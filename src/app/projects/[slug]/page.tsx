@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { projects, type ContentBlock } from "@/data/projects";
+import { projects, type ContentBlock, type ProjectMeta } from "@/data/projects";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -38,6 +38,35 @@ function renderInline(text: string) {
     }
     return <span key={i}>{token}</span>;
   });
+}
+
+function MetaBar({ meta }: { meta: ProjectMeta }) {
+  const columns: { label: string; lines: string[] }[] = [
+    { label: "Role", lines: meta.role },
+    { label: "Team", lines: meta.team },
+    { label: "Timeline", lines: [meta.timeline] },
+    { label: "Skills", lines: meta.skills },
+  ];
+
+  return (
+    <div className="mt-8 grid max-w-4xl grid-cols-2 gap-x-8 gap-y-6 rounded-2xl border border-border px-6 py-6 sm:grid-cols-4">
+      {columns.map((col, i) => (
+        <div
+          key={col.label}
+          className={i > 0 ? "sm:border-l sm:border-border sm:pl-8" : ""}
+        >
+          <p className="text-xs font-medium uppercase tracking-widest text-muted">
+            {col.label}
+          </p>
+          <div className="mt-2 flex flex-col gap-1 text-sm text-foreground/90">
+            {col.lines.map((line, j) => (
+              <p key={j}>{line}</p>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function ImagePlaceholder({ caption }: { caption: string }) {
@@ -109,7 +138,9 @@ export default async function ProjectPage({
         {project.title}
       </h1>
 
-      <div className="mt-16 flex max-w-2xl flex-col gap-24 pb-[60vh]">
+      <MetaBar meta={project.meta} />
+
+      <div className="mt-16 flex max-w-4xl flex-col gap-24 pb-[60vh]">
         {project.sections.map((section) => (
           <section
             key={section.id}

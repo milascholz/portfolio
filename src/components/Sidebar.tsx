@@ -114,16 +114,16 @@ export default function Sidebar() {
               <h2 className="mt-4 text-2xl font-bold leading-snug">
                 {activeProject.title}
               </h2>
-              <nav className="mt-6 flex flex-col gap-1 border-l border-border pl-4">
+              <nav className="mt-6 flex flex-col gap-1">
                 {activeProject.sections.map((section) => (
                   <a
                     key={section.id}
                     href={`#${section.id}`}
                     onClick={() => setActiveSection(section.id)}
-                    className={`py-1.5 text-sm transition-colors ${
+                    className={`border-l-2 py-1.5 pl-4 text-sm transition-colors ${
                       activeSection === section.id
-                        ? "font-medium text-foreground"
-                        : "text-muted hover:text-foreground"
+                        ? "border-foreground font-medium text-foreground"
+                        : "border-border text-muted hover:text-foreground"
                     }`}
                   >
                     {section.label}

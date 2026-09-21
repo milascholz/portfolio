@@ -11,12 +11,20 @@ export type ProjectSection = {
   content?: ContentBlock[];
 };
 
+export type ProjectMeta = {
+  role: string[];
+  team: string[];
+  timeline: string;
+  skills: string[];
+};
+
 export type Project = {
   slug: string;
   title: string;
   badge: string;
   tags: string[];
   gradient: string;
+  meta: ProjectMeta;
   sections: ProjectSection[];
 };
 
@@ -26,6 +34,13 @@ const defaultSections: ProjectSection[] = [
   { id: "details", label: "Details" },
 ];
 
+const placeholderMeta = (skills: string[]): ProjectMeta => ({
+  role: ["[Add role]"],
+  team: ["[Add team]"],
+  timeline: "[Add timeline]",
+  skills,
+});
+
 export const projects: Project[] = [
   {
     slug: "discify",
@@ -33,6 +48,7 @@ export const projects: Project[] = [
     badge: "Case Study Draft",
     tags: ["JavaScript", "Spicetify", "UI Design"],
     gradient: "from-violet-500 via-purple-400 to-fuchsia-300",
+    meta: placeholderMeta(["JavaScript", "Spicetify", "UI Design"]),
     sections: [
       {
         id: "overview",
@@ -151,6 +167,7 @@ export const projects: Project[] = [
     badge: "Placeholder Badge",
     tags: ["Tag One", "Tag Two"],
     gradient: "from-sky-400 via-blue-300 to-indigo-200",
+    meta: placeholderMeta(["Tag One", "Tag Two"]),
     sections: defaultSections,
   },
   {
@@ -159,6 +176,7 @@ export const projects: Project[] = [
     badge: "Placeholder Badge",
     tags: ["Tag One", "Tag Two", "Tag Three"],
     gradient: "from-emerald-400 via-teal-300 to-cyan-200",
+    meta: placeholderMeta(["Tag One", "Tag Two", "Tag Three"]),
     sections: defaultSections,
   },
   {
@@ -167,6 +185,7 @@ export const projects: Project[] = [
     badge: "Placeholder Badge",
     tags: ["Tag One", "Tag Two"],
     gradient: "from-fuchsia-400 via-pink-300 to-rose-200",
+    meta: placeholderMeta(["Tag One", "Tag Two"]),
     sections: defaultSections,
   },
 ];
