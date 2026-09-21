@@ -10,8 +10,8 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/your-handle";
 const EMAIL = "mscholz5@uwo.ca";
 
 const navLinks = [
-  { number: "01", label: "Projects", href: "/" },
-  { number: "02", label: "About Me", href: "/about" },
+  { label: "Projects", href: "/" },
+  { label: "About Me", href: "/about" },
 ];
 
 function normalizePath(pathname: string | null) {
@@ -111,10 +111,10 @@ export default function Sidebar() {
                 <span aria-hidden="true">&larr;</span>
                 Back home
               </Link>
-              <h2 className="mt-4 text-lg font-semibold leading-snug">
+              <h2 className="mt-4 text-2xl font-bold leading-snug">
                 {activeProject.title}
               </h2>
-              <nav className="mt-6 flex flex-col border-l border-border pl-4">
+              <nav className="mt-6 flex flex-col gap-1 border-l border-border pl-4">
                 {activeProject.sections.map((section) => (
                   <a
                     key={section.id}
@@ -132,24 +132,20 @@ export default function Sidebar() {
               </nav>
             </div>
           ) : (
-            <nav className="mt-10 flex flex-col gap-1 rounded-2xl bg-white/[0.04] p-2 md:mt-14">
+            <nav className="mt-10 flex flex-col gap-3 md:mt-14">
               {navLinks.map((link) => {
                 const isActive = normalizedPath === link.href;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm transition-colors ${
+                    className={`text-sm transition-colors ${
                       isActive
-                        ? "bg-white/10 text-foreground"
+                        ? "font-medium text-foreground"
                         : "text-muted hover:text-foreground"
                     }`}
                   >
-                    <span>
-                      <span className="text-muted">{link.number}.</span>{" "}
-                      {link.label}
-                    </span>
-                    <span aria-hidden="true">&rarr;</span>
+                    {link.label}
                   </Link>
                 );
               })}
@@ -158,28 +154,23 @@ export default function Sidebar() {
         </div>
 
         <div className="flex flex-col gap-4 border-t border-border pt-6">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-muted">
-              Outbound
-            </p>
-            <div className="mt-3 flex items-center gap-3">
-              <a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
-              >
-                <LinkedInIcon />
-              </a>
-              <a
-                href={`mailto:${EMAIL}`}
-                aria-label="Email"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
-              >
-                <EmailIcon />
-              </a>
-            </div>
+          <div className="flex items-center gap-3">
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
+            >
+              <LinkedInIcon />
+            </a>
+            <a
+              href={`mailto:${EMAIL}`}
+              aria-label="Email"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
+            >
+              <EmailIcon />
+            </a>
           </div>
           <Clock />
         </div>
