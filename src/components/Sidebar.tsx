@@ -1,5 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import Clock from "@/components/Clock";
+import { projects } from "@/data/projects";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/your-handle";
 const EMAIL = "mscholz5@uwo.ca";
@@ -27,28 +32,81 @@ function EmailIcon() {
 }
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const projectSlug = pathname?.startsWith("/projects/")
+    ? pathname.split("/").filter(Boolean)[1]
+    : null;
+  const activeProject = projectSlug
+    ? projects.find((p) => p.slug === projectSlug)
+    : null;
+
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activeProject) {
+      setActiveSection(null);
+      return;
+    }
+    const hash = window.location.hash.replace("#", "");
+    setActiveSection(hash || activeProject.sections[0]?.id || null);
+  }, [activeProject]);
+
   return (
     <header className="border-b border-border px-6 py-8 md:fixed md:inset-y-0 md:left-0 md:w-[340px] md:border-b-0 md:border-r md:overflow-y-auto md:px-10 md:py-14">
       <div className="flex h-full flex-col justify-between gap-10">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-            Mila Scholz
-          </h1>
-          <p className="mt-3 text-sm leading-relaxed text-muted">
-            Mechatronics + AI Engineering
-          </p>
+          <Link href="/">
+            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Mila Scholz
+            </h1>
+          </Link>
 
-          <nav className="mt-10 flex gap-6 md:mt-14 md:flex-col md:gap-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-foreground/90 transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <div
+            className="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            style={{ gridTemplateRows: activeProject ? "0fr" : "1fr" }}
+          >
+            <div className="overflow-hidden">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                Mechatronics + AI Engineering
+              </p>
+            </div>
+          </div>
+
+          {activeProject ? (
+            <div className="mt-8">
+              <h2 className="text-lg font-semibold leading-snug">
+                {activeProject.title}
+              </h2>
+              <nav className="mt-6 flex flex-col border-l border-border pl-4">
+                {activeProject.sections.map((section) => (
+                  <a
+                    key={section.id}
+                    href={`#${section.id}`}
+                    onClick={() => setActiveSection(section.id)}
+                    className={`py-1.5 text-sm transition-colors ${
+                      activeSection === section.id
+                        ? "font-medium text-foreground"
+                        : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    {section.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          ) : (
+            <nav className="mt-10 flex gap-6 md:mt-14 md:flex-col md:gap-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-foreground/90 transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          )}
         </div>
 
         <div className="flex flex-col gap-4 border-t border-border pt-6 text-sm">
