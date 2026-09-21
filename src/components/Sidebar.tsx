@@ -1,9 +1,12 @@
+import Link from "next/link";
+import Clock from "@/components/Clock";
+
 const LINKEDIN_URL = "https://www.linkedin.com/in/your-handle";
-const EMAIL = "milacscholz@gmail.com";
+const EMAIL = "mscholz5@uwo.ca";
 
 const navLinks = [
-  { label: "Projects", href: "#projects" },
-  { label: "About Me", href: "#about" },
+  { label: "Projects", href: "/" },
+  { label: "About Me", href: "/about" },
 ];
 
 function LinkedInIcon() {
@@ -37,34 +40,37 @@ export default function Sidebar() {
 
           <nav className="mt-10 flex gap-6 md:mt-14 md:flex-col md:gap-3">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-sm text-foreground/90 transition-colors hover:text-foreground"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-border pt-6 text-sm">
-          <a
-            href={LINKEDIN_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 text-muted transition-colors hover:text-foreground"
-          >
-            <LinkedInIcon />
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="flex items-center gap-2 text-muted transition-colors hover:text-foreground"
-          >
-            <EmailIcon />
-            {EMAIL}
-          </a>
+        <div className="flex flex-col gap-4 border-t border-border pt-6 text-sm">
+          <div className="flex flex-col gap-3">
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 text-muted transition-colors hover:text-foreground"
+            >
+              <LinkedInIcon />
+              LinkedIn
+            </a>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="flex items-center gap-2 text-muted transition-colors hover:text-foreground"
+            >
+              <EmailIcon />
+              {EMAIL}
+            </a>
+          </div>
+          <Clock />
         </div>
       </div>
     </header>
