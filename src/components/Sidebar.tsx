@@ -88,7 +88,7 @@ export default function Sidebar() {
         <div>
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/mila-name.png"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/mila-name.png`}
               alt="Mila"
               width={785}
               height={324}
