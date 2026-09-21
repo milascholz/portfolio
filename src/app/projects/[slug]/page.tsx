@@ -49,7 +49,7 @@ function MetaBar({ meta }: { meta: ProjectMeta }) {
   ];
 
   return (
-    <div className="mt-8 grid max-w-4xl grid-cols-2 gap-x-8 gap-y-6 rounded-2xl border border-border px-6 py-6 sm:grid-cols-4">
+    <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-6 rounded-2xl border border-border px-6 py-6 sm:grid-cols-4">
       {columns.map((col, i) => (
         <div
           key={col.label}
@@ -134,31 +134,33 @@ export default async function ProjectPage({
 
   return (
     <div className="px-6 py-14 md:px-16 md:py-20">
-      <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-        {project.title}
-      </h1>
+      <div className="mx-auto max-w-4xl">
+        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+          {project.title}
+        </h1>
 
-      <MetaBar meta={project.meta} />
+        <MetaBar meta={project.meta} />
 
-      <div className="mt-16 flex max-w-4xl flex-col gap-24 pb-[60vh]">
-        {project.sections.map((section) => (
-          <section
-            key={section.id}
-            id={section.id}
-            className={`scroll-mt-10 ${section.content ? "" : "min-h-[40vh]"}`}
-          >
-            <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
-              {section.label}
-            </h2>
-            {section.content && (
-              <div className="mt-5 flex flex-col gap-5">
-                {section.content.map((block, i) => (
-                  <Block key={i} block={block} />
-                ))}
-              </div>
-            )}
-          </section>
-        ))}
+        <div className="mt-16 flex flex-col gap-24 pb-[60vh]">
+          {project.sections.map((section) => (
+            <section
+              key={section.id}
+              id={section.id}
+              className={`scroll-mt-10 ${section.content ? "" : "min-h-[40vh]"}`}
+            >
+              <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
+                {section.label}
+              </h2>
+              {section.content && (
+                <div className="mt-5 flex flex-col gap-5">
+                  {section.content.map((block, i) => (
+                    <Block key={i} block={block} />
+                  ))}
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
       </div>
     </div>
   );

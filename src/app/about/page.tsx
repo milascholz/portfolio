@@ -7,10 +7,7 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <section className="px-6 py-14 md:px-16 md:py-20">
-      <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
-        About Me
-      </h2>
-      <p className="mt-8 max-w-2xl text-lg leading-relaxed text-foreground/90">
+      <p className="max-w-2xl text-lg leading-relaxed text-foreground/90">
         [Add a short bio here — your background, interests, and what
         you&apos;re currently working on.]
       </p>

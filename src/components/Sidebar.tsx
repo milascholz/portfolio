@@ -114,7 +114,7 @@ export default function Sidebar() {
               <h2 className="mt-4 text-2xl font-bold leading-snug">
                 {activeProject.title}
               </h2>
-              <nav className="mt-6 flex flex-col gap-1">
+              <nav className="mt-6 flex flex-col">
                 {activeProject.sections.map((section) => (
                   <a
                     key={section.id}
