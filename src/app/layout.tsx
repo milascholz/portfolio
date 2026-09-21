@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import Sidebar from "@/components/Sidebar";
 import "./globals.css";
+
+const agrandir = localFont({
+  src: "../fonts/AgrandirTight-HeavyItalic.ttf",
+  variable: "--font-agrandir",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Mila Scholz",
@@ -9,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased dark">
+    <html lang="en" className={`h-full antialiased ${agrandir.variable}`}>
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link

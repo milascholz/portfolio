@@ -30,7 +30,7 @@ function renderInline(text: string) {
       return (
         <code
           key={i}
-          className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground"
+          className="rounded bg-black/[0.06] px-1.5 py-0.5 font-mono text-[0.85em] text-foreground"
         >
           {token.slice(1, -1)}
         </code>
@@ -71,7 +71,7 @@ function MetaBar({ meta }: { meta: ProjectMeta }) {
 
 function ImagePlaceholder({ caption }: { caption: string }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-white/[0.02] px-6 py-20 text-center">
+    <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-black/[0.02] px-6 py-20 text-center">
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -135,7 +135,7 @@ export default async function ProjectPage({
   return (
     <div className="px-6 py-14 md:px-16 md:py-20">
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+        <h1 className="text-outlined text-3xl md:text-4xl">
           {project.title}
         </h1>
 

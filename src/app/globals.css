@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #f2f2f0;
-  --muted: #8a8a86;
-  --border: #232323;
-  --accent: #f2f2f0;
+  --background: #f0eae0;
+  --foreground: #221f1b;
+  --muted: #8b8477;
+  --border: #ded5c3;
+  --accent: #b15c78;
 }
 
 @theme inline {
@@ -16,10 +16,11 @@
   --color-accent: var(--accent);
   --font-sans: "Switzer", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: var(--font-agrandir);
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -31,4 +32,12 @@ body {
 ::selection {
   background: var(--foreground);
   color: var(--background);
+}
+
+.text-outlined {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  letter-spacing: -0.068em;
+  color: var(--accent);
+  -webkit-text-stroke: 0.05em #000;
+  paint-order: stroke fill;
 }
