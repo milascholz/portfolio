@@ -32,7 +32,7 @@ export default async function ProjectPage({
         {project.title}
       </h1>
 
-      <div className="mt-16 flex flex-col gap-24">
+      <div className="mt-16 flex flex-col gap-24 pb-[60vh]">
         {project.sections.map((section) => (
           <section key={section.id} id={section.id} className="min-h-[40vh] scroll-mt-10">
             <h2 className="text-sm font-medium uppercase tracking-widest text-muted">

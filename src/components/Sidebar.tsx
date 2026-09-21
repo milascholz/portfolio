@@ -10,9 +10,14 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/your-handle";
 const EMAIL = "mscholz5@uwo.ca";
 
 const navLinks = [
-  { label: "Projects", href: "/" },
-  { label: "About Me", href: "/about" },
+  { number: "01", label: "Projects", href: "/" },
+  { number: "02", label: "About Me", href: "/about" },
 ];
+
+function normalizePath(pathname: string | null) {
+  if (!pathname) return "/";
+  return pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+}
 
 function LinkedInIcon() {
   return (
@@ -33,6 +38,7 @@ function EmailIcon() {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const normalizedPath = normalizePath(pathname);
   const projectSlug = pathname?.startsWith("/projects/")
     ? pathname.split("/").filter(Boolean)[1]
     : null;
@@ -49,6 +55,30 @@ export default function Sidebar() {
     }
     const hash = window.location.hash.replace("#", "");
     setActiveSection(hash || activeProject.sections[0]?.id || null);
+  }, [activeProject]);
+
+  useEffect(() => {
+    if (!activeProject) return;
+
+    const elements = activeProject.sections
+      .map((section) => document.getElementById(section.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-15% 0px -70% 0px", threshold: 0 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, [activeProject]);
 
   return (
@@ -102,38 +132,54 @@ export default function Sidebar() {
               </nav>
             </div>
           ) : (
-            <nav className="mt-10 flex gap-6 md:mt-14 md:flex-col md:gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-foreground/90 transition-colors hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <nav className="mt-10 flex flex-col gap-1 rounded-2xl bg-white/[0.04] p-2 md:mt-14">
+              {navLinks.map((link) => {
+                const isActive = normalizedPath === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm transition-colors ${
+                      isActive
+                        ? "bg-white/10 text-foreground"
+                        : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    <span>
+                      <span className="text-muted">{link.number}.</span>{" "}
+                      {link.label}
+                    </span>
+                    <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                );
+              })}
             </nav>
           )}
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-border pt-6 text-sm">
-          <div className="flex flex-col gap-3">
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 text-muted transition-colors hover:text-foreground"
-            >
-              <LinkedInIcon />
-              LinkedIn
-            </a>
-            <a
-              href={`mailto:${EMAIL}`}
-              className="flex items-center gap-2 text-muted transition-colors hover:text-foreground"
-            >
-              <EmailIcon />
-              {EMAIL}
-            </a>
+        <div className="flex flex-col gap-4 border-t border-border pt-6">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-muted">
+              Outbound
+            </p>
+            <div className="mt-3 flex items-center gap-3">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
+              >
+                <LinkedInIcon />
+              </a>
+              <a
+                href={`mailto:${EMAIL}`}
+                aria-label="Email"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
+              >
+                <EmailIcon />
+              </a>
+            </div>
           </div>
           <Clock />
         </div>
