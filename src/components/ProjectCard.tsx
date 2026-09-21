@@ -16,7 +16,7 @@ export default function ProjectCard({ slug, title, badge, tags, gradient }: Proj
       <div className="flex gap-4 px-5 py-5">
         <div className="w-px shrink-0 bg-border" />
         <div>
-          <h3 className="text-outlined text-lg">{title}</h3>
+          <h3 className="text-lg font-medium">{title}</h3>
           <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
             {tags.map((tag) => (
               <span key={tag}>{tag}</span>

@@ -135,7 +135,7 @@ export default async function ProjectPage({
   return (
     <div className="px-6 py-14 md:px-16 md:py-20">
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-outlined text-3xl md:text-4xl">
+        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           {project.title}
         </h1>
 

@@ -86,8 +86,8 @@ export default function Sidebar() {
       <div className="flex h-full flex-col justify-between gap-10">
         <div>
           <Link href="/">
-            <h1 className="text-outlined text-3xl md:text-4xl">
-              Mila Scholz
+            <h1 className="name-logo text-4xl md:text-5xl">
+              mila scholz
             </h1>
           </Link>
 
@@ -111,7 +111,7 @@ export default function Sidebar() {
                 <span aria-hidden="true">&larr;</span>
                 Back home
               </Link>
-              <h2 className="text-outlined mt-4 text-2xl leading-snug">
+              <h2 className="mt-4 text-2xl font-bold leading-snug">
                 {activeProject.title}
               </h2>
               <nav className="mt-6 flex flex-col">

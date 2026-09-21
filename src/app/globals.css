@@ -34,10 +34,10 @@ body {
   color: var(--background);
 }
 
-.text-outlined {
+.name-logo {
   font-family: var(--font-display), var(--font-sans), sans-serif;
   letter-spacing: -0.068em;
-  color: var(--accent);
-  -webkit-text-stroke: 0.05em #000;
+  color: #c6ce84;
+  -webkit-text-stroke: 0.045em #000;
   paint-order: stroke fill;
 }
