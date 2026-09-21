@@ -35,9 +35,12 @@ body {
 }
 
 .name-logo {
+  display: inline-block;
   font-family: var(--font-display), var(--font-sans), sans-serif;
-  letter-spacing: -0.068em;
+  letter-spacing: -0.03em;
   color: #c6ce84;
   -webkit-text-stroke: 0.045em #000;
   paint-order: stroke fill;
+  transform-origin: bottom;
+  transform: skewX(10deg);
 }
