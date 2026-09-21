@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -85,9 +86,17 @@ export default function Sidebar() {
     <header className="border-b border-border px-6 py-8 md:fixed md:inset-y-0 md:left-0 md:w-[340px] md:border-b-0 md:border-r md:overflow-y-auto md:px-10 md:py-14">
       <div className="flex h-full flex-col justify-between gap-10">
         <div>
-          <Link href="/">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/mila-name.png"
+              alt="Mila"
+              width={785}
+              height={324}
+              priority
+              className="h-10 w-auto md:h-12"
+            />
             <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Mila Scholz
+              Scholz
             </h1>
           </Link>
 
