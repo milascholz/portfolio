@@ -74,7 +74,14 @@ export default function Sidebar() {
 
           {activeProject ? (
             <div className="mt-8">
-              <h2 className="text-lg font-semibold leading-snug">
+              <Link
+                href="/"
+                className="flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-foreground"
+              >
+                <span aria-hidden="true">&larr;</span>
+                Back home
+              </Link>
+              <h2 className="mt-4 text-lg font-semibold leading-snug">
                 {activeProject.title}
               </h2>
               <nav className="mt-6 flex flex-col border-l border-border pl-4">
