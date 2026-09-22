@@ -5,7 +5,7 @@ export default function ProjectCard({ slug, title, badge, tags, gradient }: Proj
   return (
     <Link
       href={`/projects/${slug}`}
-      className="group overflow-hidden rounded-2xl border border-border bg-[#111113] transition-colors hover:border-foreground/30"
+      className="group overflow-hidden rounded-2xl border border-border bg-background transition-colors hover:border-foreground/30"
     >
       <div className="relative">
         <div className={`aspect-[16/10] w-full bg-gradient-to-br ${gradient}`} />

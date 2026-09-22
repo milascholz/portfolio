@@ -83,21 +83,18 @@ export default function Sidebar() {
   }, [activeProject]);
 
   return (
-    <header className="border-b border-border px-6 py-8 md:fixed md:inset-y-0 md:left-0 md:w-[340px] md:border-b-0 md:border-r md:overflow-y-auto md:px-10 md:py-14">
+    <header className="border-b border-border bg-sidebar px-6 py-8 md:fixed md:inset-y-0 md:left-0 md:w-[340px] md:border-b-0 md:border-r md:overflow-y-auto md:px-10 md:py-14">
       <div className="flex h-full flex-col justify-between gap-10">
         <div>
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center">
             <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/mila-name.png`}
-              alt="Mila"
-              width={785}
-              height={324}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/mila-scholz-name.png`}
+              alt="Mila Scholz"
+              width={1309}
+              height={250}
               priority
               className="h-10 w-auto md:h-12"
             />
-            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Scholz
-            </h1>
           </Link>
 
           <div
