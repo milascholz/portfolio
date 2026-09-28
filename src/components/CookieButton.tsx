@@ -15,6 +15,17 @@ const COOKIE_RADIUS = 41; // the cookie's edge, as a % of the container
 const BITE_RADIUS = 24; // % of the container
 const BITE_DEPTH = 0.92; // how far inside the edge the bite center sits
 const CLICK_HINT_DELAY_MS = 10000;
+// If a click lands within this many radians of the previous bite's angle,
+// treat it as "the same spot" and rotate the new bite elsewhere so repeated
+// clicks in one place still visibly eat the cookie.
+const SAME_SPOT_ANGLE_THRESHOLD = 0.6;
+// ~137.5deg — an irrational fraction of a full turn, so repeated same-spot
+// clicks keep landing on fresh ground instead of cycling back.
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+
+function angleDiff(a: number, b: number) {
+  return Math.atan2(Math.sin(a - b), Math.cos(a - b));
+}
 
 // A bite is rendered as a cluster of overlapping circles (a core plus
 // bumps around it) instead of one smooth circle, so its edge reads as a
@@ -68,6 +79,11 @@ export default function CookieButton() {
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const popTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasClickedRef = useRef(false);
+  // Raw cursor angle from the previous click, so we can tell whether the
+  // user actually moved the cursor since then (as opposed to the angle a
+  // same-spot click ended up rotated to).
+  const lastRawAngleRef = useRef<number | null>(null);
+  const lastPlacedAngleRef = useRef<number | null>(null);
 
   useEffect(() => {
     const hintTimeout = setTimeout(() => {
@@ -94,8 +110,7 @@ export default function CookieButton() {
     popTimeout.current = setTimeout(() => setIsPopping(false), 180);
 
     const rect = imageRef.current?.getBoundingClientRect();
-    let ux = 1;
-    let uy = 0;
+    let rawAngle = 0;
     if (rect && rect.width > 0 && rect.height > 0) {
       const clickXPct = ((event.clientX - rect.left) / rect.width) * 100;
       const clickYPct = ((event.clientY - rect.top) / rect.height) * 100;
@@ -103,10 +118,24 @@ export default function CookieButton() {
       const dy = clickYPct - 50;
       const len = Math.hypot(dx, dy);
       if (len > 2) {
-        ux = dx / len;
-        uy = dy / len;
+        rawAngle = Math.atan2(dy, dx);
       }
     }
+
+    const cursorDidNotMove =
+      lastRawAngleRef.current !== null &&
+      Math.abs(angleDiff(rawAngle, lastRawAngleRef.current)) < SAME_SPOT_ANGLE_THRESHOLD;
+
+    const angle =
+      cursorDidNotMove && lastPlacedAngleRef.current !== null
+        ? lastPlacedAngleRef.current + GOLDEN_ANGLE
+        : rawAngle;
+
+    lastRawAngleRef.current = rawAngle;
+    lastPlacedAngleRef.current = angle;
+
+    const ux = Math.cos(angle);
+    const uy = Math.sin(angle);
 
     const newBite: Bite = {
       cx: 50 + ux * COOKIE_RADIUS * BITE_DEPTH,
@@ -121,6 +150,8 @@ export default function CookieButton() {
         resetTimeout.current = setTimeout(() => {
           setCookieSrc((current) => nextRandomCookie(current));
           setBites([]);
+          lastRawAngleRef.current = null;
+          lastPlacedAngleRef.current = null;
         }, 500);
       }
       return next;
