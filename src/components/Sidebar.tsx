@@ -7,21 +7,9 @@ import { usePathname } from "next/navigation";
 import { ArrowLeft, Mail } from "lucide-react";
 import CookieButton from "./CookieButton";
 import CalloutBox from "./CalloutBox";
+import LinkedInIcon from "./LinkedInIcon";
 import { BASE_PATH } from "@/lib/base-path";
 import { useProjectNav } from "@/context/ProjectNavContext";
-
-function LinkedInIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.26 2.37 4.26 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
-    </svg>
-  );
-}
 
 const NAV_ITEMS = [
   { href: "/", label: "projects" },
@@ -156,7 +144,7 @@ export default function Sidebar() {
               </p>
               <Link
                 href="/"
-                className={`absolute inset-0 flex items-center gap-1.5 text-[15px] font-medium text-foreground/70 transition-opacity duration-300 hover:text-foreground ${
+                className={`absolute inset-0 flex items-center gap-1.5 text-[15px] font-medium capitalize text-foreground/70 transition-opacity duration-300 hover:text-foreground ${
                   isProjectMode ? "opacity-100" : "pointer-events-none opacity-0"
                 }`}
               >
@@ -196,7 +184,7 @@ export default function Sidebar() {
                     />
                   </span>
                   <span
-                    className={`transition-colors ${
+                    className={`capitalize transition-colors ${
                       isActive
                         ? "font-semibold text-foreground"
                         : "text-foreground/60 group-hover:text-foreground"
@@ -228,7 +216,7 @@ export default function Sidebar() {
                   />
                 </span>
                 <span
-                  className={`relative transition-colors ${
+                  className={`relative capitalize transition-colors ${
                     customizeOpen ? "text-foreground" : "text-foreground/60"
                   }`}
                 >
@@ -279,7 +267,7 @@ export default function Sidebar() {
             >
               {projectNav ? (
                 <>
-                  <h2 className="text-[15px] font-semibold text-foreground">
+                  <h2 className="text-[15px] font-semibold capitalize text-foreground">
                     {projectNav.title}
                   </h2>
                   <nav className="flex flex-col gap-3.5">
@@ -305,7 +293,7 @@ export default function Sidebar() {
                             />
                           </span>
                           <span
-                            className={`transition-colors ${
+                            className={`capitalize transition-colors ${
                               isActive
                                 ? "font-semibold text-foreground"
                                 : "text-foreground/60 group-hover:text-foreground"

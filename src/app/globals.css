@@ -34,30 +34,11 @@ html {
   animation: soft-bounce 1.6s ease-in-out infinite;
 }
 
-@keyframes scroll-y {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-50%);
-  }
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-@keyframes shape-stick {
-  0% {
-    transform: scale(1) rotate(0deg);
-  }
-  40% {
-    transform: scale(1.35) rotate(-4deg);
-  }
-  70% {
-    transform: scale(0.92) rotate(2deg);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-.animate-shape-stick {
-  animation: shape-stick 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

@@ -29,7 +29,7 @@ export const projects: Project[] = [
     subheading: "Posture-correcting macOS menu bar app",
     gradient: "linear-gradient(135deg, #0ea5e9 0%, #60a5fa 60%, #bfdbfe 100%)",
     video: "/videos/slouchy-showreel.mp4",
-    tag: "Cornell UX Designathon Winner",
+    tag: "Cornell UX Designathon 2nd Place Winner",
     link: "https://devpost.com/software/slouchy",
     linkLabel: "See on Devpost",
     linkExternal: true,
