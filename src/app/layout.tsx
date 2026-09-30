@@ -21,7 +21,7 @@ const switzer = localFont({
 
 export const metadata: Metadata = {
   title: "Mila Scholz",
-  description: "Portfolio of Mila Scholz — created to create.",
+  description: "Portfolio of Mila Scholz — Created to create.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

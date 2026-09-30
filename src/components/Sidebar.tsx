@@ -122,14 +122,14 @@ export default function Sidebar() {
         <div className="flex flex-col gap-10">
           <div>
             <h1 className="flex items-baseline overflow-hidden text-2xl font-bold tracking-tight text-black">
-              <span>m</span>
+              <span>M</span>
               <span className="inline-block max-w-[2.5rem] overflow-hidden whitespace-nowrap opacity-100">
                 ila
               </span>
               <span className="inline-block max-w-[0.4rem] overflow-hidden whitespace-nowrap opacity-100">
                 &nbsp;
               </span>
-              <span>s</span>
+              <span>S</span>
               <span className="inline-block max-w-[6rem] overflow-hidden whitespace-nowrap opacity-100">
                 cholz
               </span>
@@ -140,7 +140,7 @@ export default function Sidebar() {
                   isProjectMode ? "pointer-events-none opacity-0" : "opacity-100"
                 }`}
               >
-                created to create
+                Created to create
               </p>
               <Link
                 href="/"
