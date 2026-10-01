@@ -36,14 +36,69 @@ function Prose({ children }: { children: ReactNode }) {
   return <div className="mt-4 max-w-[960px] space-y-4 leading-relaxed text-foreground/70">{children}</div>;
 }
 
-function MediaPlaceholder({ type, label }: { type: "Visual" | "Video"; label: string }) {
+type ImageItem = { src: string; alt: string; caption: string; aspect?: number };
+
+function MediaFigure({ src, alt, caption }: ImageItem) {
   return (
-    <figure className="mt-6 flex min-h-[200px] w-full flex-col items-center justify-center gap-2 border border-black/15 bg-black/[0.035] p-8 text-center">
-      <span className="text-xs font-semibold uppercase tracking-widest text-foreground/30">
-        {type} placeholder
-      </span>
-      <figcaption className="text-xs uppercase tracking-widest text-foreground/45">{label}</figcaption>
+    <figure className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full border border-black/10" />
+      <figcaption className="mt-2 text-xs text-foreground/50">{caption}</figcaption>
     </figure>
+  );
+}
+
+function FigureRow({
+  items,
+  cols = 3,
+  fit = "cover",
+}: {
+  items: ImageItem[];
+  cols?: 2 | 3;
+  fit?: "cover" | "contain" | "justified";
+}) {
+  if (fit === "justified") {
+    return (
+      <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+          {items.map((item) => (
+            <div key={item.src} className="min-w-0" style={{ flexGrow: item.aspect ?? 1, flexBasis: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${BASE_PATH}${item.src}`}
+                alt={item.alt}
+                className="block h-auto w-full border border-black/10"
+              />
+              <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+      <div className={`grid grid-cols-1 gap-6 ${cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+        {items.map((item) => (
+          <div key={item.src}>
+            <div
+              className={`aspect-square w-full overflow-hidden border border-black/10 ${
+                fit === "contain" ? "bg-white" : ""
+              }`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${BASE_PATH}${item.src}`}
+                alt={item.alt}
+                className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
+              />
+            </div>
+            <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -164,12 +219,13 @@ function MotorSizing() {
         straight out.
       </p>
       <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-foreground/70">
-        <li>Carbon fiber forearm: [X g] over [L mm]</li>
-        <li>Printed hand: [Y g] at the end</li>
-        <li>Holding moment: [Z N·m]</li>
+        <li>Carbon fiber forearm tube (10mm OD, 8mm ID, 420mm long): about 20 g</li>
+        <li>Printed hand: about 200 g at the end</li>
+        <li>Static holding moment at full extension: about 0.9 N·m</li>
       </ul>
       <p className="mt-3 text-sm leading-relaxed text-foreground">
-        Motor rating: [W N·m], a [~Nx] safety margin
+        Motor rating: about 3 N·m, roughly a 3x safety factor on the static hold, with the
+        non-backdrivable worm carrying the load at rest instead of the motor.
       </p>
     </div>
   );
@@ -183,11 +239,11 @@ type ReflectionPoint = {
 const REFLECTION_POINTS: ReflectionPoint[] = [
   {
     title: "Design for how it's made, not just how it works.",
-    body: "A part can be correct in CAD and still fail on the printer. The first layer of an FDM print flares outward (elephant's foot), so a small chamfer on the bottom edges keeps parts flat and fitting. Horizontal holes sag under the layers printed above them, so modelling them as teardrops keeps them round. None of this shows up in a render, and all of it decides whether the part works.",
+    body: "A part can be correct in CAD and still fail on the printer. The first layer of an FDM print flares outward (elephant's foot), so a small chamfer on the bottom edges keeps parts flat. Horizontal holes sag under the layers printed above them, so modelling them as teardrops keeps them round.",
   },
   {
     title: "Validate before you print.",
-    body: "For part of this project I was working remotely, so I couldn't check a part in person once it was printed. Each design had to be right before it went to the printer: checking clearances and interference in CAD, thinking through overhangs, first-layer flare, and hole sag, and walking through assembly step by step. I learned this after an 11-hour print had already finished, and it stuck: find out you're wrong while it's still cheap. The same goes for product work, where testing assumptions early costs far less than rebuilding after launch.",
+    body: "For part of this project I was working remotely, so I couldn't check a part in person once it was printed. Each design had to be right before it went to the printer: checking clearances and interference in CAD, thinking through overhangs, first-layer flare, and hole sag, and walking through assembly step by step.",
   },
   {
     title: "Building my first locking mechanism.",
@@ -279,7 +335,25 @@ export default function HumanoidRobotArmAssemblyPage() {
               that emotion, so interactions feel humanized.
             </p>
           </Prose>
-          <MediaPlaceholder type="Visual" label="Full robot" />
+          <FigureRow
+            items={[
+              {
+                src: "/images/baker-bot/hero-card.jpg",
+                alt: "Baker Bot assembled waist-up on a workbench, head and both arms wired to the exposed torso electronics.",
+                caption: "Baker Bot, assembled: head, arms, and onboard electronics.",
+              },
+              {
+                src: "/images/baker-bot/hero-suit.jpg",
+                alt: "Baker Bot from behind, wearing a padded beige muscle suit over the torso and arms.",
+                caption: "The finished robot in its padded muscle suit.",
+              },
+              {
+                src: "/images/baker-bot/full-cad.jpg",
+                alt: "Full CAD render of Baker Bot showing the head, torso frame, battery, control boards, and both arm assemblies.",
+                caption: "Full assembly CAD, waist-up.",
+              },
+            ]}
+          />
           <Prose>
             <p className="font-medium text-foreground">Each arm has three components.</p>
             <ul className="list-disc space-y-2 pl-5">
@@ -307,13 +381,8 @@ export default function HumanoidRobotArmAssemblyPage() {
         <section id="3d-model" className="mt-16 scroll-mt-8">
           <Eyebrow>3D Model</Eyebrow>
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            The full arm assembly, live.
+            Interactive CAD Model
           </h2>
-          <Prose>
-            <p>
-              Every part below, shoulder to fingertips, assembled the way it bolts together on the robot.
-            </p>
-          </Prose>
           <ArmModelViewer />
         </section>
 
@@ -332,7 +401,7 @@ export default function HumanoidRobotArmAssemblyPage() {
               </li>
               <li>
                 <span className="font-semibold text-foreground">It&apos;s on a student budget.</span>{" "}
-                Every motor and part had to earn its place.
+                Every motor and part had to earn its place in our $2,000 budget.
               </li>
             </ul>
           </Prose>
@@ -358,9 +427,27 @@ export default function HumanoidRobotArmAssemblyPage() {
               saving the budget for the elbow, where independent motion matters more.
             </p>
           </Prose>
-          <MediaPlaceholder type="Visual" label="Shoulder, transparent view" />
-          <MediaPlaceholder type="Visual" label="Printed shoulder housing with plunger" />
+          <FigureRow
+            fit="justified"
+            items={[
+              {
+                src: "/images/baker-bot/shoulder-cad.jpg",
+                alt: "Transparent CAD render of the shoulder pivot, showing the central mounting bolt, internal plates, tie rods, and indexing hardware.",
+                caption: "Shoulder pivot internals in CAD: bolt, plates, and indexing hardware.",
+                aspect: 1100 / 746,
+              },
+              {
+                src: "/images/baker-bot/shoulder-real-crop.jpg",
+                alt: "3D-printed shoulder housing held in hand, with a knurled indexing plunger knob and the edge of the aluminum indexing plate visible.",
+                caption: "The printed shoulder housing and its indexing plunger.",
+                aspect: 975 / 680,
+              },
+            ]}
+          />
 
+          <div className="mt-10">
+            <Eyebrow>Shoulder Design Decisions</Eyebrow>
+          </div>
           {SHOULDER_DECISIONS.map((decision, index) => (
             <DecisionCard key={decision.title} index={index + 1} decision={decision} />
           ))}
@@ -378,8 +465,15 @@ export default function HumanoidRobotArmAssemblyPage() {
               and down to gesture, and holds any angle with the power off.
             </p>
           </Prose>
-          <MediaPlaceholder type="Visual" label="Elbow motor / assembled elbow" />
+          <MediaFigure
+            src="/images/baker-bot/elbow-cad.jpg"
+            alt="Elbow CAD showing both arms' worm-gear motor, limit switch, and potentiometer housed in the joint."
+            caption="Elbow CAD: worm-gear motor, limit switch, and potentiometer."
+          />
 
+          <div className="mt-10">
+            <Eyebrow>Elbow Design Decisions</Eyebrow>
+          </div>
           <DecisionCard index={1} decision={ELBOW_DECISION} media={<MotorSizing />} />
         </section>
 
@@ -395,13 +489,69 @@ export default function HumanoidRobotArmAssemblyPage() {
               lock. A magnet in the wrist and one in the hand hold the mechanism pieces together, so it
               can&apos;t twist back out, which is especially important with the vibrations the robot
               experiences by travelling by bike. The set includes a right-hand-rule hand for
-              electromagnetism demos, thumbs up, thumbs down, and fists that hold props.
+              electromagnetism demos, a fist that holds props, and open hands for gesturing.
             </p>
           </Prose>
-          <MediaPlaceholder type="Visual" label="Bayonet mount" />
-          <MediaPlaceholder type="Visual" label="Hand set" />
-          <MediaPlaceholder type="Visual" label="Interactive CAD: hand + mount" />
+          <FigureRow
+            cols={2}
+            fit="contain"
+            items={[
+              {
+                src: "/images/baker-bot/bayonet-mount-section.png",
+                alt: "Cross-sectioned CAD render of the bayonet mount collar, showing the internal keyway.",
+                caption: "Internal bayonet locking mechanism.",
+              },
+              {
+                src: "/images/baker-bot/bayonet-mount-solid.png",
+                alt: "Solid CAD render of the printed bayonet mount collar.",
+                caption: "The printed collar, solid view.",
+              },
+            ]}
+          />
+          <FigureRow
+            fit="justified"
+            items={[
+              {
+                src: "/images/baker-bot/hand-open.png",
+                alt: "CAD render of an open, extended hand used for gesturing.",
+                caption: "Open hand, for gesturing.",
+                aspect: 817 / 713,
+              },
+              {
+                src: "/images/baker-bot/hand-rhr.png",
+                alt: "CAD render of a right-hand-rule hand with the index finger and thumb extended perpendicular.",
+                caption: "Right-hand-rule hand, for electromagnetism demos.",
+                aspect: 1068 / 785,
+              },
+              {
+                src: "/images/baker-bot/hand-fist.png",
+                alt: "CAD render of a closed fist hand used to hold props.",
+                caption: "Fist, for holding props.",
+                aspect: 893 / 817,
+              },
+            ]}
+          />
+          <FigureRow
+            fit="justified"
+            items={[
+              {
+                src: "/images/baker-bot/bayonet-point-hand.png",
+                alt: "The right-hand-rule hand aligned with the bayonet mount on the forearm, about to lock in place.",
+                caption: "The right-hand-rule hand lining up with the mount.",
+                aspect: 1144 / 701,
+              },
+              {
+                src: "/images/baker-bot/bayonet-fist-hand.png",
+                alt: "The fist hand aligned with the bayonet mount on the forearm, about to lock in place.",
+                caption: "The inner mechanism of the mount embedded in the hand models.",
+                aspect: 1173 / 730,
+              },
+            ]}
+          />
 
+          <div className="mt-10">
+            <Eyebrow>Hands Design Decisions</Eyebrow>
+          </div>
           {HANDS_DECISIONS.map((decision, index) => (
             <DecisionCard
               key={decision.title}
@@ -409,7 +559,21 @@ export default function HumanoidRobotArmAssemblyPage() {
               decision={decision}
               media={
                 index === 2 ? (
-                  <MediaPlaceholder type="Visual" label="Chamfer, teardrop hole, insert hole" />
+                  <FigureRow
+                    cols={2}
+                    items={[
+                      {
+                        src: "/images/baker-bot/elephant.png",
+                        alt: "Close-up CAD render of a chamfered bottom edge on a printed bracket.",
+                        caption: "Chamfered bottom edge: cancels elephant's foot so the part sits flat.",
+                      },
+                      {
+                        src: "/images/baker-bot/teadrop.png",
+                        alt: "Close-up CAD render of a teardrop-shaped hole and chamfered heat-set insert hole.",
+                        caption: "Teardrop hole and chamfered insert: print clean, no support needed.",
+                      },
+                    ]}
+                  />
                 ) : undefined
               }
             />

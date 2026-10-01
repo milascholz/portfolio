@@ -85,8 +85,7 @@ export default function ArmModelViewer() {
         )}
       </div>
       <p className="mt-2 text-xs text-foreground/50">
-        Full right arm assembly, exported from SolidWorks. Drag to rotate, scroll to zoom — let go
-        and it picks the spin back up on its own.
+        The full right arm assembly in 3D. Drag to rotate, scroll to zoom.
       </p>
     </div>
   );

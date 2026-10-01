@@ -12,10 +12,9 @@ export default function AboutPage() {
             Hi, I&apos;m Mila.
           </h1>
           <p className="mt-4 max-w-md leading-relaxed text-foreground/70">
-            I&apos;m a product designer and developer who likes building things that are a little more
-            thoughtful than they need to be — like a Spotify extension that gamifies finishing an
-            album. When I&apos;m not designing, I&apos;m cooking my way through recipes, or reading
-            unsettling Japanese mystery novels.
+            I&apos;m a designer and engineer who loves building useful things. When I&apos;m not
+            creating products, you&apos;ll find me working on my model trainset or reading books
+            about floorplans.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <a
