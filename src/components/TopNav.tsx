@@ -2,17 +2,53 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Home as HomeIcon, Mail } from "lucide-react";
 import CaseStudyToc from "./CaseStudyToc";
 import { useProjectNav } from "@/context/ProjectNavContext";
 
 const NAV_ITEMS = [
-  { href: "/about", label: "About" },
-  { href: "/", label: "Projects" },
+  { href: "/about", label: "About", disabled: true },
+  { href: "/", label: "Projects", disabled: false },
 ];
 
 function normalizePath(path: string) {
   return path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+}
+
+// Disabled nav pill that tracks the cursor with a "Coming soon" bubble
+// instead of navigating.
+function ComingSoonPill({ label }: { label: string }) {
+  const [hover, setHover] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  return (
+    <span
+      className="relative inline-flex shrink-0"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      }}
+    >
+      <span
+        aria-disabled="true"
+        className="btn-pill btn-pill-static cursor-not-allowed px-3.5 py-1.5 text-sm font-medium text-foreground/40"
+      >
+        {label}
+      </span>
+      {hover && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute z-50 -translate-x-1/2 -translate-y-[calc(100%+10px)] whitespace-nowrap rounded-full border border-black/80 bg-[#2b2b2b] px-2.5 py-1 text-[11px] font-medium text-white shadow-[0_6px_16px_rgba(0,0,0,0.25)]"
+          style={{ left: pos.x, top: pos.y }}
+        >
+          Coming soon
+        </span>
+      )}
+    </span>
+  );
 }
 
 export default function TopNav() {
@@ -46,6 +82,9 @@ export default function TopNav() {
           }`}
         >
           {NAV_ITEMS.map((item) => {
+            if (item.disabled) {
+              return <ComingSoonPill key={item.href} label={item.label} />;
+            }
             const isActive = normalizePath(pathname) === item.href;
             return (
               <Link
