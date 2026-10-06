@@ -1,7 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { ViewTransition, type ReactNode } from "react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
 
@@ -37,9 +38,9 @@ function Prose({ children }: { children: ReactNode }) {
 
 function MediaFigure({ src, alt, caption }: { src: string; alt: string; caption: string }) {
   return (
-    <div className="border border-black/15 bg-black/[0.035] p-6">
+    <div className="well-inset p-6">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full border border-black/10" />
+      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full rounded-lg border border-black/10" />
       <p className="mt-2 text-xs text-foreground/50">{caption}</p>
     </div>
   );
@@ -49,13 +50,13 @@ type ImagePairItem = { src: string; alt: string; caption: string };
 
 function FigurePair({ items, aspect }: { items: [ImagePairItem, ImagePairItem]; aspect?: string }) {
   return (
-    <div className="border border-black/15 bg-black/[0.035] p-6">
+    <div className="well-inset p-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {items.map((item) => (
           <div key={item.src}>
             {aspect ? (
               <div
-                className="w-full overflow-hidden border border-black/10 bg-white"
+                className="w-full overflow-hidden rounded-lg border border-black/10 bg-white"
                 style={{ aspectRatio: aspect }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -63,7 +64,7 @@ function FigurePair({ items, aspect }: { items: [ImagePairItem, ImagePairItem]; 
               </div>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={`${BASE_PATH}${item.src}`} alt={item.alt} className="w-full border border-black/10" />
+              <img src={`${BASE_PATH}${item.src}`} alt={item.alt} className="w-full rounded-lg border border-black/10" />
             )}
             <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
           </div>
@@ -128,11 +129,15 @@ function FindingCard({
   media?: ReactNode;
 }) {
   return (
-    <div className="mt-6 w-full border border-black bg-white">
-      <div className="border-b border-black bg-black px-5 py-3">
-        <p className="text-sm font-semibold text-white">
-          {String(index + 1).padStart(2, "0")} — {finding.title}
-        </p>
+    <div className="panel-grey panel-flat mt-6 w-full overflow-hidden rounded-[22px] border border-[#6e6e6e]">
+      <div
+        className="btn-pill btn-pill-static finding-header flex items-center gap-3 px-5 py-3"
+        style={{ borderRadius: "21px 21px 0 0" }}
+      >
+        <span className="text-sm font-semibold text-foreground/50">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <p className="text-sm font-semibold text-foreground">{finding.title}</p>
       </div>
       <div className="divide-y divide-black/10 px-5">
         <div className="py-4">
@@ -239,25 +244,24 @@ export default function MeshPage() {
   useRegisterProjectNav("Mesh UI/UX Website Review", SECTIONS);
 
   return (
+    <ViewTransition name="project-project-four">
     <div>
-      <div className="mx-auto w-full max-w-[1120px]">
-        <video
-          className="aspect-[40/9] w-full border border-black object-cover"
-          src={`${BASE_PATH}/videos/mesh.mp4`}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
-      </div>
+      <video
+        className="aspect-[40/9] w-full rounded-t-[21px] object-cover"
+        src={`${BASE_PATH}/videos/mesh.mp4`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
         <div className="flex flex-wrap gap-2">
           {TAGS.map((tag) => (
             <span
               key={tag}
-              className="border border-black px-2 py-1 text-xs font-medium uppercase tracking-wide text-foreground"
+              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
             >
               {tag}
             </span>
@@ -272,11 +276,11 @@ export default function MeshPage() {
           call.
         </p>
 
-        <div className="mt-8 grid grid-cols-2 gap-6 border border-black bg-black p-6 text-white sm:grid-cols-4">
+        <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
           {ROLE_DETAILS.map((detail) => (
             <div key={detail.label}>
-              <p className="text-xs font-medium uppercase tracking-wide text-white/60">{detail.label}</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-white">{detail.value}</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-foreground/40">{detail.label}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-foreground">{detail.value}</p>
             </div>
           ))}
         </div>
@@ -296,7 +300,7 @@ export default function MeshPage() {
               immediately. This case study walks through how I got there.
             </p>
           </Prose>
-          <div className="mt-6 overflow-hidden border border-black/15 bg-black/[0.035] px-8 pt-8">
+          <div className="well-inset mt-6 overflow-hidden px-8 pt-8">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`${BASE_PATH}/images/mesh-linkedin-call.png`}
@@ -343,12 +347,12 @@ export default function MeshPage() {
               ))}
             </ol>
           </Prose>
-          <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+          <div className="well-inset mt-6 w-full p-6">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
               {PDF_POINTS.map((point) => (
                 <div
                   key={point.src}
-                  className="aspect-[4/3] w-full overflow-hidden border border-black/10 bg-white"
+                  className="aspect-[4/3] w-full overflow-hidden rounded-lg border border-black/10 bg-white"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={`${BASE_PATH}${point.src}`} alt={point.alt} className="h-full w-full object-contain" />
@@ -388,13 +392,13 @@ export default function MeshPage() {
                     ]}
                   />
                 ) : index === 2 ? (
-                  <div className="space-y-6 border border-black/15 bg-black/[0.035] p-6">
+                  <div className="well-inset space-y-6 p-6">
                     <div>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`${BASE_PATH}/images/mesh/mesh-banner-mockup-grid.png`}
                         alt="Grid of blog posts all sharing the same blue gradient banner"
-                        className="w-full border border-black/10"
+                        className="w-full rounded-lg border border-black/10"
                       />
                       <p className="mt-2 text-xs text-foreground/50">
                         Every blog post uses the same blue gradient banner, so they all look the same at a glance
@@ -405,7 +409,7 @@ export default function MeshPage() {
                       <img
                         src={`${BASE_PATH}/images/mesh/mesh-banner-mockup-redesign.png`}
                         alt="Mockup changing one banner to the competitor's actual logo"
-                        className="w-full border border-black/10"
+                        className="w-full rounded-lg border border-black/10"
                       />
                     </div>
                   </div>
@@ -440,12 +444,12 @@ export default function MeshPage() {
             Final Deliverable
           </h2>
 
-          <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+          <div className="well-inset mt-6 w-full p-6">
             <p className="text-xs text-foreground/50">Full annotated review (PDF)</p>
             <iframe
               src={`${BASE_PATH}/files/mesh-website-feedback.pdf#page=2&toolbar=0&navpanes=0`}
               title="Mesh website feedback — full annotated PDF review"
-              className="mt-2 aspect-[4/3] w-full border border-black/10"
+              className="mt-2 aspect-[4/3] w-full rounded-lg border border-black/10"
             />
           </div>
         </section>
@@ -453,11 +457,11 @@ export default function MeshPage() {
         {/* Outcome */}
         <section id="outcome" className="mt-16 scroll-mt-8">
           <Eyebrow>Outcome</Eyebrow>
-          <div className="mt-6 w-full border border-black bg-black px-6 py-10 sm:px-12 sm:py-14">
-            <p className="max-w-[820px] text-2xl font-semibold leading-snug text-white sm:text-3xl">
+          <div className="panel-grey mt-6 w-full rounded-[22px] border border-black px-6 py-10 sm:px-12 sm:py-14">
+            <p className="max-w-[820px] text-2xl font-semibold leading-snug text-foreground sm:text-3xl">
               “This is the best feedback I&apos;ve received in a long time.”
             </p>
-            <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-white/50">
+            <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-foreground/50">
               Erin Kim, Co-founder &amp; CEO, Mesh
             </p>
           </div>
@@ -484,11 +488,13 @@ export default function MeshPage() {
 
         <Link
           href="/"
-          className="mt-16 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/55 hover:text-foreground"
+          className="mt-16 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/55 transition-colors hover:text-foreground"
         >
-          ← back to projects
+          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+          back to projects
         </Link>
       </div>
     </div>
+    </ViewTransition>
   );
 }

@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${switzer.variable} antialiased`}>
-      <body className="h-screen overflow-hidden flex flex-col gap-1.5 bg-[#d9d9d9] p-4 text-foreground">
+    <html lang="en" className={`${switzer.variable} antialiased`} data-scroll-behavior="smooth">
+      <body className="page-grey h-screen overflow-hidden flex flex-col gap-1.5 p-4 text-foreground">
         <ProjectNavProvider>
           <TopNav />
           <main className="flex-1 min-w-0 min-h-0">

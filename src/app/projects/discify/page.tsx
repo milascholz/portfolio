@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, ViewTransition, type ReactNode } from "react";
 import type { RefObject } from "react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
 
@@ -51,11 +52,11 @@ function Figure({
 }) {
   return (
     <div
-      className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6"
+      className="well-inset mt-6 p-6"
       style={maxWidth ? { maxWidth } : undefined}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full" />
+      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full rounded-lg border border-black/10" />
       <p className="mt-2 text-xs text-foreground/50">{caption}</p>
     </div>
   );
@@ -69,12 +70,12 @@ type ImagePairItem = {
 
 function FigurePair({ items }: { items: [ImagePairItem, ImagePairItem] }) {
   return (
-    <div className="border border-black/15 bg-black/[0.035] p-6">
+    <div className="well-inset p-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {items.map((item) => (
           <div key={item.src}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${BASE_PATH}${item.src}`} alt={item.alt} className="w-full" />
+            <img src={`${BASE_PATH}${item.src}`} alt={item.alt} className="w-full rounded-lg border border-black/10" />
             <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
           </div>
         ))}
@@ -93,9 +94,9 @@ function MediaBoxVideo({
   maxWidth?: number;
 }) {
   return (
-    <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6" style={maxWidth ? { maxWidth } : undefined}>
+    <div className="well-inset mt-6 p-6" style={maxWidth ? { maxWidth } : undefined}>
       <video
-        className="w-full"
+        className="w-full rounded-lg border border-black/10"
         src={`${BASE_PATH}${src}`}
         autoPlay
         loop
@@ -126,11 +127,11 @@ function MediaPair({
   imageAspect?: string;
 }) {
   return (
-    <div className="mt-6 border border-black/15 bg-black/[0.035] p-6">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <div>
+    <div className="well-inset mt-6 p-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:items-stretch">
+        <div className="flex flex-col">
           <video
-            className="w-full object-cover object-left"
+            className="w-full rounded-lg border border-black/10 object-cover object-left"
             style={videoAspect ? { aspectRatio: videoAspect } : undefined}
             src={`${BASE_PATH}${videoSrc}`}
             autoPlay
@@ -141,12 +142,12 @@ function MediaPair({
           />
           <p className="mt-2 text-xs text-foreground/50">{videoCaption}</p>
         </div>
-        <div>
+        <div className="flex flex-col">
           {imageAspect ? (
-            <div
-              className="w-full overflow-hidden bg-[#131313]"
-              style={{ aspectRatio: imageAspect }}
-            >
+            // Stretches to match the video column's height (instead of a
+            // fixed aspect ratio) so any leftover space below the image
+            // fills with its own black background, not blank white.
+            <div className="w-full flex-1 overflow-hidden rounded-lg border border-black/10 bg-black">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`${BASE_PATH}${imageSrc}`}
@@ -156,7 +157,7 @@ function MediaPair({
             </div>
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={`${BASE_PATH}${imageSrc}`} alt={imageAlt} className="w-full" />
+            <img src={`${BASE_PATH}${imageSrc}`} alt={imageAlt} className="w-full rounded-lg border border-black/10" />
           )}
           <p className="mt-2 text-xs text-foreground/50">{imageCaption}</p>
         </div>
@@ -167,7 +168,7 @@ function MediaPair({
 
 function Callout({ children }: { children: ReactNode }) {
   return (
-    <div className="max-w-[960px] border-l-2 border-black pl-4">
+    <div className="max-w-[960px] border-l-2 border-black/25 pl-4">
       <p className="leading-relaxed text-foreground">{children}</p>
     </div>
   );
@@ -234,11 +235,15 @@ function DecisionCard({
   media?: ReactNode;
 }) {
   return (
-    <div className="mt-6 w-full border border-black bg-white">
-      <div className="border-b border-black bg-black px-5 py-3">
-        <p className="text-sm font-semibold text-white">
-          {String(index + 1).padStart(2, "0")} — {decision.title}
-        </p>
+    <div className="panel-grey panel-flat mt-6 w-full overflow-hidden rounded-[22px] border border-[#6e6e6e]">
+      <div
+        className="btn-pill btn-pill-static finding-header flex items-center gap-3 px-5 py-3"
+        style={{ borderRadius: "21px 21px 0 0" }}
+      >
+        <span className="text-sm font-semibold text-foreground/50">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <p className="text-sm font-semibold text-foreground">{decision.title}</p>
       </div>
       <div className="divide-y divide-black/10 px-5">
         <div className="py-4">
@@ -444,7 +449,7 @@ function DiscDemo() {
 
   return (
     <div className="space-y-4">
-      <div className="border border-black/15 bg-black/[0.035] p-6">
+      <div className="well-inset p-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-foreground/40">Progress Preview</p>
         <div className="mt-4 flex flex-col items-center gap-6 sm:flex-row">
           <DiscCanvas progress={percent / 100} size={280} displaySize={200} assets={assets} />
@@ -471,7 +476,7 @@ function DiscDemo() {
         </div>
       </div>
 
-      <div className="border border-black/15 bg-black/[0.035] p-6">
+      <div className="well-inset p-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-foreground/40">
           Progress disc states
         </p>
@@ -479,7 +484,7 @@ function DiscDemo() {
           {DISC_GLANCE_STEPS.map((step) => (
             <div
               key={step}
-              className="flex flex-col items-center gap-2 border border-black/15 bg-white p-4"
+              className="flex flex-col items-center gap-2 rounded-lg border border-black/10 bg-white p-4"
             >
               <DiscCanvas progress={step / 100} size={140} displaySize={64} assets={assets} />
               <p className="text-xs text-foreground/50">{step}%</p>
@@ -544,8 +549,8 @@ function PlacementCard({ option }: { option: PlacementOption }) {
   const isChosen = option.verdict === "Chosen";
   return (
     <div
-      className={`w-full border ${
-        isChosen ? "border-black bg-white" : "border-black/15 bg-black/[0.015]"
+      className={`w-full overflow-hidden rounded-[18px] border ${
+        isChosen ? "border-[#6e6e6e] bg-white" : "border-black/10 bg-black/[0.015]"
       }`}
     >
       <div className="p-4">
@@ -565,7 +570,7 @@ function PlacementCard({ option }: { option: PlacementOption }) {
           </span>
         </div>
       </div>
-      <div className={`${PLACEMENT_IMAGE_ASPECT} w-full overflow-hidden bg-[#131313]`}>
+      <div className={`${PLACEMENT_IMAGE_ASPECT} w-full overflow-hidden bg-white`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`${BASE_PATH}${option.imageSrc}`}
@@ -581,26 +586,25 @@ export default function DiscifyPage() {
   useRegisterProjectNav("Discify", SECTIONS);
 
   return (
+    <ViewTransition name="project-discify">
     <div>
-      <div className="mx-auto w-full max-w-[1120px]">
-        <video
-          className="aspect-[40/9] w-full border border-black object-cover"
-          src={`${BASE_PATH}/videos/discify-showcase.mp4`}
-          poster={`${BASE_PATH}/images/discify-poster.jpg`}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
-      </div>
+      <video
+        className="aspect-[40/9] w-full rounded-t-[21px] object-cover"
+        src={`${BASE_PATH}/videos/discify-showcase.mp4`}
+        poster={`${BASE_PATH}/images/discify-poster.jpg`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
         <div className="flex flex-wrap gap-2">
           {TAGS.map((tag) => (
             <span
               key={tag}
-              className="border border-black px-2 py-1 text-xs font-medium uppercase tracking-wide text-foreground"
+              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
             >
               {tag}
             </span>
@@ -612,11 +616,11 @@ export default function DiscifyPage() {
           Spotify extension gamifying album listens
         </p>
 
-        <div className="mt-8 grid grid-cols-2 gap-6 border border-black bg-black p-6 text-white sm:grid-cols-4">
+        <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
           {ROLE_DETAILS.map((detail) => (
             <div key={detail.label}>
-              <p className="text-xs font-medium uppercase tracking-wide text-white/60">{detail.label}</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-white">{detail.value}</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-foreground/40">{detail.label}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-foreground">{detail.value}</p>
             </div>
           ))}
         </div>
@@ -741,12 +745,12 @@ export default function DiscifyPage() {
                       on-screen.
                     </p>
                   </Prose>
-                  <div className="mt-6 border border-black/15 bg-black/[0.035] p-6">
+                  <div className="well-inset mt-6 p-6">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`${BASE_PATH}/images/discify/discify-disc-redesign.png`}
                       alt="Four stages of the disc design in Figma: a 3D gradient sphere, a blank CD, a first cover-art version, and the refined cover-art disc"
-                      className="w-full"
+                      className="w-full rounded-lg border border-black/10"
                     />
                     <p className="mt-2 text-xs text-foreground/50">
                       Redesigning the disc in Figma — from a 3D gradient sphere, to a flat CD base, to
@@ -780,13 +784,13 @@ export default function DiscifyPage() {
                       placement and the disc progress loading feature.
                     </p>
                   </Prose>
-                  <div className="mt-6 border border-black/15 bg-black/[0.035] p-6">
+                  <div className="well-inset mt-6 p-6">
                     <div>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`${BASE_PATH}/images/discify/brainstorm3.jpg`}
                         alt="First concept sketch labeled 'Spotify app idea - badge collecting', showing a plain disc and a disc with cover art colored in to show progress"
-                        className="w-full"
+                        className="w-full rounded-lg border border-black/10"
                       />
                       <p className="mt-2 text-xs text-foreground/50">
                         The original idea: a disc badge whose cover art colors in to show listening
@@ -799,7 +803,7 @@ export default function DiscifyPage() {
                         <img
                           src={`${BASE_PATH}/images/discify/brainstorm1.jpg`}
                           alt="Sketch of a disc next to a track list with checkmarks and X's marking listened and unlistened songs, with a note about filtering between listened and not listened"
-                          className="w-full"
+                          className="w-full rounded-lg border border-black/10"
                         />
                         <p className="mt-2 text-xs text-foreground/50">
                           Working out the track breakdown and how to mark listened vs. unlistened tracks
@@ -810,7 +814,7 @@ export default function DiscifyPage() {
                         <img
                           src={`${BASE_PATH}/images/discify/brainstorm2.jpg`}
                           alt="Sketch of a profile header with name, playlists, and followers, with notes debating whether to surface recently collected discs or a collected/in-progress count"
-                          className="w-full"
+                          className="w-full rounded-lg border border-black/10"
                         />
                         <p className="mt-2 text-xs text-foreground/50">
                           Sketching the profile header: recently collected discs vs. a simple disc count
@@ -855,12 +859,12 @@ export default function DiscifyPage() {
                 ) : index === 4 ? (
                   <DiscDemo />
                 ) : index === 5 ? (
-                  <div className="border border-black/15 bg-black/[0.035] p-6">
+                  <div className="well-inset p-6">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`${BASE_PATH}/images/discify/discify-filter-pills.png`}
                       alt="Discs collected header showing '3 collected · 5 in progress' above All, Collected, and In progress filter pills"
-                      className="w-full"
+                      className="w-full rounded-lg border border-black/10"
                     />
                     <p className="mt-2 text-xs text-foreground/50">
                       Filter pills for switching between all, collected, and in-progress discs
@@ -982,11 +986,13 @@ export default function DiscifyPage() {
 
         <Link
           href="/"
-          className="mt-16 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/55 hover:text-foreground"
+          className="mt-16 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/55 transition-colors hover:text-foreground"
         >
-          ← back to projects
+          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+          back to projects
         </Link>
       </div>
     </div>
+    </ViewTransition>
   );
 }

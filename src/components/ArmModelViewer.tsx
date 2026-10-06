@@ -31,8 +31,8 @@ export default function ArmModelViewer() {
   }, []);
 
   return (
-    <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
-      <div className="h-[420px] w-full border border-black/10 sm:h-[520px]">
+    <div className="well-inset mt-6 p-6">
+      <div className="h-[420px] w-full overflow-hidden rounded-lg border border-black/10 sm:h-[520px]">
         {ready ? (
           <model-viewer
             src={`${BASE_PATH}/models/baker-bot-arm.glb`}

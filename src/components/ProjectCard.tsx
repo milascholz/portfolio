@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type MouseEvent } from "react";
+import { useState, ViewTransition, type MouseEvent } from "react";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { BASE_PATH } from "@/lib/base-path";
@@ -53,7 +53,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <p className="text-sm text-foreground/55">{project.subheading}</p>
       </div>
       {project.tag ? (
-        <span className="shrink-0 whitespace-nowrap rounded-full border border-black px-2 py-1 text-xs font-medium text-foreground">
+        <span className="btn-pill btn-pill-static project-tag shrink-0 whitespace-nowrap px-2 py-1 text-xs font-medium text-foreground">
           {project.tag}
         </span>
       ) : null}
@@ -99,10 +99,12 @@ export default function ProjectCard({ project }: { project: Project }) {
   }
 
   return (
-    <Link href={project.link!} {...sharedProps}>
-      {media}
-      {body}
-      {cursorTag}
-    </Link>
+    <ViewTransition name={`project-${project.id}`}>
+      <Link href={project.link!} {...sharedProps}>
+        {media}
+        {body}
+        {cursorTag}
+      </Link>
+    </ViewTransition>
   );
 }

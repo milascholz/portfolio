@@ -1,7 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { ViewTransition, type ReactNode } from "react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
 import ArmModelViewer from "@/components/ArmModelViewer";
@@ -40,9 +41,9 @@ type ImageItem = { src: string; alt: string; caption: string; aspect?: number };
 
 function MediaFigure({ src, alt, caption }: ImageItem) {
   return (
-    <figure className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+    <figure className="well-inset mt-6 p-6">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full border border-black/10" />
+      <img src={`${BASE_PATH}${src}`} alt={alt} className="w-full rounded-lg border border-black/10" />
       <figcaption className="mt-2 text-xs text-foreground/50">{caption}</figcaption>
     </figure>
   );
@@ -59,7 +60,7 @@ function FigureRow({
 }) {
   if (fit === "justified") {
     return (
-      <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+      <div className="well-inset mt-6 p-6">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
           {items.map((item) => (
             <div key={item.src} className="min-w-0" style={{ flexGrow: item.aspect ?? 1, flexBasis: 0 }}>
@@ -67,7 +68,7 @@ function FigureRow({
               <img
                 src={`${BASE_PATH}${item.src}`}
                 alt={item.alt}
-                className="block h-auto w-full border border-black/10"
+                className="block h-auto w-full rounded-lg border border-black/10"
               />
               <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
             </div>
@@ -78,12 +79,12 @@ function FigureRow({
   }
 
   return (
-    <div className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+    <div className="well-inset mt-6 p-6">
       <div className={`grid grid-cols-1 gap-6 ${cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
         {items.map((item) => (
           <div key={item.src}>
             <div
-              className={`aspect-square w-full overflow-hidden border border-black/10 ${
+              className={`aspect-square w-full overflow-hidden rounded-lg border border-black/10 ${
                 fit === "contain" ? "bg-white" : ""
               }`}
             >
@@ -104,9 +105,9 @@ function FigureRow({
 
 function MediaVideo({ src, caption }: { src: string; caption: string }) {
   return (
-    <figure className="mt-6 w-full border border-black/15 bg-black/[0.035] p-6">
+    <figure className="well-inset mt-6 p-6">
       <video
-        className="w-full"
+        className="w-full rounded-lg border border-black/10"
         src={`${BASE_PATH}${src}`}
         autoPlay
         loop
@@ -183,11 +184,15 @@ function DecisionCard({
   media?: ReactNode;
 }) {
   return (
-    <div className="mt-6 w-full border border-black bg-white">
-      <div className="border-b border-black bg-black px-5 py-3">
-        <p className="text-sm font-semibold text-white">
-          {String(index).padStart(2, "0")} — {decision.title}
-        </p>
+    <div className="panel-grey panel-flat mt-6 w-full overflow-hidden rounded-[22px] border border-[#6e6e6e]">
+      <div
+        className="btn-pill btn-pill-static finding-header flex items-center gap-3 px-5 py-3"
+        style={{ borderRadius: "21px 21px 0 0" }}
+      >
+        <span className="text-sm font-semibold text-foreground/50">
+          {String(index).padStart(2, "0")}
+        </span>
+        <p className="text-sm font-semibold text-foreground">{decision.title}</p>
       </div>
       <div className="divide-y divide-black/10 px-5">
         <div className="py-4">
@@ -212,7 +217,7 @@ function DecisionCard({
 
 function MotorSizing() {
   return (
-    <div className="border border-black/15 bg-black/[0.035] p-6">
+    <div className="well-inset p-6">
       <p className="text-xs font-semibold uppercase tracking-widest text-foreground/40">Sizing the motor</p>
       <p className="mt-2 text-sm leading-relaxed text-foreground/70">
         The forearm and hand hang off the elbow like a diving board, so the worst case is holding them
@@ -259,25 +264,24 @@ export default function HumanoidRobotArmAssemblyPage() {
   useRegisterProjectNav("Baker Bot: Humanoid Robot Arms", SECTIONS);
 
   return (
+    <ViewTransition name="project-project-three">
     <div>
-      <div className="mx-auto w-full max-w-[1120px]">
-        <video
-          className="aspect-[40/9] w-full border border-black object-cover"
-          src={`${BASE_PATH}/videos/humanoid-robot-arm-assembly.mp4`}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
-      </div>
+      <video
+        className="aspect-[40/9] w-full rounded-t-[21px] object-cover"
+        src={`${BASE_PATH}/videos/humanoid-robot-arm-assembly.mp4`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
         <div className="flex flex-wrap gap-2">
           {TAGS.map((tag) => (
             <span
               key={tag}
-              className="border border-black px-2 py-1 text-xs font-medium uppercase tracking-wide text-foreground"
+              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
             >
               {tag}
             </span>
@@ -292,11 +296,11 @@ export default function HumanoidRobotArmAssemblyPage() {
           swappable hands, and sized its elbow motors.
         </p>
 
-        <div className="mt-8 grid grid-cols-2 gap-6 border border-black bg-black p-6 text-white sm:grid-cols-4">
+        <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
           {ROLE_DETAILS.map((detail) => (
             <div key={detail.label}>
-              <p className="text-xs font-medium uppercase tracking-wide text-white/60">{detail.label}</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-white">{detail.value}</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-foreground/40">{detail.label}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-foreground">{detail.value}</p>
             </div>
           ))}
         </div>
@@ -601,11 +605,13 @@ export default function HumanoidRobotArmAssemblyPage() {
 
         <Link
           href="/"
-          className="mt-16 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/55 hover:text-foreground"
+          className="mt-16 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/55 transition-colors hover:text-foreground"
         >
-          ← back to projects
+          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+          back to projects
         </Link>
       </div>
     </div>
+    </ViewTransition>
   );
 }
