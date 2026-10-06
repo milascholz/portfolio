@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import { FileText, Mail } from "lucide-react";
 import Fishtank from "@/components/Fishtank";
 import LinkedInIcon from "@/components/LinkedInIcon";
 import LocalClock from "@/components/LocalClock";
@@ -65,13 +65,14 @@ export default function ProfileSidebar() {
 
       {/* footer */}
       <div className="panel-grey flex shrink-0 items-center justify-between rounded-[22px] border border-[#6e6e6e] p-1.5">
-        <a
-          href="mailto:mscholz5@uwo.ca"
-          className="btn-pill btn-pill-hover-blue flex items-center gap-2 px-4 py-1.5 text-sm font-medium"
+        <span
+          aria-disabled="true"
+          title="Resume coming soon"
+          className="btn-pill btn-pill-static flex cursor-not-allowed items-center gap-2 px-4 py-1.5 text-sm font-medium text-foreground/40"
         >
-          mscholz5@uwo.ca
-          <Mail className="h-3.5 w-3.5" strokeWidth={1.75} />
-        </a>
+          <FileText className="h-3.5 w-3.5" strokeWidth={1.75} />
+          Resume
+        </span>
         <div className="flex items-center gap-2">
           <a
             href="https://www.linkedin.com/in/mila-scholz-a4094730b/"
