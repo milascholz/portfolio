@@ -78,7 +78,6 @@ export default function PoolBalls({
     }
     function releaseDrag() {
       mouseConstraint.mouse.button = -1;
-      // @ts-expect-error -- matter-js types don't expose this internal field
       mouseConstraint.constraint.bodyB = null;
     }
     container.addEventListener("pointermove", handlePointerMove);
