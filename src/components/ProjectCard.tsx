@@ -32,16 +32,19 @@ export default function ProjectCard({ project }: { project: Project }) {
   }
 
   const media = project.video ? (
-    <video
-      className="aspect-video w-full object-cover"
-      src={`${BASE_PATH}${project.video}`}
-      poster={project.poster ? `${BASE_PATH}${project.poster}` : undefined}
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="metadata"
-    />
+    <div className="aspect-video w-full overflow-hidden">
+      <video
+        className="h-full w-full object-cover"
+        style={project.videoScale ? { transform: `scale(${project.videoScale})` } : undefined}
+        src={`${BASE_PATH}${project.video}`}
+        poster={project.poster ? `${BASE_PATH}${project.poster}` : undefined}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
+    </div>
   ) : (
     <div className="aspect-video" style={{ backgroundImage: project.gradient }} />
   );

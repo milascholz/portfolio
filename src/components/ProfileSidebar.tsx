@@ -1,10 +1,24 @@
-import { FileText, Mail } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Mail } from "lucide-react";
 import Fishtank from "@/components/Fishtank";
 import LinkedInIcon from "@/components/LinkedInIcon";
 import LocalClock from "@/components/LocalClock";
 import { BASE_PATH } from "@/lib/base-path";
+import { getFishPoked, incrementFishPoked } from "@/lib/cookie-counter";
 
 export default function ProfileSidebar() {
+  // All-time, shared across every visitor — backed by the same counter
+  // API/Redis instance as the cookie-click counter, just a different key.
+  const [fishPoked, setFishPoked] = useState<number | null>(null);
+
+  useEffect(() => {
+    getFishPoked()
+      .then(setFishPoked)
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="flex flex-col gap-1.5 lg:h-full lg:min-h-0">
       {/* name / tagline / clock / bio */}
@@ -34,7 +48,26 @@ export default function ProfileSidebar() {
                   className="pointer-events-none absolute inset-0 h-full w-full object-contain"
                 />
               </div>
-              <LocalClock />
+              <div className="flex flex-col items-end gap-3">
+                <LocalClock />
+                {/* Bracketed quick links, retro-terminal style — shown at
+                    every breakpoint, not just mobile. */}
+                <div className="flex flex-col items-end gap-1.5">
+                  <span
+                    aria-disabled="true"
+                    title="Resume coming soon"
+                    className="cursor-not-allowed text-sm font-medium text-[#221898]/50"
+                  >
+                    [Resume]
+                  </span>
+                  <a
+                    href="mailto:mscholz5@uwo.ca"
+                    className="text-sm font-medium text-[#221898] hover:underline"
+                  >
+                    [Email]
+                  </a>
+                </div>
+              </div>
             </div>
             <div>
               <h1 className="text-[28px] font-semibold leading-tight text-foreground">
@@ -63,15 +96,25 @@ export default function ProfileSidebar() {
         </div>
       </div>
 
-      {/* footer */}
+      {/* experience — "mila's fishtank": a macOS-chrome aquarium frame
+          (grey bezel / blue water / grey bezel, per the MacOS-buttons-in-
+          retrospect Figma "Fishtank" component), grows to fill the
+          remaining height above the footer pill. */}
+      <Fishtank
+        onPoke={() => {
+          incrementFishPoked()
+            .then(setFishPoked)
+            .catch(() => {});
+        }}
+      />
+
+      {/* footer — the all-time fish-poked count (plain italic text, like
+          the name caption) on the left, LinkedIn/Email on the right. Only
+          makes sense alongside the fishtank above it, so it shares its
+          desktop-only visibility. */}
       <div className="panel-grey flex shrink-0 items-center justify-between rounded-[22px] border border-[#6e6e6e] p-1.5">
-        <span
-          aria-disabled="true"
-          title="Resume coming soon"
-          className="btn-pill btn-pill-static flex cursor-not-allowed items-center gap-2 px-4 py-1.5 text-sm font-medium text-foreground/40"
-        >
-          <FileText className="h-3.5 w-3.5" strokeWidth={1.75} />
-          Resume
+        <span className="hidden pl-2.5 text-sm italic text-foreground/50 lg:inline">
+          {fishPoked !== null ? `${fishPoked.toLocaleString()} fish poked` : null}
         </span>
         <div className="flex items-center gap-2">
           <a
@@ -92,12 +135,6 @@ export default function ProfileSidebar() {
           </a>
         </div>
       </div>
-
-      {/* experience — "mila's fishtank": a macOS-chrome aquarium frame
-          (grey bezel / blue water / grey bezel, per the MacOS-buttons-in-
-          retrospect Figma "Fishtank" component), grows to fill the
-          remaining height below the footer pill. */}
-      <Fishtank />
     </div>
   );
 }

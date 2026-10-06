@@ -3,7 +3,11 @@ import { Redis } from "@upstash/redis";
 
 const redis = Redis.fromEnv();
 
-const COUNTER_KEY = "cookie-clicks";
+const DEFAULT_COUNTER_KEY = "cookie-clicks";
+
+// Allowlist of valid counter keys — keeps an unauthenticated POST from
+// writing arbitrary keys into Redis.
+const ALLOWED_COUNTER_KEYS = new Set(["cookie-clicks", "fish-poked"]);
 
 const ALLOWED_ORIGINS = new Set([
   "https://milascholz.github.io",
@@ -24,14 +28,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
+  const keyParam = typeof req.query.key === "string" ? req.query.key : DEFAULT_COUNTER_KEY;
+  const counterKey = ALLOWED_COUNTER_KEYS.has(keyParam) ? keyParam : DEFAULT_COUNTER_KEY;
+
   if (req.method === "POST") {
-    const count = await redis.incr(COUNTER_KEY);
+    const count = await redis.incr(counterKey);
     res.status(200).json({ count });
     return;
   }
 
   if (req.method === "GET") {
-    const count = (await redis.get<number>(COUNTER_KEY)) ?? 0;
+    const count = (await redis.get<number>(counterKey)) ?? 0;
     res.status(200).json({ count });
     return;
   }

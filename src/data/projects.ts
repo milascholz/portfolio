@@ -4,6 +4,7 @@ export type Project = {
   subheading: string;
   gradient: string;
   video?: string;
+  videoScale?: number;
   poster?: string;
   tag?: string;
   link?: string;
@@ -40,6 +41,7 @@ export const projects: Project[] = [
     subheading: "Arms for a commissioned humanoid AI teaching assistant robot",
     gradient: "linear-gradient(135deg, #059669 0%, #34d399 55%, #a7f3d0 100%)",
     video: "/videos/humanoid-robot-arm-assembly.mp4",
+    videoScale: 1.15,
     tag: "Engineering Design & Manufacturing",
     link: "/projects/humanoid-robot-arm-assembly",
     linkLabel: "View case study",

@@ -42,7 +42,12 @@ const SWIMMERS: Swimmer[] = [
   { emoji: "🦑", size: "30px", top: 58, left: 78, range: 16, speed: 2.8, bobAmp: 3, bobSpeed: 1.2, phase: 1.8 },
 ];
 
-export default function Fishtank() {
+// How much a poke multiplies a fish's speed, and how fast that burst
+// decays back to normal (higher = faster decay).
+const POKE_BOOST = 7;
+const POKE_DECAY_RATE = 2.5;
+
+export default function Fishtank({ onPoke }: { onPoke?: () => void }) {
   const critterRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const swimStateRef = useRef(
@@ -53,10 +58,16 @@ export default function Fishtank() {
       dir: (i % 2 === 0 ? 1 : -1) as 1 | -1,
       minX: Math.max(4, s.left - s.range),
       maxX: Math.min(94, s.left + s.range),
+      boost: 1,
     }))
   );
 
   const lastTimeRef = useRef<number | null>(null);
+
+  function pokeFish(i: number) {
+    swimStateRef.current[i].boost = POKE_BOOST;
+    onPoke?.();
+  }
 
   useEffect(() => {
     let rafId: number;
@@ -69,7 +80,8 @@ export default function Fishtank() {
       SWIMMERS.forEach((cfg, i) => {
         const st = swimStateRef.current[i];
 
-        st.x += st.dir * cfg.speed * dt;
+        st.boost = 1 + (st.boost - 1) * Math.exp(-dt * POKE_DECAY_RATE);
+        st.x += st.dir * cfg.speed * st.boost * dt;
         if (st.x >= st.maxX) {
           st.x = st.maxX;
           st.dir = -1;
@@ -96,7 +108,7 @@ export default function Fishtank() {
   }, []);
 
   return (
-    <div className="panel-grey flex min-h-0 flex-1 flex-col overflow-hidden rounded-[22px] border border-[#6e6e6e]">
+    <div className="panel-grey hidden min-h-0 flex-1 flex-col overflow-hidden rounded-[22px] border border-[#6e6e6e] lg:flex">
       {/* top chrome bezel */}
       <div
         className="btn-win btn-win-static relative z-10 flex shrink-0 items-center justify-center"
@@ -134,11 +146,20 @@ export default function Fishtank() {
         {SWIMMERS.map((s, i) => (
           <span
             key={`swimmer-${i}`}
-            aria-hidden
+            role="button"
+            tabIndex={0}
+            aria-label="Poke fish"
             ref={(el) => {
               critterRefs.current[i] = el;
             }}
-            className="pointer-events-none absolute select-none opacity-90 will-change-transform"
+            onClick={() => pokeFish(i)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                pokeFish(i);
+              }
+            }}
+            className="absolute cursor-pointer select-none opacity-90 will-change-transform"
             style={{
               top: `${s.top}%`,
               left: `${s.left}%`,
