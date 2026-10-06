@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import TopNav from "@/components/TopNav";
+import MainSurface from "@/components/MainSurface";
 import { ProjectNavProvider } from "@/context/ProjectNavContext";
 
 const switzer = localFont({
@@ -27,10 +28,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${switzer.variable} antialiased`}>
-      <body className="min-h-screen flex flex-col md:flex-row gap-6 bg-background p-6 text-foreground">
+      <body className="h-screen overflow-hidden flex flex-col gap-1.5 bg-[#d9d9d9] p-4 text-foreground">
         <ProjectNavProvider>
-          <Sidebar />
-          <main className="flex-1 min-w-0">{children}</main>
+          <TopNav />
+          <main className="flex-1 min-w-0 min-h-0">
+            <MainSurface>{children}</MainSurface>
+          </main>
         </ProjectNavProvider>
       </body>
     </html>

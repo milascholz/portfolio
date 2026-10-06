@@ -53,7 +53,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <p className="text-sm text-foreground/55">{project.subheading}</p>
       </div>
       {project.tag ? (
-        <span className="shrink-0 whitespace-nowrap border border-black px-2 py-1 text-xs font-medium text-foreground">
+        <span className="shrink-0 whitespace-nowrap rounded-full border border-black px-2 py-1 text-xs font-medium text-foreground">
           {project.tag}
         </span>
       ) : null}
@@ -62,7 +62,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
   if (!hasLink) {
     return (
-      <div className="flex flex-col overflow-hidden border border-black bg-white">
+      <div className="flex flex-col overflow-hidden rounded-[22px] border border-black bg-white">
         {media}
         {body}
       </div>
@@ -72,7 +72,7 @@ export default function ProjectCard({ project }: { project: Project }) {
   const cursorTag =
     isHovering && project.linkLabel ? (
       <div
-        className="pointer-events-none absolute z-20 flex items-center gap-1 whitespace-nowrap border border-black bg-white px-2 py-1 text-xs font-medium text-foreground shadow-sm"
+        className="pointer-events-none absolute z-20 flex items-center gap-1 whitespace-nowrap rounded-full border border-black bg-white px-2 py-1 text-xs font-medium text-foreground shadow-sm"
         style={{ left: cursorPos.x, top: cursorPos.y, transform: "translate(10px, 10px)" }}
       >
         {project.linkLabel}
@@ -81,7 +81,8 @@ export default function ProjectCard({ project }: { project: Project }) {
     ) : null;
 
   const sharedProps = {
-    className: "group relative flex cursor-none flex-col overflow-hidden border border-black bg-white",
+    className:
+      "group relative flex cursor-none flex-col overflow-hidden rounded-[22px] border border-black bg-white",
     onMouseEnter: () => setIsHovering(true),
     onMouseLeave: () => setIsHovering(false),
     onMouseMove: handleMouseMove,
