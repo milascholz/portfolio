@@ -17,7 +17,7 @@ const ANCHORED = [
 
 // Sits in its original corner and just bobs gently in place — doesn't
 // patrol like the swimmers below.
-const FLOATER = { emoji: "🛟", top: "8%", left: "88%", size: "22px" };
+const FLOATER = { emoji: "🛟", top: "16%", left: "88%", size: "22px" };
 
 type Swimmer = {
   emoji: string;
@@ -33,12 +33,14 @@ type Swimmer = {
 
 // Everything else — drifts slowly back and forth, bobbing, and turns
 // around at the edges of its own lane instead of crossing the whole tank.
+// top (home center) keeps at least bobAmp + a margin clear of 0% so
+// no swimmer's bob can carry it up behind the top chrome bezel.
 const SWIMMERS: Swimmer[] = [
-  { emoji: "🐠", size: "30px", top: 6, left: 8, range: 16, speed: 3.4, bobAmp: 3, bobSpeed: 1.6, phase: 0 },
-  { emoji: "🐟", size: "28px", top: 14, left: 68, range: 18, speed: 3, bobAmp: 3, bobSpeed: 1.3, phase: 1.1 },
+  { emoji: "🐠", size: "30px", top: 16, left: 8, range: 16, speed: 3.4, bobAmp: 3, bobSpeed: 1.6, phase: 0 },
+  { emoji: "🐟", size: "28px", top: 19, left: 68, range: 18, speed: 3, bobAmp: 3, bobSpeed: 1.3, phase: 1.1 },
   { emoji: "🐡", size: "32px", top: 52, left: 18, range: 16, speed: 2.4, bobAmp: 4, bobSpeed: 1.1, phase: 2.3 },
-  { emoji: "🪼", size: "24px", top: 10, left: 42, range: 14, speed: 2, bobAmp: 3, bobSpeed: 0.9, phase: 0.6 },
-  { emoji: "🪼", size: "22px", top: 24, left: 52, range: 14, speed: 2.2, bobAmp: 3, bobSpeed: 1.0, phase: 3.0 },
+  { emoji: "🪼", size: "24px", top: 20, left: 42, range: 14, speed: 2, bobAmp: 3, bobSpeed: 0.9, phase: 0.6 },
+  { emoji: "🪼", size: "22px", top: 28, left: 52, range: 14, speed: 2.2, bobAmp: 3, bobSpeed: 1.0, phase: 3.0 },
   { emoji: "🦑", size: "30px", top: 58, left: 78, range: 16, speed: 2.8, bobAmp: 3, bobSpeed: 1.2, phase: 1.8 },
 ];
 
@@ -111,13 +113,9 @@ export default function Fishtank({ onPoke }: { onPoke?: () => void }) {
     <div className="panel-grey hidden min-h-0 flex-1 flex-col overflow-hidden rounded-[22px] border border-[#6e6e6e] lg:flex">
       {/* top chrome bezel */}
       <div
-        className="btn-win btn-win-static relative z-10 flex shrink-0 items-center justify-center"
-        style={{ height: "32px", borderRadius: "22px 22px 0 0" }}
-      >
-        <span className="relative text-[11px] font-semibold tracking-wide text-black/55">
-          Mila&apos;s Fishtank
-        </span>
-      </div>
+        className="btn-win btn-win-static relative z-10 shrink-0"
+        style={{ height: "21.33px", borderRadius: "22px 22px 0 0" }}
+      />
 
       {/* water */}
       <div
@@ -185,9 +183,13 @@ export default function Fishtank({ onPoke }: { onPoke?: () => void }) {
 
       {/* bottom chrome bezel */}
       <div
-        className="btn-win btn-win-static relative shrink-0"
+        className="btn-win btn-win-static relative flex shrink-0 items-center"
         style={{ height: "28px", borderRadius: "0 0 22px 22px" }}
-      />
+      >
+        <span className="relative pl-3 text-[11px] font-semibold tracking-wide text-black/55">
+          the fishtank
+        </span>
+      </div>
     </div>
   );
 }
