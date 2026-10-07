@@ -53,13 +53,14 @@ export default function ProfileSidebar() {
                 {/* Bracketed quick links, retro-terminal style — shown at
                     every breakpoint, not just mobile. */}
                 <div className="flex flex-col items-end gap-1.5">
-                  <span
-                    aria-disabled="true"
-                    title="Resume coming soon"
-                    className="cursor-not-allowed text-sm font-medium text-[#221898]/50"
+                  <a
+                    href={`${BASE_PATH}/files/mila-scholz-resume.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-[#221898] hover:underline"
                   >
                     [Resume]
-                  </span>
+                  </a>
                   <a
                     href="mailto:mscholz5@uwo.ca"
                     className="text-sm font-medium text-[#221898] hover:underline"
