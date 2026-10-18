@@ -352,7 +352,9 @@ html {
    shadow dialed way back, so the tag doesn't outcompete the card's
    media/title for attention; keeps just a faint glass highlight, with
    a solid black border to stay legible against white card backgrounds. */
-.project-tag {
+.project-tag,
+.project-tag:hover,
+.project-tag:active {
   border-color: #000;
   background-image: linear-gradient(180deg, #ffffff 0%, #fafafa 42%, #f3f3f3 100%);
   box-shadow:

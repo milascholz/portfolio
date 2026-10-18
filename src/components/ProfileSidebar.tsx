@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mail } from "lucide-react";
 import Fishtank from "@/components/Fishtank";
-import LinkedInIcon from "@/components/LinkedInIcon";
 import LocalClock from "@/components/LocalClock";
 import { BASE_PATH } from "@/lib/base-path";
 import { getFishPoked, incrementFishPoked } from "@/lib/cookie-counter";
@@ -62,6 +60,14 @@ export default function ProfileSidebar() {
                     [Resume]
                   </a>
                   <a
+                    href="https://www.linkedin.com/in/mila-scholz-a4094730b/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-[#221898] hover:underline"
+                  >
+                    [LinkedIn]
+                  </a>
+                  <a
                     href="mailto:mscholz5@uwo.ca"
                     className="text-sm font-medium text-[#221898] hover:underline"
                   >
@@ -110,31 +116,12 @@ export default function ProfileSidebar() {
       />
 
       {/* footer — the all-time fish-poked count (plain italic text, like
-          the name caption) on the left, LinkedIn/Email on the right. Only
-          makes sense alongside the fishtank above it, so it shares its
-          desktop-only visibility. */}
-      <div className="panel-grey flex shrink-0 items-center justify-between rounded-[22px] border border-[#6e6e6e] p-1.5">
+          the name caption). Only makes sense alongside the fishtank above
+          it, so it shares its desktop-only visibility. */}
+      <div className="panel-grey flex shrink-0 items-center rounded-[22px] border border-[#6e6e6e] p-1.5">
         <span className="hidden pl-2.5 text-sm italic text-foreground/50 lg:inline">
           {fishPoked !== null ? `${fishPoked.toLocaleString()} fish pokes` : null}
         </span>
-        <div className="flex items-center gap-2">
-          <a
-            href="https://www.linkedin.com/in/mila-scholz-a4094730b/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="btn-pill flex h-9 w-9 items-center justify-center"
-          >
-            <LinkedInIcon className="h-4 w-4" />
-          </a>
-          <a
-            href="mailto:mscholz5@uwo.ca"
-            aria-label="Email"
-            className="btn-pill flex h-9 w-9 items-center justify-center"
-          >
-            <Mail className="h-4 w-4" strokeWidth={1.75} />
-          </a>
-        </div>
       </div>
     </div>
   );

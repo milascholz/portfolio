@@ -146,8 +146,8 @@ function MediaPair({
           {imageAspect ? (
             // Stretches to match the video column's height (instead of a
             // fixed aspect ratio) so any leftover space below the image
-            // fills with its own black background, not blank white.
-            <div className="w-full flex-1 overflow-hidden rounded-lg border border-black/10 bg-black">
+            // fills with the image's own dark grey background, not blank white.
+            <div className="w-full flex-1 overflow-hidden rounded-lg border border-black/10 bg-[#131313]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`${BASE_PATH}${imageSrc}`}
@@ -190,13 +190,13 @@ const DECISIONS: Decision[] = [
   {
     title: "No discs for singles",
     decision: "Only albums earn discs.",
-    why: "Singles originally earned discs too, which meant that for every single song played on Spotify, a new completed disc or “in progress” disc would be generated. This overpopulated the collected discs section, giving the user a cluttered overview of their album listening history. It also missed the point of Discify: a single has no sequencing or transitions to appreciate.",
+    why: "Singles originally earned discs too, which meant that for every single song played on Spotify, a new completed disc or “in-progress” disc would be generated. This overpopulated the collected discs section, giving the user a cluttered overview of their album listening history. It also missed the point of Discify: a single is just one song, not a body of work to complete.",
   },
   {
     title: "“In progress” = 3 tracks, not a percentage listened",
     decision:
       "An album shows as “in progress” after 3 tracks, not after listening to a set percentage of an album.",
-    why: "I started with 30% of tracks listened being the threshold for generating an “in progress” disc for an album, but that treats albums unevenly. 30% of a 20-track album is 6 songs, whereas 30% of a 7-track album is 2. Short albums landed on the shelf almost by accident, while long ones took longer to show up. A fixed count means the same effort grants any album an “in progress” disc, no matter its length.",
+    why: "I started with 30% of tracks listened being the threshold for generating an “in-progress” disc for an album, but that treats albums unevenly. 30% of a 20-track album is 6 songs, whereas 30% of a 7-track album is 2. Short albums landed on the shelf almost by accident, while long ones took longer to show up. A fixed count means the same effort grants any album an “in-progress” disc, no matter its length.",
     rejected:
       "Showing every album you've played one song from, since it would clutter the shelf and make progress difficult to track for a user.",
   },
@@ -207,6 +207,12 @@ const DECISIONS: Decision[] = [
     rejected: "Shareable disc collections on public profiles (see hand-drawn sketch for this concept work).",
   },
   {
+    title: "Progress visible two ways: a hover toast and a track checklist",
+    decision:
+      "Hovering the mini disc on an album page shows a toast with the percent and track count listened. Clicking the disc opens a dropdown checklist marking every track as listened or not.",
+    why: "A disc alone shows how close an album is to done, but not which tracks still need a listen, or whether you've made progress since you last checked. The hover toast gives that read at a glance without a click, while the click-through checklist shows exactly which tracks are missing, so you know what to play next.",
+  },
+  {
     title: "Progress bar stalls at 80%",
     decision:
       "A disc in progress fills clockwise from grayscale to color, but stalls at 80% until every track is complete.",
@@ -215,7 +221,7 @@ const DECISIONS: Decision[] = [
   {
     title: "Filter between in-progress and complete",
     decision: "Filter pills on the “Show all” view.",
-    why: "At first, every disc was included in the same section. As collections grew, finished and in-progress albums were difficult to separate, and the collection stopped feeling like a collection. The one thing worth seeing, what you've actually finished, was buried. Filters let you view completed discs on their own, or view what's still in progress when you're picking what to listen to next.",
+    why: "At first, every disc was included in the same section. As collections grew, finished and in-progress albums were difficult to separate, and the collection stopped feeling like a collection. The one thing worth seeing, what you've actually finished, was buried. Filters let you view completed discs on their own, or view what's still in progress when you're picking what to listen to next. The pills also reuse Spotify's own filter-pill pattern, the same rounded, dark pills Spotify already uses elsewhere in its UI, so the filtering feels native to the app instead of bolted on.",
   },
   {
     title: "Disc placement: album page only",
@@ -629,7 +635,7 @@ export default function DiscifyPage() {
         <section id="overview" className="mt-16 scroll-mt-8">
           <Eyebrow>Overview</Eyebrow>
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            A Spotify extension that rewards listening to an entire album the way it was meant to be heard.
+            A Spotify extension that rewards listening to every song on an album.
           </h2>
           <Prose>
             <p>
@@ -654,21 +660,21 @@ export default function DiscifyPage() {
           </Prose>
 
           <h2 className="mt-10 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            Most listeners never hear an album the way the artist sequenced it.
+            Most listeners only ever hear an album’s singles.
           </h2>
           <Prose>
             <p>
               I noticed I only listened to entire albums, start to finish, on long car rides with a
               friend, for example playing new releases from Ariana Grande and Gracie Abrams. On my own, I
-              shuffled and skipped songs. That means missing deliberate transitions an artist has added
-              between songs, recurring themes, and the craft that goes into ordering a tracklist.
+              shuffled and skipped straight to the songs I already knew. That means missing deep cuts,
+              b-sides, and the rest of an artist’s work that never shows up on a playlist.
             </p>
           </Prose>
 
           <div className="mt-6">
             <Callout>
-              <span className="font-semibold">Goal:</span> give people a reason to listen to full albums
-              to experience them the way the artist intended, not for engagement.
+              <span className="font-semibold">Goal:</span> give people a reason to listen to every song on
+              an album, not just the singles, and not for engagement.
             </Callout>
           </div>
         </section>
@@ -689,7 +695,7 @@ export default function DiscifyPage() {
           </Prose>
           <Figure
             src="/images/discify/discify-profile-shelf.png"
-            alt="Discs collected page showing All, Collected, and In progress filter pills above six discs, each with the album's cover art, title, and artist"
+            alt="Discs collected page showing All, Collected, and In-progress filter pills above six discs, each with the album's cover art, title, and artist"
             caption="Profile section of earned discs, with collected / in-progress filters"
           />
         </section>
@@ -731,7 +737,7 @@ export default function DiscifyPage() {
                     imageSrc="/images/discify/discify-mvp-screenshot.png"
                     imageAspect="558 / 438"
                     imageAlt="Early functional build showing collected discs with no visual styling yet"
-                    imageCaption="First edition of collected discs design, where singles like &quot;4me 4me&quot; earned their own disc"
+                    imageCaption="First edition of collected discs design, where singles like &quot;4Me 4Me&quot; earned their own disc"
                   />
                 </>
               ) : step.title === "3. Redesigning the MVP" ? (
@@ -852,25 +858,43 @@ export default function DiscifyPage() {
                       {
                         src: "/images/discify/discs-no-singles.png",
                         alt: "Discs shelf with singles removed, showing only full albums like \"Midnight Memories\" and \"FOUR\"",
-                        caption: "After: only completed albums earn a disc, creating a cleaner collection",
+                        caption:
+                          "After: only completed and in-progress albums earn a disc, not singles, creating a cleaner collection",
                       },
                     ]}
                   />
                 ) : index === 4 ? (
-                  <DiscDemo />
+                  <FigurePair
+                    items={[
+                      {
+                        src: "/images/discify/discify-toast.png",
+                        alt: "Toast popup over the mini disc reading '84.6% listened (11/13 tracks)'",
+                        caption:
+                          "Hovering the mini disc surfaces a toast with the exact percent and track count listened",
+                      },
+                      {
+                        src: "/images/discify/discify-progress-dropdown.png",
+                        alt: "Dropdown checklist under the mini disc listing each track with a checkmark for listened and a dash for not yet listened",
+                        caption:
+                          "Clicking the mini disc opens a checklist marking which tracks have been listened to",
+                      },
+                    ]}
+                  />
                 ) : index === 5 ? (
+                  <DiscDemo />
+                ) : index === 6 ? (
                   <div className="well-inset p-6">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`${BASE_PATH}/images/discify/discify-filter-pills.png`}
-                      alt="Discs collected header showing '3 collected · 5 in progress' above All, Collected, and In progress filter pills"
+                      alt="Discs collected header showing '3 collected · 5 in progress' above All, Collected, and In-progress filter pills"
                       className="w-full rounded-lg border border-black/10"
                     />
                     <p className="mt-2 text-xs text-foreground/50">
                       Filter pills for switching between all, collected, and in-progress discs
                     </p>
                   </div>
-                ) : index === 6 ? (
+                ) : index === 7 ? (
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
                     {PLACEMENT_OPTIONS.map((option) => (
                       <PlacementCard key={option.title} option={option} />
@@ -908,7 +932,7 @@ export default function DiscifyPage() {
           <Prose>
             <p>
               A new section on a user’s profile is created underneath the “Public Playlists” section,
-              displaying a user’s most recent in progress and completed albums. The “X collected · X in
+              displaying a user’s most recent in-progress and completed albums. The “X collected · X in
               progress” provides a preview of a user’s total discs, which can be found when expanding this
               section by clicking “Show all”. The “X collected” tag also appears beside a user’s following
               count, but is private to avoid disingenuity, as explained by design decision #4.
@@ -965,7 +989,7 @@ export default function DiscifyPage() {
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
               <h3 className="text-xl font-semibold leading-snug text-foreground">
-                Designing within someone else's product means designing to “disappear”.
+                Designing within someone else's product means designing to seamlessly integrate.
               </h3>
               <p className="mt-3 leading-relaxed text-foreground/70">
                 The best aspect of Discify is that it looks like it belongs in Spotify, because the design
