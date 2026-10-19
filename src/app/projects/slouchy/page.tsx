@@ -346,35 +346,22 @@ const DIRECTIONS_ROWS: Record<string, ReactNode>[] = [
   },
 ];
 
-const CORE_FLOWS: {
-  title: string;
-  text: string;
-  video?: string;
-  image?: string;
-  alt?: string;
-}[] = [
+const CORE_FLOWS: { title: string; text: string }[] = [
   {
     title: "Nudge",
     text: "Slouchy pops up, unimpressed, and asks if you're slouching. Say yes and he lets you know (\"aw man not again\"), which is usually enough to make you sit up. Say no and he gives you a thumbs up, and your weekly dot row fills.",
-    video: "/videos/slouchy/solution-yes-no-clicks.mp4",
   },
   {
     title: "Log",
     text: "Your day streak, weekly score, and whether you're improving. The dot grid shows every check-in across the week, so you can see which days you nailed it and which afternoons you fell off.",
-    image: "/images/slouchy/devpost-log.jpg",
-    alt: "Slouchy log screen showing a 5 day streak, 78% this week, +12% last week, and a dot grid from Monday to Sunday",
   },
   {
     title: "Shop",
     text: "Accessories you've unlocked, and the ones you're close to earning.",
-    image: "/images/slouchy/devpost-shop.jpg",
-    alt: "Shop screen with a new hat equipped, sunglasses, a coffee cup, and an unlocked apple accessory, each priced in streak points",
   },
   {
     title: "Settings",
     text: "Nudge interval, active hours, and weekends. Nothing else.",
-    image: "/images/slouchy/final-settings.png",
-    alt: "Final hand-drawn settings screen with nudge interval, active hours, and a weekends toggle",
   },
 ];
 
@@ -532,25 +519,38 @@ export default function SlouchyPage() {
         {/* Problem */}
         <section id="problem" className="mt-16 scroll-mt-8">
           <Eyebrow>Problem</Eyebrow>
-          <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            Students know their posture is bad. They just don&apos;t notice in the moment.
-          </h2>
-          <Prose>
-            <p>
-              University students spend hours hunched over laptops writing essays, sitting through lectures and
-              grinding through assignments. Studies report that 30 to 80% of university students experience low
-              back pain. It&apos;s a small daily habit that gets ignored until it compounds into a bigger problem.
-            </p>
-            <p>
-              It started with me. It was exam season and my posture was terrible. I knew it could be better, but
-              I only fixed it when someone pointed it out. Studying alone, nobody does.
-            </p>
-          </Prose>
-          <div className="mt-6">
-            <Callout>
-              <span className="font-semibold">Goal:</span> catch people in the moment they&apos;re slouching,
-              without nagging them.
-            </Callout>
+          <div className="mt-2 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto]">
+            <div>
+              <h2 className="max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
+                Students know their posture is bad. They just don&apos;t notice in the moment.
+              </h2>
+              <Prose>
+                <p>
+                  University students spend hours hunched over laptops writing essays, sitting through lectures
+                  and grinding through assignments. Studies report that 30 to 80% of university students
+                  experience low back pain. It&apos;s a small daily habit that gets ignored until it compounds
+                  into a bigger problem.
+                </p>
+                <p>
+                  It started with me. It was exam season and my posture was terrible. I knew it could be better,
+                  but I only fixed it when someone pointed it out. Studying alone, nobody does.
+                </p>
+              </Prose>
+              <div className="mt-6">
+                <Callout>
+                  <span className="font-semibold">Goal:</span> catch people in the moment they&apos;re slouching,
+                  without nagging them.
+                </Callout>
+              </div>
+            </div>
+            <div className="relative hidden w-24 lg:block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${BASE_PATH}/images/slouchy/character-neutral.png`}
+                alt="Slouchy drawn with a blank, neutral expression, arms crossed"
+                className="absolute inset-0 h-full w-full object-contain"
+              />
+            </div>
           </div>
         </section>
 
@@ -687,16 +687,6 @@ export default function SlouchyPage() {
             </p>
           </Prose>
 
-          <Prose>
-            <p>
-              Direction 4&apos;s dark theme nudge introduced a progress ring and streak badge, which direction
-              5 traded for a row of flowers. Direction 6 kept refining the log from there: rounded cards,
-              centered tabs, then lowercase labels with a thumbs-up Slouchy. Every pass looked more polished,
-              but none of it had a personality yet. A system notification exploration got dropped outright,
-              too: notifications are exactly what students tune out, and removing the character made it feel
-              even more clinical.
-            </p>
-          </Prose>
           <div className="well-inset mt-6 p-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -713,6 +703,16 @@ export default function SlouchyPage() {
               </p>
             </div>
           </div>
+          <Prose>
+            <p>
+              Direction 4&apos;s dark theme nudge introduced a progress ring and streak badge, which direction
+              5 traded for a row of flowers. Direction 6 kept refining the log from there: rounded cards,
+              centered tabs, then lowercase labels with a thumbs-up Slouchy. Every pass looked more polished,
+              but none of it had a personality yet. A system notification exploration got dropped outright,
+              too: notifications are exactly what students tune out, and removing the character made it feel
+              even more clinical.
+            </p>
+          </Prose>
           <div className="well-inset mt-6 p-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -839,8 +839,7 @@ export default function SlouchyPage() {
           </h3>
           <div className="well-inset mt-6 flex flex-wrap items-center justify-between gap-4 p-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-foreground/40">Figma prototype</p>
-              <p className="mt-1.5 max-w-[640px] leading-relaxed text-foreground/70">
+              <p className="max-w-[760px] leading-relaxed text-foreground/70">
                 The final Figma prototype covers the nudge, both responses, the log, the shop and settings.
               </p>
             </div>
@@ -867,7 +866,7 @@ export default function SlouchyPage() {
               key={decision.title}
               index={index}
               decision={decision}
-              mediaPosition={index === 0 || index === 1 || index === 2 ? "right" : "bottom"}
+              mediaPosition={index === 0 || index === 2 ? "right" : "bottom"}
               media={
                 index === 0 ? (
                   <div className="well-inset flex flex-col p-4 lg:h-full">
@@ -884,30 +883,32 @@ export default function SlouchyPage() {
                     </p>
                   </div>
                 ) : index === 1 ? (
-                  <div className="well-inset flex flex-col gap-4 p-4 lg:h-full">
-                    <div>
+                  <div className="well-inset flex flex-col gap-5 p-4 sm:flex-row sm:items-center">
+                    <div className="mx-auto w-full max-w-[220px] sm:mx-0 sm:w-56 sm:shrink-0">
                       <div className="flex items-center justify-center rounded-lg border border-black/10 bg-[#e8e8e8] p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`${BASE_PATH}/images/slouchy/icon-states-large.png`}
                           alt="Menu bar icon states at large scale: a straight idle pin and an amber overdue pin that curves like a slouch"
-                          className="w-full object-contain"
+                          className="w-full rounded-md object-contain"
                         />
                       </div>
                       <p className="mt-2 text-xs text-foreground/50">
                         Icon states: idle (straight) vs. overdue (curved, amber)
                       </p>
                     </div>
-                    <div>
+                    <div className="w-full sm:flex-1">
                       <div className="flex items-center justify-center rounded-lg border border-black/10 bg-[#e8e8e8] p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`${BASE_PATH}/images/slouchy/menu.png`}
                           alt="The idle pin icon sitting in the real macOS menu bar, beside battery, search and wifi"
-                          className="w-full object-contain"
+                          className="w-full rounded-md object-contain"
                         />
                       </div>
-                      <p className="mt-2 text-xs text-foreground/50">The icon, live in the menu bar</p>
+                      <p className="mt-2 text-xs text-foreground/50">
+                        The icon, live in the menu bar beside the battery icon
+                      </p>
                     </div>
                   </div>
                 ) : index === 2 ? (
@@ -944,27 +945,39 @@ export default function SlouchyPage() {
                         },
                       ].map((item) => (
                         <div key={item.src}>
-                          <div className="flex h-64 items-center justify-center overflow-hidden rounded-lg border border-black/10 bg-white">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={`${BASE_PATH}/images/slouchy/${item.src}`} alt={item.alt} className="h-full w-full object-contain" />
-                          </div>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={`${BASE_PATH}/images/slouchy/${item.src}`}
+                            alt={item.alt}
+                            className="h-64 w-full rounded-lg border border-black/10 object-cover"
+                          />
                           <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 ) : index === 5 ? (
-                  <Figure
-                    src="/images/slouchy/shop-desktop.png"
-                    alt="Shop screen showing streak points, an equipped new hat, sunglasses, a coffee cup, and an unlocked apple accessory, live in the macOS menu bar"
-                    caption="The shop: accessories unlocked by keeping your streak"
-                  />
+                  <div className="well-inset p-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${BASE_PATH}/images/slouchy/shop-desktop.png`}
+                      alt="Shop screen showing streak points, an equipped new hat, sunglasses, a coffee cup, and an unlocked apple accessory, live in the macOS menu bar"
+                      className="w-full rounded-lg border border-black/10"
+                    />
+                    <p className="mt-2 text-xs text-foreground/50">
+                      The shop: accessories unlocked by keeping your streak
+                    </p>
+                  </div>
                 ) : index === 6 ? (
-                  <Figure
-                    src="/images/slouchy/settings-desktop.png"
-                    alt="Settings screen with nudge interval (30m, 45m, 60m, custom), active hours, and a weekends toggle, live in the macOS menu bar"
-                    caption="The only three settings Slouchy has"
-                  />
+                  <div className="well-inset p-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${BASE_PATH}/images/slouchy/settings-desktop.png`}
+                      alt="Settings screen with nudge interval (30m, 45m, 60m, custom), active hours, and a weekends toggle, live in the macOS menu bar"
+                      className="w-full rounded-lg border border-black/10"
+                    />
+                    <p className="mt-2 text-xs text-foreground/50">The only three settings Slouchy has</p>
+                  </div>
                 ) : undefined
               }
             />
@@ -985,22 +998,6 @@ export default function SlouchyPage() {
                   <div className="lg:flex-1">
                     <p className="text-sm font-semibold text-foreground">{flow.title}</p>
                     <p className="mt-1.5 text-sm leading-relaxed text-foreground/70">{flow.text}</p>
-                    <div className="mt-4 overflow-hidden rounded-lg border border-black/10 bg-white">
-                      {flow.video ? (
-                        <video
-                          className="w-full"
-                          src={`${BASE_PATH}${flow.video}`}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          preload="metadata"
-                        />
-                      ) : (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={`${BASE_PATH}${flow.image}`} alt={flow.alt} className="w-full" />
-                      )}
-                    </div>
                   </div>
                   {i < CORE_FLOWS.length - 1 ? (
                     <div className="flex shrink-0 items-center justify-center py-1 text-foreground/25 lg:py-0">
@@ -1009,6 +1006,18 @@ export default function SlouchyPage() {
                   ) : null}
                 </Fragment>
               ))}
+            </div>
+            <div className="mt-6 overflow-hidden rounded-lg border border-black/10 bg-white">
+              <video
+                className="w-full"
+                src={`${BASE_PATH}/videos/slouchy-showreel.mp4`}
+                poster={`${BASE_PATH}/images/slouchy-poster.jpg`}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+              />
             </div>
           </div>
         </section>
@@ -1019,13 +1028,20 @@ export default function SlouchyPage() {
           <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-stretch">
             <div className="flex w-full flex-col">
               <p className="text-2xl font-semibold leading-snug text-foreground sm:text-3xl">
-                2nd Place, Cornell UX Designathon 2026
+                2nd Place, Cornell UX Designathon
               </p>
-              <div className="well-inset mt-4 flex-1 p-6">
+              <Prose>
+                <p>
+                  <span className="font-semibold text-foreground">Next:</span> build it as a real macOS menu bar
+                  app, and test it with the students from the library for a week to see if the shop keeps
+                  answers honest once the novelty wears off.
+                </p>
+              </Prose>
+              <div className="well-inset mt-4 flex-1 p-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${BASE_PATH}/images/slouchy/devpost-card.png`}
-                  alt="Slouchy's Devpost submission card showing the project title, its description, the submitter's avatar, and like and comment counts"
+                  alt="Slouchy's Devpost submission card with a gold 'Winner' ribbon and the nudge screen asking 'you slouching?'"
                   className="w-full rounded-lg border border-black/10"
                 />
                 <p className="mt-2 text-xs text-foreground/50">
@@ -1033,25 +1049,18 @@ export default function SlouchyPage() {
                 </p>
               </div>
             </div>
-            <div className="well-inset p-6">
+            <div className="well-inset overflow-hidden px-4 pt-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`${BASE_PATH}/images/slouchy/judge-shoutout-highlighted.png`}
                 alt="LinkedIn post from judge Bhroovi Gupta recapping the CU Design-a-thon 2026, with 'Slouchy - Mila Scholz' highlighted among her top picks"
-                className="w-full rounded-lg border border-black/10"
+                className="mx-auto w-full max-w-[560px] rounded-t-xl border border-b-0 border-black/10 shadow-sm"
               />
               <p className="mt-2 text-xs text-foreground/50">
                 Bhroovi Gupta&apos;s judge recap, with Slouchy highlighted among her top picks
               </p>
             </div>
           </div>
-          <Prose>
-            <p>
-              <span className="font-semibold text-foreground">Next:</span> build it as a real macOS menu bar app,
-              and test it with the students from the library for a week to see if the shop keeps answers honest
-              once the novelty wears off.
-            </p>
-          </Prose>
         </section>
 
         {/* Reflection */}
