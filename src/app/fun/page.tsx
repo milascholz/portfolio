@@ -136,7 +136,7 @@ const ENTRIES: FunEntry[] = [
     title: "@miasdeck",
     meta: "Digital Collage",
     description:
-      "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account to share my work and grew an awesome community of fellow collage artists.",
+      "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account under @miasdeck, my alias, to share my work and grew an awesome community of fellow collage artists.",
     software: ["Canva", "Instagram"],
     link: "https://www.instagram.com/miasdeck/",
     linkLabel: "View on Instagram",
@@ -162,7 +162,7 @@ const ENTRIES: FunEntry[] = [
     title: "@miasdeck",
     meta: "Digital Collage",
     description:
-      "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account to share my work and grew an awesome community of fellow collage artists.",
+      "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account under @miasdeck, my alias, to share my work and grew an awesome community of fellow collage artists.",
     software: ["Canva", "Instagram"],
     link: "https://www.instagram.com/miasdeck/",
     linkLabel: "View on Instagram",
@@ -196,7 +196,7 @@ const ENTRIES: FunEntry[] = [
     title: "@miasdeck",
     meta: "Digital Collage",
     description:
-      "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account to share my work and grew an awesome community of fellow collage artists.",
+      "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account under @miasdeck, my alias, to share my work and grew an awesome community of fellow collage artists.",
     software: ["Canva", "Instagram"],
     link: "https://www.instagram.com/miasdeck/",
     linkLabel: "View on Instagram",
