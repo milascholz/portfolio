@@ -2,8 +2,9 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
-import { useRegisterProjectNav, useSetHoveredInfo } from "@/context/ProjectNavContext";
+import { useHoveredSoftwareKey, useRegisterProjectNav, useSetHoveredInfo } from "@/context/ProjectNavContext";
 import { CursorTag, useCursorTag } from "@/components/CursorTag";
+import { getUniqueSoftwareIcons } from "@/lib/software-icons";
 
 type MediaItem = {
   type: "image" | "video";
@@ -262,7 +263,11 @@ function EntryCaption({ entry }: { entry: FunEntry }) {
 
 function EntryCard({ entry }: { entry: FunEntry }) {
   const setHoveredInfo = useSetHoveredInfo();
+  const hoveredSoftwareKey = useHoveredSoftwareKey();
   const cursor = useCursorTag();
+
+  const entryIconKeys = getUniqueSoftwareIcons(entry.software ?? []).map(({ icon }) => icon.key);
+  const isDimmed = hoveredSoftwareKey !== null && !entryIconKeys.includes(hoveredSoftwareKey);
 
   const content = (
     <div
@@ -295,7 +300,9 @@ function EntryCard({ entry }: { entry: FunEntry }) {
     content
   );
 
-  return <div className="mb-6">{wrapped}</div>;
+  return (
+    <div className={`mb-6 transition-opacity duration-200 ${isDimmed ? "opacity-20" : "opacity-100"}`}>{wrapped}</div>
+  );
 }
 
 const ALL_SOFTWARE = Array.from(new Set(ENTRIES.flatMap((entry) => entry.software ?? [])));

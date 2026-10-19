@@ -32,6 +32,8 @@ type ProjectNavContextValue = {
   setProjectNav: (data: ProjectNavData | null) => void;
   hoveredInfo: HoveredInfo | null;
   setHoveredInfo: (info: HoveredInfo | null) => void;
+  hoveredSoftwareKey: string | null;
+  setHoveredSoftwareKey: (key: string | null) => void;
 };
 
 const ProjectNavContext = createContext<ProjectNavContextValue | null>(null);
@@ -39,9 +41,10 @@ const ProjectNavContext = createContext<ProjectNavContextValue | null>(null);
 export function ProjectNavProvider({ children }: { children: ReactNode }) {
   const [projectNav, setProjectNav] = useState<ProjectNavData | null>(null);
   const [hoveredInfo, setHoveredInfo] = useState<HoveredInfo | null>(null);
+  const [hoveredSoftwareKey, setHoveredSoftwareKey] = useState<string | null>(null);
   const value = useMemo(
-    () => ({ projectNav, setProjectNav, hoveredInfo, setHoveredInfo }),
-    [projectNav, hoveredInfo]
+    () => ({ projectNav, setProjectNav, hoveredInfo, setHoveredInfo, hoveredSoftwareKey, setHoveredSoftwareKey }),
+    [projectNav, hoveredInfo, hoveredSoftwareKey]
   );
 
   return <ProjectNavContext.Provider value={value}>{children}</ProjectNavContext.Provider>;
@@ -87,4 +90,16 @@ export function useHoveredInfo() {
 /** Set (or clear, with null) the item hovered on a hover-driven nav page. */
 export function useSetHoveredInfo() {
   return useProjectNavContext().setHoveredInfo;
+}
+
+/** The software icon key currently hovered in the sidebar's aggregate
+ * "Software I used" row (e.g. Fun), so the page can fade out entries that
+ * don't use it. */
+export function useHoveredSoftwareKey() {
+  return useProjectNavContext().hoveredSoftwareKey;
+}
+
+/** Set (or clear, with null) the hovered aggregate software icon key. */
+export function useSetHoveredSoftwareKey() {
+  return useProjectNavContext().setHoveredSoftwareKey;
 }

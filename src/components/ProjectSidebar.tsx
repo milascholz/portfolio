@@ -1,13 +1,23 @@
 "use client";
 
 import { useEffect, useState, type MouseEvent } from "react";
-import { useHoveredInfo, useProjectNav } from "@/context/ProjectNavContext";
+import {
+  useHoveredInfo,
+  useProjectNav,
+  useSetHoveredSoftwareKey,
+} from "@/context/ProjectNavContext";
 import { formatSoftwareList, getUniqueSoftwareIcons } from "@/lib/software-icons";
 import { BASE_PATH } from "@/lib/base-path";
 
-function SoftwareIconRow({ software }: { software: string[] }) {
+// `filterable` is only set on the aggregate "Software I used" row (shown
+// when no project is hovered) — hovering an icon there fades out entries
+// on the page that don't use it. The per-project row (shown once something
+// IS hovered) doesn't filter anything, since it's already scoped to one
+// project.
+function SoftwareIconRow({ software, filterable }: { software: string[]; filterable?: boolean }) {
   const icons = getUniqueSoftwareIcons(software);
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
+  const setHoveredSoftwareKey = useSetHoveredSoftwareKey();
   if (icons.length === 0) return null;
 
   return (
@@ -15,8 +25,14 @@ function SoftwareIconRow({ software }: { software: string[] }) {
       {icons.map(({ icon, label }) => (
         <span
           key={icon.key}
-          onMouseEnter={() => setHoveredKey(icon.key)}
-          onMouseLeave={() => setHoveredKey((current) => (current === icon.key ? null : current))}
+          onMouseEnter={() => {
+            setHoveredKey(icon.key);
+            if (filterable) setHoveredSoftwareKey(icon.key);
+          }}
+          onMouseLeave={() => {
+            setHoveredKey((current) => (current === icon.key ? null : current));
+            if (filterable) setHoveredSoftwareKey(null);
+          }}
           className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#6e6e6e]/30 bg-white"
         >
           {icon.kind === "component" ? (
@@ -135,7 +151,7 @@ export default function ProjectSidebar() {
               {projectNav.hoverPanel.defaultSoftware && projectNav.hoverPanel.defaultSoftware.length > 0 ? (
                 <>
                   <p className="mt-4 text-sm leading-relaxed text-foreground/60">Software I used</p>
-                  <SoftwareIconRow software={projectNav.hoverPanel.defaultSoftware} />
+                  <SoftwareIconRow software={projectNav.hoverPanel.defaultSoftware} filterable />
                 </>
               ) : null}
             </>
