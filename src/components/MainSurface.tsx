@@ -36,7 +36,7 @@ export default function MainSurface({ children }: { children: ReactNode }) {
             className={`transition-all duration-300 ease-in-out ${
               isExpanded
                 ? "absolute inset-0 -translate-x-6 opacity-0 pointer-events-none"
-                : "translate-x-0 opacity-100"
+                : "lg:h-full translate-x-0 opacity-100"
             }`}
           >
             <ProfileSidebar />
