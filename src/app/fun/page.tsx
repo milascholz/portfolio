@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useHoveredSoftwareKey, useRegisterProjectNav, useSetHoveredInfo } from "@/context/ProjectNavContext";
@@ -227,6 +228,10 @@ const ENTRIES: FunEntry[] = [
   },
 ];
 
+function entryKey(entry: FunEntry): string {
+  return `${entry.title}-${entry.item.src}`;
+}
+
 function EntryMedia({ item }: { item: MediaItem }) {
   if (item.type === "video") {
     return (
@@ -261,7 +266,7 @@ function EntryCaption({ entry }: { entry: FunEntry }) {
   );
 }
 
-function EntryCard({ entry }: { entry: FunEntry }) {
+function EntryCard({ entry, registerRef }: { entry: FunEntry; registerRef: (el: HTMLDivElement | null) => void }) {
   const setHoveredInfo = useSetHoveredInfo();
   const hoveredSoftwareKey = useHoveredSoftwareKey();
   const cursor = useCursorTag();
@@ -301,7 +306,9 @@ function EntryCard({ entry }: { entry: FunEntry }) {
   );
 
   return (
-    <div className={`mb-6 transition-opacity duration-200 ${isDimmed ? "opacity-20" : "opacity-100"}`}>{wrapped}</div>
+    <div ref={registerRef} className={`mb-6 transition-opacity duration-200 ${isDimmed ? "opacity-20" : "opacity-100"}`}>
+      {wrapped}
+    </div>
   );
 }
 
@@ -312,6 +319,28 @@ export default function FunPage() {
     defaultHeading: "A collection of my projects, hobbies, and everything in between.",
     defaultSoftware: ALL_SOFTWARE,
   });
+
+  const hoveredSoftwareKey = useHoveredSoftwareKey();
+  const entryEls = useRef<Map<string, HTMLDivElement>>(new Map());
+
+  // When a software icon is hovered and none of the entries that use it are
+  // currently on screen, scroll the first one into view so the highlight is
+  // actually visible instead of silently fading out stuff off-screen.
+  useEffect(() => {
+    if (!hoveredSoftwareKey) return;
+    const matches = ENTRIES.filter((entry) =>
+      getUniqueSoftwareIcons(entry.software ?? []).some(({ icon }) => icon.key === hoveredSoftwareKey)
+    );
+    const anyVisible = matches.some((entry) => {
+      const el = entryEls.current.get(entryKey(entry));
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.bottom > 0 && rect.top < window.innerHeight;
+    });
+    if (!anyVisible && matches.length > 0) {
+      entryEls.current.get(entryKey(matches[0]))?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [hoveredSoftwareKey]);
 
   // Explicit columns (rather than CSS `columns` auto-balancing) so the
   // order entries are authored in above maps directly to which column —
@@ -326,7 +355,14 @@ export default function FunPage() {
         {columns.map((column, i) => (
           <div key={i} className="flex flex-1 flex-col">
             {column.map((entry) => (
-              <EntryCard key={`${entry.title}-${entry.item.src}`} entry={entry} />
+              <EntryCard
+                key={entryKey(entry)}
+                entry={entry}
+                registerRef={(el) => {
+                  if (el) entryEls.current.set(entryKey(entry), el);
+                  else entryEls.current.delete(entryKey(entry));
+                }}
+              />
             ))}
           </div>
         ))}
