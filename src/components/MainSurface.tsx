@@ -27,19 +27,25 @@ export default function MainSurface({ children }: { children: ReactNode }) {
   return (
     <div className="no-scrollbar flex h-full flex-col gap-1.5 overflow-y-auto lg:h-full lg:min-h-0 lg:flex-row lg:items-stretch lg:overflow-visible">
       <div
-        className={`${isExpanded ? "hidden lg:flex" : "flex"} w-full shrink-0 flex-col lg:w-[284px] lg:h-full lg:min-h-0`}
+        className={`${isExpanded ? "hidden lg:flex" : "flex"} w-full shrink-0 flex-col lg:w-[284px] ${
+          isExpanded ? "lg:h-auto lg:max-h-full lg:self-start" : "lg:h-full lg:min-h-0"
+        }`}
       >
-        <div className="relative min-h-0 w-full flex-1 lg:h-full">
+        <div className={`relative min-h-0 w-full ${isExpanded ? "lg:h-auto" : "flex-1 lg:h-full"}`}>
           <div
-            className={`absolute inset-0 transition-all duration-300 ease-in-out ${
-              isExpanded ? "-translate-x-6 opacity-0 pointer-events-none" : "translate-x-0 opacity-100"
+            className={`transition-all duration-300 ease-in-out ${
+              isExpanded
+                ? "absolute inset-0 -translate-x-6 opacity-0 pointer-events-none"
+                : "translate-x-0 opacity-100"
             }`}
           >
             <ProfileSidebar />
           </div>
           <div
-            className={`absolute inset-0 transition-all duration-300 ease-in-out ${
-              isExpanded ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0 pointer-events-none"
+            className={`transition-all duration-300 ease-in-out ${
+              isExpanded
+                ? "translate-x-0 opacity-100"
+                : "absolute inset-0 translate-x-6 opacity-0 pointer-events-none"
             }`}
           >
             <ProjectSidebar />
