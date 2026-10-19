@@ -40,9 +40,8 @@ export const projects: Project[] = [
     video: "/videos/slouchy-showreel.mp4",
     poster: "/images/slouchy-poster.jpg",
     tag: "2nd Place @ Cornell UX Designathon",
-    link: "https://devpost.com/software/slouchy",
-    linkLabel: "See on Devpost",
-    linkExternal: true,
+    link: "/projects/slouchy",
+    linkLabel: "View case study",
   },
   {
     id: "project-four",
