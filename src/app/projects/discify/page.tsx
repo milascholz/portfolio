@@ -9,17 +9,6 @@ import { useRegisterProjectNav } from "@/context/ProjectNavContext";
 
 const TAGS = ["Personal Project", "Shipped 2026"];
 
-const SECTIONS = [
-  { id: "overview", label: "Overview" },
-  { id: "problem", label: "Problem" },
-  { id: "solution", label: "Solution" },
-  { id: "design-process", label: "Design Process" },
-  { id: "design-decisions", label: "Design Decisions" },
-  { id: "core-flows", label: "Core Flows" },
-  { id: "final-product", label: "Final Product" },
-  { id: "reflection", label: "Reflection" },
-];
-
 const ROLE_DETAILS = [
   { label: "Role", value: "Product Designer + Developer" },
   { label: "Team", value: "Solo" },
@@ -231,6 +220,24 @@ const DECISIONS: Decision[] = [
   },
 ];
 
+const SECTIONS = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "solution", label: "Solution" },
+  { id: "design-process", label: "Design Process" },
+  {
+    id: "design-decisions",
+    label: "Design Decisions",
+    subsections: DECISIONS.map((decision, index) => ({
+      id: `design-decision-${index}`,
+      label: decision.title,
+    })),
+  },
+  { id: "core-flows", label: "Core Flows" },
+  { id: "final-product", label: "Final Product" },
+  { id: "reflection", label: "Reflection" },
+];
+
 function DecisionCard({
   index,
   decision,
@@ -241,7 +248,10 @@ function DecisionCard({
   media?: ReactNode;
 }) {
   return (
-    <div className="panel-grey panel-flat mt-6 w-full overflow-hidden rounded-[22px] border border-[#6e6e6e]">
+    <div
+      id={`design-decision-${index}`}
+      className="panel-grey panel-flat mt-6 w-full scroll-mt-8 overflow-hidden rounded-[22px] border border-[#6e6e6e]"
+    >
       <div
         className="btn-pill btn-pill-static finding-header flex items-center gap-3 px-5 py-3"
         style={{ borderRadius: "21px 21px 0 0" }}

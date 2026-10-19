@@ -261,7 +261,7 @@ const REFLECTION_POINTS: ReflectionPoint[] = [
 ];
 
 export default function HumanoidRobotArmAssemblyPage() {
-  useRegisterProjectNav("Baker Bot: Humanoid Robot Arms", SECTIONS);
+  useRegisterProjectNav("Humanoid Robot Arms", SECTIONS);
 
   return (
     <ViewTransition name="project-project-three">
@@ -289,7 +289,7 @@ export default function HumanoidRobotArmAssemblyPage() {
         </div>
 
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground">
-          Baker Bot: Humanoid Robot Arms
+          Humanoid Robot Arms
         </h1>
         <p className="mt-3 max-w-[960px] leading-relaxed text-foreground/70">
           A life-size humanoid robot that co-teaches first-year physics. I designed its shoulders and

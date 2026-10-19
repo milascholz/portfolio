@@ -248,7 +248,7 @@ export default function MeshPage() {
     <div>
       <video
         className="aspect-[40/9] w-full rounded-t-[21px] object-cover"
-        src={`${BASE_PATH}/videos/mesh.mp4`}
+        src={`${BASE_PATH}/videos/meshvid.mp4`}
         autoPlay
         loop
         muted
