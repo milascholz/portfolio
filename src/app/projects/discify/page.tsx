@@ -174,11 +174,11 @@ const DECISIONS: Decision[] = [
     title: "Completion threshold: 90% per track",
     decision:
       "A track counts as “listened” once 90% of it is played. An album completes when every track clears that threshold.",
-    why: "100% is problematic if there is a buffering glitch, if a user skips back to replay a lyric, or if they close the app two seconds early, because it would wrongly disqualify an otherwise real listen. The 90% threshold absorbs that noise while still landing past the point where skipping “pays off”; if a user listens to 90% of a track, they’ve essentially heard the whole thing.",
+    why: "100% is problematic if there is a buffering glitch, if a user skips back to replay a lyric, or if they close the app two seconds early, because it would wrongly disqualify an otherwise real listen. It also absorbs the noise of listeners who've enabled fade transitions between songs in Spotify, since that overlap can cut up to 12 seconds off the beginning and end of a track. The 90% threshold absorbs all of that noise while still landing past the point where skipping “pays off”; if a user listens to 90% of a track, they’ve essentially heard the whole thing.",
   },
   {
     title: "No discs for singles",
-    decision: "Only albums earn discs.",
+    decision: "Only albums earn discs, not singles.",
     why: "Singles originally earned discs too, which meant that for every single song played on Spotify, a new completed disc or “in-progress” disc would be generated. This overpopulated the collected discs section, giving the user a cluttered overview of their album listening history. It also missed the point of Discify: a single is just one song, not a body of work to complete.",
   },
   {
@@ -216,7 +216,7 @@ const DECISIONS: Decision[] = [
     title: "Disc placement: album page only",
     decision: "The disc badge lives on the album page only.",
     why: "A disc beside every album was too messy on search results and library lists, as they were screens built for finding music, not celebrating a finished one. It also diluted the feature by putting it everywhere an album appears. The album page ties the badge to the listening experience itself, sitting where your eye naturally goes when you open or play an album.",
-    rejected: "Search results, library lists — both too cluttered and off-purpose.",
+    rejected: "Search results, library lists: both too cluttered and off-purpose.",
   },
 ];
 
@@ -674,17 +674,16 @@ export default function DiscifyPage() {
           </h2>
           <Prose>
             <p>
-              I noticed I only listened to entire albums, start to finish, on long car rides with a
-              friend, for example playing new releases from Ariana Grande and Gracie Abrams. On my own, I
-              shuffled and skipped straight to the songs I already knew. That means missing deep cuts,
-              b-sides, and the rest of an artist’s work that never shows up on a playlist.
+              I noticed I only heard full albums on long car rides with a friend, like when we played new
+              releases from Ariana Grande and Gracie Abrams. On my own, I skipped straight to the songs I
+              already knew, so I was missing every song that wasn’t a single.
             </p>
           </Prose>
 
           <div className="mt-6">
             <Callout>
-              <span className="font-semibold">Goal:</span> give people a reason to listen to every song on
-              an album, not just the singles, and not for engagement.
+              <span className="font-semibold">Goal:</span> give people a reason to hear every song on an
+              album, in any order, because the music is worth it, not for engagement.
             </Callout>
           </div>
         </section>
@@ -769,7 +768,7 @@ export default function DiscifyPage() {
                       className="w-full rounded-lg border border-black/10"
                     />
                     <p className="mt-2 text-xs text-foreground/50">
-                      Redesigning the disc in Figma — from a 3D gradient sphere, to a flat CD base, to
+                      Redesigning the disc in Figma, from a 3D gradient sphere, to a flat CD base, to
                       the final cover-art disc states.
                     </p>
                   </div>

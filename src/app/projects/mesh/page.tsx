@@ -106,7 +106,7 @@ const FINDINGS: Finding[] = [
   },
   {
     title: "Content that's hard to scan",
-    body: "Every “Mesh vs X” blog post uses the same blue gradient banner, so you can't tell the posts apart at a glance. On the unfiltered blog page, the same posts appear twice: once under “All” and again under “How Mesh Compares.” That distinction matters — these are the posts meant to convince someone to choose Mesh over the alternative, so they need to be instantly recognizable, not identical banners with different words.",
+    body: "Every “Mesh vs X” blog post uses the same blue gradient banner, so you can't tell the posts apart at a glance. On the unfiltered blog page, the same posts appear twice: once under “All” and again under “How Mesh Compares.” That distinction matters: these are the posts meant to convince someone to choose Mesh over the alternative, so they need to be instantly recognizable, not identical banners with different words.",
     fix: "Give each blog post a unique banner, for example the competitor's actual logo (I mocked one up). Hide the “How Mesh Compares” section on the unfiltered view but keep it on the filtered ones, where it still does its marketing job, to remove the duplicates.",
   },
   {
@@ -448,7 +448,7 @@ export default function MeshPage() {
             <p className="text-xs text-foreground/50">Full annotated review (PDF)</p>
             <iframe
               src={`${BASE_PATH}/files/mesh-website-feedback.pdf#page=2&toolbar=0&navpanes=0`}
-              title="Mesh website feedback — full annotated PDF review"
+              title="Mesh website feedback: full annotated PDF review"
               className="mt-2 aspect-[4/3] w-full rounded-lg border border-black/10"
             />
           </div>
