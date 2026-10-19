@@ -838,7 +838,7 @@ export default function DiscifyPage() {
         <section id="design-decisions" className="mt-16 scroll-mt-8">
           <Eyebrow>Design Decisions</Eyebrow>
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            The completion logic: defining a “listen”
+            The decisions behind how discs are tracked, look, and show progress
           </h2>
           {DECISIONS.map((decision, index) => (
             <DecisionCard

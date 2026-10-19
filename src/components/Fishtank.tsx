@@ -2,17 +2,19 @@
 
 import { useEffect, useRef } from "react";
 
-// Decor that sits fixed on the tank floor, all aligned to the same
-// ground line as the anchor — never moves.
-const GROUND_TOP = "82%";
+// Decor that sits fixed on the tank floor, all anchored by the bottom
+// edge of their box to the same ground line (the border above "the
+// fishtank" label) regardless of font-size or viewport height — never
+// moves.
+const GROUND_BOTTOM = "0px";
 const ANCHORED = [
-  { emoji: "🪸", top: GROUND_TOP, left: "12%", size: "18px", rotate: "0deg" },
-  { emoji: "🪨", top: GROUND_TOP, left: "24%", size: "16px", rotate: "0deg" },
-  { emoji: "⚓", top: GROUND_TOP, left: "34%", size: "16px", rotate: "0deg" },
-  { emoji: "🌿", top: GROUND_TOP, left: "58%", size: "18px", rotate: "0deg" },
-  { emoji: "🪸", top: GROUND_TOP, left: "72%", size: "16px", rotate: "0deg" },
-  { emoji: "🗿", top: GROUND_TOP, left: "88%", size: "20px", rotate: "0deg" },
-  { emoji: "🪨", top: GROUND_TOP, left: "95%", size: "14px", rotate: "0deg" },
+  { emoji: "🪸", bottom: GROUND_BOTTOM, left: "12%", size: "18px", rotate: "0deg" },
+  { emoji: "🪨", bottom: GROUND_BOTTOM, left: "24%", size: "16px", rotate: "0deg" },
+  { emoji: "⚓", bottom: GROUND_BOTTOM, left: "34%", size: "16px", rotate: "0deg" },
+  { emoji: "🌿", bottom: GROUND_BOTTOM, left: "58%", size: "18px", rotate: "0deg" },
+  { emoji: "🪸", bottom: GROUND_BOTTOM, left: "72%", size: "16px", rotate: "0deg" },
+  { emoji: "🗿", bottom: GROUND_BOTTOM, left: "88%", size: "20px", rotate: "0deg" },
+  { emoji: "🪨", bottom: GROUND_BOTTOM, left: "95%", size: "14px", rotate: "0deg" },
 ];
 
 // Sits in its original corner and just bobs gently in place — doesn't
@@ -126,8 +128,8 @@ export default function Fishtank({ onPoke }: { onPoke?: () => void }) {
           <span
             key={`anchored-${i}`}
             aria-hidden
-            className="pointer-events-none absolute select-none opacity-90"
-            style={{ top: d.top, left: d.left, fontSize: d.size, transform: `rotate(${d.rotate})` }}
+            className="pointer-events-none absolute select-none opacity-90 leading-none"
+            style={{ bottom: d.bottom, left: d.left, fontSize: d.size, transform: `rotate(${d.rotate})` }}
           >
             {d.emoji}
           </span>
