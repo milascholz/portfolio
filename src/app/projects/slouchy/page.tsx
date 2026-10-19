@@ -1,10 +1,11 @@
 "use client";
 
-import { ViewTransition, type ReactNode } from "react";
+import { Fragment, ViewTransition, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
+import { getSoftwareIcon } from "@/lib/software-icons";
 
 const TAGS = ["Designathon", "2nd Place @ Cornell UX Designathon 2026"];
 
@@ -16,8 +17,12 @@ const ROLE_DETAILS = [
 ];
 
 const EXTERNAL_LINKS = [
-  { label: "Try the Figma prototype", href: "https://www.figma.com/proto/hSILlXPvbpAhHCtTZDFxLn/slouchy?node-id=6-727&p=f&t=ItbbGPDawmsRJ5Rd-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=6%3A727" },
-  { label: "View on Devpost", href: "https://devpost.com/software/slouchy" },
+  {
+    label: "Try the Figma prototype",
+    href: "https://www.figma.com/proto/hSILlXPvbpAhHCtTZDFxLn/slouchy?node-id=6-727&p=f&t=ItbbGPDawmsRJ5Rd-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=6%3A727",
+    iconKey: "figma",
+  },
+  { label: "View on Devpost", href: "https://devpost.com/software/slouchy", iconKey: "devpost" },
 ];
 
 function Eyebrow({ children }: { children: ReactNode }) {
@@ -341,6 +346,38 @@ const DIRECTIONS_ROWS: Record<string, ReactNode>[] = [
   },
 ];
 
+const CORE_FLOWS: {
+  title: string;
+  text: string;
+  video?: string;
+  image?: string;
+  alt?: string;
+}[] = [
+  {
+    title: "Nudge",
+    text: "Slouchy pops up, unimpressed, and asks if you're slouching. Say yes and he lets you know (\"aw man not again\"), which is usually enough to make you sit up. Say no and he gives you a thumbs up, and your weekly dot row fills.",
+    video: "/videos/slouchy/solution-yes-no-clicks.mp4",
+  },
+  {
+    title: "Log",
+    text: "Your day streak, weekly score, and whether you're improving. The dot grid shows every check-in across the week, so you can see which days you nailed it and which afternoons you fell off.",
+    image: "/images/slouchy/devpost-log.jpg",
+    alt: "Slouchy log screen showing a 5 day streak, 78% this week, +12% last week, and a dot grid from Monday to Sunday",
+  },
+  {
+    title: "Shop",
+    text: "Accessories you've unlocked, and the ones you're close to earning.",
+    image: "/images/slouchy/devpost-shop.jpg",
+    alt: "Shop screen with a new hat equipped, sunglasses, a coffee cup, and an unlocked apple accessory, each priced in streak points",
+  },
+  {
+    title: "Settings",
+    text: "Nudge interval, active hours, and weekends. Nothing else.",
+    image: "/images/slouchy/final-settings.png",
+    alt: "Final hand-drawn settings screen with nudge interval, active hours, and a weekends toggle",
+  },
+];
+
 const COMPETITIVE_COLUMNS: TableColumn[] = [
   { key: "app", label: "App" },
   { key: "catches", label: "How it catches slouching" },
@@ -437,18 +474,31 @@ export default function SlouchyPage() {
         </p>
 
         <div className="mt-4 flex flex-wrap gap-4">
-          {EXTERNAL_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-sm font-medium text-foreground/60 underline decoration-foreground/25 underline-offset-4 transition-colors hover:text-foreground"
-            >
-              {link.label}
-              <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
-            </a>
-          ))}
+          {EXTERNAL_LINKS.map((link) => {
+            const icon = getSoftwareIcon(link.iconKey);
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-foreground/60 underline decoration-foreground/25 underline-offset-4 transition-colors hover:text-foreground"
+              >
+                {icon ? (
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#6e6e6e]/30 bg-white">
+                    {icon.kind === "component" ? (
+                      <icon.Icon size={13} color={icon.color} />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={`${BASE_PATH}${icon.src}`} alt="" className="h-4 w-4 rounded-sm" />
+                    )}
+                  </span>
+                ) : null}
+                {link.label}
+                <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+              </a>
+            );
+          })}
         </div>
 
         <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
@@ -663,11 +713,17 @@ export default function SlouchyPage() {
               </p>
             </div>
           </div>
-          <Figure
-            src="/images/slouchy/progress.png"
-            alt="Progress across the Figma Make explorations: two dark-themed 'Straighten' directions with a flower icon and a circle icon, evolving into the final hand-drawn 'slouchy' nudge widget with tabs, dot row and shop cart"
-            caption="Progress from the early dark-themed directions to the final hand-drawn nudge widget"
-          />
+          <div className="well-inset mt-6 p-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${BASE_PATH}/images/slouchy/progress.png`}
+              alt="Progress across the Figma Make explorations: two dark-themed 'Straighten' directions with a flower icon and a circle icon, evolving into the final hand-drawn 'slouchy' nudge widget with tabs, dot row and shop cart"
+              className="w-full rounded-lg"
+            />
+            <p className="mt-2 text-xs text-foreground/50">
+              Progress from the early dark-themed directions to the final hand-drawn nudge widget
+            </p>
+          </div>
 
           <Prose>
             <p>
@@ -738,8 +794,8 @@ export default function SlouchyPage() {
               neutral by default, unimpressed when you admit to slouching, happy and thumbs-up when you
               don&apos;t.
             </p>
-            <div className="well-inset min-w-0 flex-1 overflow-x-auto p-6">
-              <div className="flex gap-6">
+            <div className="well-inset min-w-0 flex-1 p-6">
+              <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
                 {[
                   {
                     src: "character-neutral.png",
@@ -762,7 +818,7 @@ export default function SlouchyPage() {
                     caption: "An early concept pose, not used in the app",
                   },
                 ].map((item) => (
-                  <div key={item.src} className="w-32 shrink-0">
+                  <div key={item.src}>
                     <div className="flex h-32 items-center justify-center rounded-lg border border-black/10 bg-white px-3">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -811,9 +867,7 @@ export default function SlouchyPage() {
               key={decision.title}
               index={index}
               decision={decision}
-              mediaPosition={
-                index === 0 || index === 1 || index === 5 || index === 6 ? "right" : "bottom"
-              }
+              mediaPosition={index === 0 || index === 1 || index === 2 ? "right" : "bottom"}
               media={
                 index === 0 ? (
                   <div className="well-inset flex flex-col p-4 lg:h-full">
@@ -830,34 +884,38 @@ export default function SlouchyPage() {
                     </p>
                   </div>
                 ) : index === 1 ? (
-                  <div className="well-inset flex flex-col gap-6 p-8 sm:flex-row lg:h-full">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-center rounded-lg border border-black/10 bg-white p-8">
+                  <div className="well-inset flex flex-col gap-4 p-4 lg:h-full">
+                    <div>
+                      <div className="flex items-center justify-center rounded-lg border border-black/10 bg-[#e8e8e8] p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`${BASE_PATH}/images/slouchy/icon-states-large.png`}
                           alt="Menu bar icon states at large scale: a straight idle pin and an amber overdue pin that curves like a slouch"
-                          className="max-h-full w-auto max-w-full object-contain"
+                          className="w-full object-contain"
                         />
                       </div>
                       <p className="mt-2 text-xs text-foreground/50">
                         Icon states: idle (straight) vs. overdue (curved, amber)
                       </p>
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-center rounded-lg border border-black/10 bg-white p-8">
+                    <div>
+                      <div className="flex items-center justify-center rounded-lg border border-black/10 bg-[#e8e8e8] p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`${BASE_PATH}/images/slouchy/logo.png`}
-                          alt="Renaming from Straighten's pin icon to Slouchy's hand-drawn stick figure icon and wordmark"
-                          className="max-h-full w-auto max-w-full object-contain"
+                          src={`${BASE_PATH}/images/slouchy/menu.png`}
+                          alt="The idle pin icon sitting in the real macOS menu bar, beside battery, search and wifi"
+                          className="w-full object-contain"
                         />
                       </div>
-                      <p className="mt-2 text-xs text-foreground/50">
-                        Renaming from Straighten to Slouchy
-                      </p>
+                      <p className="mt-2 text-xs text-foreground/50">The icon, live in the menu bar</p>
                     </div>
                   </div>
+                ) : index === 2 ? (
+                  <Figure
+                    src="/images/slouchy/nudge-interval.png"
+                    alt="Settings screen snippet showing the nudge interval control: 30m, 60m, 45m (selected), and custom"
+                    caption="Choosing the nudge interval in settings"
+                  />
                 ) : index === 3 ? (
                   <div className="well-inset p-6">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -875,24 +933,20 @@ export default function SlouchyPage() {
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       {[
                         {
-                          src: "devpost-nudge-slouching.jpg",
-                          alt: "Slouchy reacting 'aw man not again' after a yes answer, with a weekly dot row at 68%",
+                          src: "nudge-slouching-desktop.png",
+                          alt: "Slouchy reacting 'aw man not again' after a yes answer, with a weekly dot row at 75%, live in the macOS menu bar",
                           caption: "Reacting to an honest “yes”",
                         },
                         {
-                          src: "devpost-nudge-goodwork.jpg",
-                          alt: "Slouchy reacting 'good work!' after a no answer, with a weekly dot row at 79%",
+                          src: "nudge-goodwork-desktop.png",
+                          alt: "Slouchy reacting 'good work!' after a no answer, with a weekly dot row at 79%, live in the macOS menu bar",
                           caption: "Reacting to a “no”",
                         },
                       ].map((item) => (
                         <div key={item.src}>
-                          <div className="flex items-center justify-center rounded-lg border border-black/10 bg-white p-8">
+                          <div className="flex h-64 items-center justify-center overflow-hidden rounded-lg border border-black/10 bg-white">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={`${BASE_PATH}/images/slouchy/${item.src}`}
-                              alt={item.alt}
-                              className="w-full max-w-[260px] rounded"
-                            />
+                            <img src={`${BASE_PATH}/images/slouchy/${item.src}`} alt={item.alt} className="h-full w-full object-contain" />
                           </div>
                           <p className="mt-2 text-xs text-foreground/50">{item.caption}</p>
                         </div>
@@ -901,14 +955,14 @@ export default function SlouchyPage() {
                   </div>
                 ) : index === 5 ? (
                   <Figure
-                    src="/images/slouchy/devpost-shop.jpg"
-                    alt="Shop screen showing streak points, an equipped new hat, sunglasses, a coffee cup, and an unlocked apple accessory"
+                    src="/images/slouchy/shop-desktop.png"
+                    alt="Shop screen showing streak points, an equipped new hat, sunglasses, a coffee cup, and an unlocked apple accessory, live in the macOS menu bar"
                     caption="The shop: accessories unlocked by keeping your streak"
                   />
                 ) : index === 6 ? (
                   <Figure
-                    src="/images/slouchy/final-settings.png"
-                    alt="Final hand-drawn settings screen with nudge interval (30m, 45m, 60m, custom), active hours, and a weekends toggle"
+                    src="/images/slouchy/settings-desktop.png"
+                    alt="Settings screen with nudge interval (30m, 45m, 60m, custom), active hours, and a weekends toggle, live in the macOS menu bar"
                     caption="The only three settings Slouchy has"
                   />
                 ) : undefined
@@ -924,52 +978,39 @@ export default function SlouchyPage() {
             Four screens, one habit.
           </h2>
 
-          <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">Nudge</h3>
-          <Prose>
-            <p>
-              Slouchy pops up, unimpressed, and asks if you&apos;re slouching. Say yes and he lets you know
-              (&quot;aw man not again&quot;), which is usually enough to make you sit up. Say no and he gives you
-              a thumbs up, and your weekly dot row fills.
-            </p>
-          </Prose>
-          <Figure
-            src="/images/slouchy/devpost-nudge-desktop.jpg"
-            alt="Slouchy's nudge widget asking 'you slouching?' in the macOS menu bar"
-            caption="The nudge, asking the one question"
-          />
-
-          <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">Log</h3>
-          <Prose>
-            <p>
-              Your day streak, weekly score, and whether you&apos;re improving. The dot grid shows every check-in
-              across the week, so you can see which days you nailed it and which afternoons you fell off.
-            </p>
-          </Prose>
-          <Figure
-            src="/images/slouchy/devpost-log.jpg"
-            alt="Slouchy log screen showing a 5 day streak, 78% this week, +12% last week, and a dot grid from Monday to Sunday"
-            caption="Log screen with the dot grid"
-          />
-
-          <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">Shop</h3>
-          <Prose>
-            <p>Accessories you&apos;ve unlocked, and the ones you&apos;re close to earning.</p>
-          </Prose>
-          <Figure
-            src="/images/slouchy/devpost-shop.jpg"
-            alt="Shop screen with a new hat equipped, sunglasses, a coffee cup, and an unlocked apple accessory, each priced in streak points"
-            caption="Shop screen"
-          />
-
-          <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">Settings</h3>
-          <Prose>
-            <p>Nudge interval, active hours, and weekends. Nothing else.</p>
-          </Prose>
-          <Figure
-            src="/images/slouchy/final-settings.png"
-            alt="Final hand-drawn settings screen with nudge interval, active hours, and a weekends toggle"
-            caption="Settings screen"
-          />
+          <div className="well-inset mt-6 p-6">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+              {CORE_FLOWS.map((flow, i) => (
+                <Fragment key={flow.title}>
+                  <div className="lg:flex-1">
+                    <p className="text-sm font-semibold text-foreground">{flow.title}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-foreground/70">{flow.text}</p>
+                    <div className="mt-4 overflow-hidden rounded-lg border border-black/10 bg-white">
+                      {flow.video ? (
+                        <video
+                          className="w-full"
+                          src={`${BASE_PATH}${flow.video}`}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                        />
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={`${BASE_PATH}${flow.image}`} alt={flow.alt} className="w-full" />
+                      )}
+                    </div>
+                  </div>
+                  {i < CORE_FLOWS.length - 1 ? (
+                    <div className="flex shrink-0 items-center justify-center py-1 text-foreground/25 lg:py-0">
+                      <ArrowRight className="h-5 w-5 rotate-90 lg:rotate-0" strokeWidth={2} />
+                    </div>
+                  ) : null}
+                </Fragment>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* Outcome */}

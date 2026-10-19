@@ -1,4 +1,4 @@
-import { SiAutodeskmaya, SiEtsy, SiFigma, SiFramer, SiInstagram, SiYoutube } from "react-icons/si";
+import { SiAutodeskmaya, SiDevpost, SiEtsy, SiFigma, SiFramer, SiInstagram, SiYoutube } from "react-icons/si";
 import type { IconType } from "react-icons";
 
 type SoftwareIconDef =
@@ -17,6 +17,7 @@ type SoftwareIconDef =
 // — all saved locally under public/icons/software/.
 const SOFTWARE_ICONS: Record<string, SoftwareIconDef> = {
   figma: { key: "figma", kind: "component", Icon: SiFigma, color: "#F24E1E" },
+  devpost: { key: "devpost", kind: "component", Icon: SiDevpost, color: "#003E54" },
   framer: { key: "framer", kind: "component", Icon: SiFramer, color: "#0055FF" },
   maya: { key: "maya", kind: "component", Icon: SiAutodeskmaya, color: "#37A5CC" },
   youtube: { key: "youtube", kind: "component", Icon: SiYoutube, color: "#FF0000" },
