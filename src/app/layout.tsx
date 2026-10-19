@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 import TopNav from "@/components/TopNav";
 import MainSurface from "@/components/MainSurface";
@@ -35,6 +36,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <MainSurface>{children}</MainSurface>
           </main>
         </ProjectNavProvider>
+        <Script
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "5df0f8cf8c30472ea6810d12e072dcab"}'
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
