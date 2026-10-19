@@ -36,7 +36,7 @@ const ENTRIES: FunEntry[] = [
   {
     title: "Women in Engineering @ UWO",
     meta: "Website Design",
-    description: "A website redesign for Western's Women in Engineering club.",
+    description: "A website redesign for Western's Women in Engineering club, where I'm VP of Design.",
     software: ["Framer"],
     link: "https://womeninengineeringuwo.framer.media/",
     linkLabel: "Visit site",
