@@ -1,4 +1,4 @@
-import { SiAutodeskmaya, SiFigma, SiFramer, SiYoutube } from "react-icons/si";
+import { SiAutodeskmaya, SiEtsy, SiFigma, SiFramer, SiInstagram, SiYoutube } from "react-icons/si";
 import type { IconType } from "react-icons";
 
 type SoftwareIconDef =
@@ -24,6 +24,8 @@ const SOFTWARE_ICONS: Record<string, SoftwareIconDef> = {
   "after effects": { key: "after-effects", kind: "image", src: "/icons/software/after-effects.svg" },
   "premiere pro": { key: "premiere-pro", kind: "image", src: "/icons/software/premiere-pro.svg" },
   canva: { key: "canva", kind: "image", src: "/icons/software/canva.svg" },
+  instagram: { key: "instagram", kind: "component", Icon: SiInstagram, color: "#E4405F" },
+  etsy: { key: "etsy", kind: "component", Icon: SiEtsy, color: "#F16521" },
 };
 
 export function getSoftwareIcon(name: string): SoftwareIconDef | null {

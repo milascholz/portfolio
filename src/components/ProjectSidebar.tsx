@@ -7,6 +7,7 @@ import { BASE_PATH } from "@/lib/base-path";
 
 function SoftwareIconRow({ software }: { software: string[] }) {
   const icons = getUniqueSoftwareIcons(software);
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
   if (icons.length === 0) return null;
 
   return (
@@ -14,8 +15,9 @@ function SoftwareIconRow({ software }: { software: string[] }) {
       {icons.map(({ icon, label }) => (
         <span
           key={icon.key}
-          title={label}
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#6e6e6e]/30 bg-white"
+          onMouseEnter={() => setHoveredKey(icon.key)}
+          onMouseLeave={() => setHoveredKey((current) => (current === icon.key ? null : current))}
+          className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#6e6e6e]/30 bg-white"
         >
           {icon.kind === "component" ? (
             <icon.Icon size={13} color={icon.color} />
@@ -23,6 +25,14 @@ function SoftwareIconRow({ software }: { software: string[] }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={`${BASE_PATH}${icon.src}`} alt={label} className="h-4 w-4 rounded-sm" />
           )}
+          {hoveredKey === icon.key ? (
+            <span
+              role="tooltip"
+              className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-[11px] font-medium text-background shadow-sm"
+            >
+              {label}
+            </span>
+          ) : null}
         </span>
       ))}
     </div>

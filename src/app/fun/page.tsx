@@ -121,7 +121,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Etsy Shop",
     description:
       "A profitable Etsy shop I ran selling gradient wall calendars. I did all the design, shop upkeep, and advertising on Pinterest, solo.",
-    software: ["Photoshop"],
+    software: ["Photoshop", "Etsy"],
     item: { type: "image", src: "/images/fun/etsy-store.jpg", alt: "dear miashop Etsy storefront logo" },
   },
   {
@@ -137,7 +137,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Digital Collage",
     description:
       "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account to share my work and grew an awesome community of fellow collage artists.",
-    software: ["Canva"],
+    software: ["Canva", "Instagram"],
     link: "https://www.instagram.com/miasdeck/",
     linkLabel: "View on Instagram",
     item: { type: "image", src: "/images/fun/playing-cards/10.jpg", alt: "Playing card collage, Honey Donuts" },
@@ -155,7 +155,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Etsy Shop",
     description:
       "A profitable Etsy shop I ran selling gradient wall calendars. I did all the design, shop upkeep, and advertising on Pinterest, solo.",
-    software: ["Photoshop"],
+    software: ["Photoshop", "Etsy"],
     item: { type: "image", src: "/images/fun/calendar-2.jpg", alt: "Full twelve-month gradient calendar set" },
   },
   {
@@ -163,7 +163,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Digital Collage",
     description:
       "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account to share my work and grew an awesome community of fellow collage artists.",
-    software: ["Canva"],
+    software: ["Canva", "Instagram"],
     link: "https://www.instagram.com/miasdeck/",
     linkLabel: "View on Instagram",
     item: { type: "image", src: "/images/fun/playing-cards/21.jpg", alt: "Playing card collage, Poi Dog Deli" },
@@ -181,7 +181,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Etsy Shop",
     description:
       "A profitable Etsy shop I ran selling gradient wall calendars. I did all the design, shop upkeep, and advertising on Pinterest, solo.",
-    software: ["Photoshop"],
+    software: ["Photoshop", "Etsy"],
     item: { type: "image", src: "/images/fun/calendar-1.jpg", alt: "January gradient calendar page hung on a wall" },
   },
   {
@@ -197,7 +197,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Digital Collage",
     description:
       "A series of collages made on playing cards, using media from my travels and daily life, as I try to romanticize the ordinary. I started an Instagram account to share my work and grew an awesome community of fellow collage artists.",
-    software: ["Canva"],
+    software: ["Canva", "Instagram"],
     link: "https://www.instagram.com/miasdeck/",
     linkLabel: "View on Instagram",
     item: { type: "image", src: "/images/fun/playing-cards/8.jpg", alt: "Playing card collage, NYC cronut" },
@@ -214,7 +214,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Etsy Shop",
     description:
       "A profitable Etsy shop I ran selling gradient wall calendars. I did all the design, shop upkeep, and advertising on Pinterest, solo.",
-    software: ["Photoshop"],
+    software: ["Photoshop", "Etsy"],
     item: { type: "image", src: "/images/fun/calendar-3.jpg", alt: "Calendar pages laid out together" },
   },
   {
