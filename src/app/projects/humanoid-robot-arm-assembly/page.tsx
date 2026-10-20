@@ -6,8 +6,9 @@ import { ArrowLeft } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
 import ArmModelViewer from "@/components/ArmModelViewer";
+import SoftwareIconRow from "@/components/SoftwareIconRow";
 
-const TAGS = ["Engineering Design & Manufacturing", "2026"];
+const SOFTWARE = ["SolidWorks", "OnShape"];
 
 const SECTIONS = [
   { id: "overview", label: "Overview" },
@@ -277,24 +278,15 @@ export default function HumanoidRobotArmAssemblyPage() {
       />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
-        <div className="flex flex-wrap gap-2">
-          {TAGS.map((tag) => (
-            <span
-              key={tag}
-              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">
           Humanoid Robot Arms
         </h1>
         <p className="mt-3 max-w-[960px] leading-relaxed text-foreground/70">
           A life-size humanoid robot that co-teaches first-year physics. I designed its shoulders and
           swappable hands, and sized its elbow motors.
         </p>
+
+        <SoftwareIconRow software={SOFTWARE} />
 
         <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
           {ROLE_DETAILS.map((detail) => (

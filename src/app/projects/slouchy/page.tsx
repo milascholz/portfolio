@@ -7,8 +7,6 @@ import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
 import { getSoftwareIcon } from "@/lib/software-icons";
 
-const TAGS = ["Designathon", "2nd Place @ Cornell UX Designathon 2026"];
-
 const ROLE_DETAILS = [
   { label: "Role", value: "Product Designer" },
   { label: "Team", value: "Solo" },
@@ -198,14 +196,14 @@ const DECISIONS: Decision[] = [
     rejected: "A standalone app, push notifications.",
   },
   {
-    title: "Every 45 minutes, work hours only",
-    decision: "Nudges arrive on a fixed interval, only during active hours you set.",
-    why: "Long enough to settle into work, short enough to catch posture before it slips for hours. Limiting nudges to work hours keeps Slouchy out of your evenings.",
+    title: "Custom nudge interval timing",
+    decision: "Nudges arrive on an interval you set, only during your active hours",
+    why: "You select an interval that works best for you: a time that is long enough for you to settle into your work (because everyone focuses differently!), but short enough to catch posture before it is ignored for hours. Limiting nudges to work hours keeps Slouchy out of your evenings.",
   },
   {
     title: "A friend, not a doctor",
     decision: "A hand-drawn stick figure, casual language, and Comic Sans.",
-    why: "Every wellness app talks to you like a doctor. Students don't need a lecture, like a parent telling you to sit up straight. They need a friend giving them a look from across the desk. I chose Comic Sans because people read it as unserious and playful, and the hand-drawn style reinforces that.",
+    why: "Every wellness app talks to you like a doctor. Students don't need a lecture, like a parent telling you to sit up straight. They need a friend delivering that reminder, like my research and experience showed. I chose Comic Sans because people read it as unserious and playful, and the hand-drawn style reinforces that.",
   },
   {
     title: "Slouchy reacts to context",
@@ -214,7 +212,7 @@ const DECISIONS: Decision[] = [
   },
   {
     title: "A shop for the reward loop",
-    decision: "Streak milestones unlock accessories for Slouchy: a hat, sunglasses, a coffee cup.",
+    decision: "Streaks unlock accessories for Slouchy: a hat, sunglasses, a coffee cup.",
     why: "Habits stick when there's a reward. Most habit tools get forgotten after a couple of days, and a small sense of progression gives people a reason to come back daily.",
   },
   {
@@ -349,7 +347,7 @@ const DIRECTIONS_ROWS: Record<string, ReactNode>[] = [
 const CORE_FLOWS: { title: string; text: string }[] = [
   {
     title: "Nudge",
-    text: "Slouchy pops up, unimpressed, and asks if you're slouching. Say yes and he lets you know (\"aw man not again\"), which is usually enough to make you sit up. Say no and he gives you a thumbs up, and your weekly dot row fills.",
+    text: "Slouchy pops up, unimpressed, and asks if you're slouching. Say yes and he responds \"aw man not again\", which is enough to make you sit up. Say no and he gives you a thumbs up. Your weekly progress dots fill in with your response, purple for no, orange for yes.",
   },
   {
     title: "Log",
@@ -357,7 +355,7 @@ const CORE_FLOWS: { title: string; text: string }[] = [
   },
   {
     title: "Shop",
-    text: "Accessories you've unlocked, and the ones you're close to earning.",
+    text: "Accessories you've unlocked, what you've got equipped, and ones you're close to earning. You can buy new accessories with your day streak.",
   },
   {
     title: "Settings",
@@ -421,7 +419,7 @@ const COMPETITIVE_ROWS: Record<string, ReactNode>[] = [
     need: "Nothing",
     nudge: "A character who reacts to your answer",
     tone: "Friend calling you out",
-    habit: "Streaks, weekly dot grid, shop unlocks",
+    habit: "Streaks, weekly progress tracking, rewards shop",
     highlight: true,
   },
 ];
@@ -444,18 +442,8 @@ export default function SlouchyPage() {
       />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
-        <div className="flex flex-wrap gap-2">
-          {TAGS.map((tag) => (
-            <span
-              key={tag}
-              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground">Slouchy</h1>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">Slouchy</h1>
+        <p className="mt-1.5 text-sm italic text-foreground/50">2nd Place @ Cornell UX Designathon 2026</p>
         <p className="mt-3 max-w-[960px] leading-relaxed text-foreground/70">
           A grumpy stick figure who lives in your Mac menu bar and asks if you&apos;re slouching.
         </p>
@@ -532,8 +520,11 @@ export default function SlouchyPage() {
                   into a bigger problem.
                 </p>
                 <p>
-                  It started with me. It was exam season and my posture was terrible. I knew it could be better,
-                  but I only fixed it when someone pointed it out. Studying alone, nobody does.
+                  The inspiration behind this project started with my own experience. I was in the middle of
+                  exams, and my posture was terrible. I knew it could be better, but I only fixed it when
+                  someone would point it out. My friends and I help each other out with this and make a joke of
+                  it when we&apos;re together, but when I&apos;m studying alone, there&apos;s nobody to help keep
+                  you accountable.
                 </p>
               </Prose>
               <div className="mt-6">
@@ -562,12 +553,14 @@ export default function SlouchyPage() {
           </h2>
           <Prose>
             <p>
-              Before designing anything, I walked around my university library and asked ten students the same
-              question: how&apos;s your posture right now?
+              Before designing anything, I wanted to make sure this was a common issue amongst students, so I
+              walked around my university library and observed that many people&apos;s posture wasn&apos;t
+              ergonomic. To add to my observations, I asked about 10 students how they felt about their posture
+              during exam season.
             </p>
             <p>
-              Every one of them immediately sat up straighter, so they all knew what good posture was. Thirty
-              seconds later, most were hunched over again.
+              Every one of them immediately sat up straighter, which showed they all knew what good posture was.
+              Thirty seconds later, I noticed most were hunched over again.
             </p>
           </Prose>
           <Prose>
@@ -605,10 +598,10 @@ export default function SlouchyPage() {
             <p className="font-medium text-foreground">What this told me:</p>
             <ol className="list-decimal space-y-2 pl-5">
               <li>
-                <span className="font-semibold text-foreground">Detection apps cost hardware and trust.</span>{" "}
-                They need AirPods in or a camera on all day, and still only see your head. Asking costs nothing,
-                and answering makes you check your own posture, which is the moment my research said was
-                missing.
+                <span className="font-semibold text-foreground">Current detection apps cost hardware and trust.</span>{" "}
+                They need AirPods in or a camera on all day, and still only see your head. Simply asking costs
+                nothing, and unlike those apps, the act of answering makes you check your own posture, which my
+                research found was the exact moment these apps were missing.
               </li>
               <li>
                 <span className="font-semibold text-foreground">Reminder apps are easy to tune out.</span> Gaze
@@ -617,7 +610,8 @@ export default function SlouchyPage() {
               <li>
                 <span className="font-semibold text-foreground">Posture Pal proved a character works.</span>{" "}
                 Nobody wants to disappoint a cartoon giraffe. But it reacts the same way every time and has no
-                habit loop on Mac. Slouchy reacts to your history and rewards your streaks.
+                habit loop on Mac. <span className="font-semibold text-foreground">Slouchy:</span> reacts to
+                your answer and your streaks unlock rewards.
               </li>
             </ol>
           </Prose>
@@ -649,7 +643,8 @@ export default function SlouchyPage() {
               preload="metadata"
             />
             <p className="mt-2 text-xs text-foreground/50">
-              The nudge widget, live in the Mac menu bar, clicking between yes and no
+              The Slouchy widget in the Mac menu bar, showing the nudge notification with the question and
+              yes/no buttons
             </p>
           </div>
         </section>
@@ -662,8 +657,8 @@ export default function SlouchyPage() {
           </h2>
           <Prose>
             <p>
-              The research gave me the core interaction straight away: a single question at the right moment.
-              Everything else had to earn its place around that.
+              This research outlined the core interactions immediately: a single, friendly question that is
+              quick to answer so it won&apos;t be ignored.
             </p>
           </Prose>
 
@@ -672,8 +667,9 @@ export default function SlouchyPage() {
           </h3>
           <Prose>
             <p>
-              Instead of sketching on paper, I started in Figma Make. I kept the structure fixed (one question, a
-              log, minimal settings) and used prompts to push the look in very different directions, fast.
+              Instead of sketching on paper, I started in Figma Make. I kept the core app structure fixed (one
+              question, a log, minimal settings) and used prompts to quickly iterate and explore different looks
+              and directions.
             </p>
           </Prose>
           <DataTable columns={DIRECTIONS_COLUMNS} rows={DIRECTIONS_ROWS} />
@@ -699,18 +695,19 @@ export default function SlouchyPage() {
               <p className="text-xs text-foreground/50">Direction 5, garden: every check-in as a flower</p>
               <p className="text-xs text-foreground/50">Direction 6: rounded cards and centered tabs</p>
               <p className="text-xs text-foreground/50">
-                Direction 6: lowercase tabs and a thumbs-up Slouchy
+                Direction 6, version 2: lowercase tabs and a thumbs-up Slouchy
               </p>
             </div>
           </div>
           <Prose>
             <p>
-              Direction 4&apos;s dark theme nudge introduced a progress ring and streak badge, which direction
-              5 traded for a row of flowers. Direction 6 kept refining the log from there: rounded cards,
-              centered tabs, then lowercase labels with a thumbs-up Slouchy. Every pass looked more polished,
-              but none of it had a personality yet. A system notification exploration got dropped outright,
-              too: notifications are exactly what students tune out, and removing the character made it feel
-              even more clinical.
+              Direction 4&apos;s dark theme nudge (nudge = notification posture reminder) added a progress ring
+              and streak badge, whereas direction 5 swapped them for a weekly garden, one flower per day, in an
+              attempt to make the app feel more playful. Direction 6 swapped the garden for a dot grid, which
+              was simpler to understand. I iterated on this version until reaching a finalized design, with a
+              more playful font and the Slouchy character. I did the same iterative process with the reminder
+              notification as shown below, where I started with a dark theme that felt clinical and looked too
+              much like a notification, which is exactly what students tune out.
             </p>
           </Prose>
           <div className="well-inset mt-6 p-6">
@@ -727,9 +724,10 @@ export default function SlouchyPage() {
 
           <Prose>
             <p>
-              <span className="font-semibold text-foreground">What six directions taught me:</span> each one
-              looked good, and none had a personality. Polished and neutral is what every competitor already
-              looks like. My research said people change for friends, not lectures.
+              <span className="font-semibold text-foreground">What six directions taught me:</span> A design can
+              look clean and polished, but without personality it won&apos;t speak to my target audience.
+              Polished and neutral is what every competitor already looks like, and my research showed people
+              listen to their friends, not a lecture.
             </p>
           </Prose>
 
@@ -738,8 +736,9 @@ export default function SlouchyPage() {
           </h3>
           <Prose>
             <p>
-              I rebuilt the nudge around the character. I drew Slouchy myself, and he&apos;s now the biggest thing
-              on screen, arms crossed, unimpressed. &quot;Are you straight?&quot; became &quot;you slouching?&quot;:
+              I redesigned the nudge screen around the Slouchy character. I drew all the assets by hand
+              including Slouchy, and he&apos;s now the biggest thing on the screen, arms crossed, unimpressed.
+              Previous versions&apos; &quot;Are you straight?&quot; became &quot;you slouching?&quot;, which was
               shorter, lowercase, and how a friend would actually say it. The buttons went from solid green and
               red, to tints, to plain outlines, so neither answer looks like the &quot;right&quot; one to tap. I
               kept today&apos;s dots and added the next-nudge timer and a cart for the shop.
@@ -747,9 +746,10 @@ export default function SlouchyPage() {
           </Prose>
           <Prose>
             <p>
-              The log got the same treatment: same structure, new voice. Comic Sans, lowercase, flat dots instead
-              of glossy ones, &quot;day streak!&quot;, and Slouchy giving a thumbs up. I cut the week tabs, trend
-              chart and insight callout to keep the focus on this week.
+              The log screens were redesigned similarly. I used the Comic Sans font in all lowercase and added
+              Slouchy into this screen to add a feeling of playfulness to the app, and used flat dots for
+              progress tracking instead of glossy ones to match the hand-drawn aesthetic. I cut the week tabs,
+              trend chart and insight callout to keep the focus on this week.
             </p>
           </Prose>
           <div className="mt-6">
@@ -772,18 +772,31 @@ export default function SlouchyPage() {
           <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">
             Branding
           </h3>
-          <Prose>
-            <p>
-              The menu bar icon had a different job than the character: read at 16px beside wifi and battery.
-              So no arms or legs, just a single stroke and a head. It stays straight when you&apos;re on track
-              and curves into an amber S when you&apos;re overdue, so you can see your status without opening
-              anything.
-            </p>
-            <p>
-              I also dropped the name Straighten. It sounded like an instruction, the exact tone my research
-              said to avoid. The app is now named after its character, and the app icon is Slouchy himself.
-            </p>
-          </Prose>
+          <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-start">
+            <div className="space-y-4 leading-relaxed text-foreground/70 lg:max-w-[420px] lg:shrink-0">
+              <p>
+                The menu bar icon had a different job than the character: read at 16px beside wifi and battery.
+                So no arms or legs, just a single stroke and a head. It stays straight when you&apos;re on track
+                and curves into an amber S when you&apos;re overdue, so you can see your status without opening
+                anything.
+              </p>
+              <p>
+                I also dropped the name Straighten. It sounded like an instruction, the exact tone my research
+                said to avoid. The app is now named after its character, and the app icon is Slouchy himself.
+              </p>
+            </div>
+            <div className="well-inset min-w-0 flex-1 p-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${BASE_PATH}/images/slouchy/logo.png`}
+                alt="The old 'straighten' wordmark with a pin icon, next to an arrow pointing to the new 'slouchy' app icon and wordmark"
+                className="w-full rounded-lg"
+              />
+              <p className="mt-2 text-xs text-foreground/50">
+                Straighten&apos;s original wordmark, rebranded to Slouchy and his icon
+              </p>
+            </div>
+          </div>
 
           <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">
             2. Building Slouchy&apos;s character
@@ -885,7 +898,7 @@ export default function SlouchyPage() {
                 ) : index === 1 ? (
                   <div className="well-inset flex flex-col gap-5 p-4 sm:flex-row sm:items-center">
                     <div className="mx-auto w-full max-w-[220px] sm:mx-0 sm:w-56 sm:shrink-0">
-                      <div className="flex items-center justify-center rounded-lg border border-black/10 bg-[#e8e8e8] p-2">
+                      <div className="flex items-center justify-center rounded-lg bg-[#e8e8e8] p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`${BASE_PATH}/images/slouchy/icon-states-large.png`}
@@ -898,7 +911,7 @@ export default function SlouchyPage() {
                       </p>
                     </div>
                     <div className="w-full sm:flex-1">
-                      <div className="flex items-center justify-center rounded-lg border border-black/10 bg-[#e8e8e8] p-2">
+                      <div className="flex items-center justify-center rounded-lg bg-[#e8e8e8] p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`${BASE_PATH}/images/slouchy/menu.png`}
@@ -926,7 +939,7 @@ export default function SlouchyPage() {
                       className="w-full rounded-lg"
                     />
                     <p className="mt-2 text-xs text-foreground/50">
-                      Slouchy&apos;s expressions, and early sketches of the shop accessories
+                      Slouchy&apos;s expressions, and sketches of the shop accessories
                     </p>
                   </div>
                 ) : index === 4 ? (
@@ -1067,16 +1080,16 @@ export default function SlouchyPage() {
         <section id="reflection" className="mt-16 scroll-mt-8">
           <Eyebrow>Reflection</Eyebrow>
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            What I learned
+            What I learned and what I&apos;d do next
           </h2>
 
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
               <h3 className="text-xl font-semibold leading-snug text-foreground">Tone is a design decision.</h3>
               <p className="mt-3 leading-relaxed text-foreground/70">
-                Slouchy&apos;s function is simple: a timer and a yes/no question. What makes people answer
-                instead of dismissing it is the character. The research pointed straight there: friends get
-                people to sit up, lectures don&apos;t.
+                Slouchy&apos;s function is simple, just a timer and a yes/no question. What makes people answer
+                instead of dismissing it is the character. My research confirmed this directly, people respond
+                to a friend, not a lecture.
               </p>
             </div>
             <div>
@@ -1086,7 +1099,7 @@ export default function SlouchyPage() {
               <p className="mt-3 leading-relaxed text-foreground/70">
                 Slouchy relies on people answering honestly. With more time, I&apos;d run a week-long test with
                 real students to see if they keep answering truthfully once the novelty wears off, and if the
-                shop actually changes that.
+                shop encourages them to use the app daily.
               </p>
             </div>
           </div>

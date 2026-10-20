@@ -1,4 +1,14 @@
-import { SiAutodeskmaya, SiDevpost, SiEtsy, SiFigma, SiFramer, SiInstagram, SiYoutube } from "react-icons/si";
+import {
+  SiAutodeskmaya,
+  SiClaude,
+  SiClaudecode,
+  SiDevpost,
+  SiEtsy,
+  SiFigma,
+  SiFramer,
+  SiInstagram,
+  SiYoutube,
+} from "react-icons/si";
 import type { IconType } from "react-icons";
 
 type SoftwareIconDef =
@@ -13,8 +23,14 @@ type SoftwareIconDef =
 // (adobe.com/cc-shared/assets/img/product-icons/svg/, served with open CORS
 // for exactly this kind of embedding) and already carry their own color.
 // Canva's is the icon mark from the official logo pack Canva publishes for
-// third-party integrations (canva.dev/docs/apps/rest-apis/brand-guidelines)
-// — all saved locally under public/icons/software/.
+// third-party integrations (canva.dev/docs/apps/rest-apis/brand-guidelines).
+// LinkedIn and OnShape are brand SVGs (LinkedIn from the Simple Icons
+// project, recolored to its brand blue since the source file ships with no
+// fill; OnShape from the Dashboard Icons project, already brand-colored).
+// SolidWorks has no accurate mark in either set (Dashboard Icons mislabels
+// the parent Dassault Systèmes logo as "solidworks"), so that one's the
+// icons8 "color" PNG of the actual SW app icon instead.
+// All saved locally under public/icons/software/.
 const SOFTWARE_ICONS: Record<string, SoftwareIconDef> = {
   figma: { key: "figma", kind: "component", Icon: SiFigma, color: "#F24E1E" },
   devpost: { key: "devpost", kind: "component", Icon: SiDevpost, color: "#003E54" },
@@ -27,6 +43,11 @@ const SOFTWARE_ICONS: Record<string, SoftwareIconDef> = {
   canva: { key: "canva", kind: "image", src: "/icons/software/canva.svg" },
   instagram: { key: "instagram", kind: "component", Icon: SiInstagram, color: "#E4405F" },
   etsy: { key: "etsy", kind: "component", Icon: SiEtsy, color: "#F16521" },
+  claude: { key: "claude", kind: "component", Icon: SiClaude, color: "#D97757" },
+  "claude code": { key: "claude-code", kind: "component", Icon: SiClaudecode, color: "#D97757" },
+  linkedin: { key: "linkedin", kind: "image", src: "/icons/software/linkedin.svg" },
+  solidworks: { key: "solidworks", kind: "image", src: "/icons/software/solidworks.png" },
+  onshape: { key: "onshape", kind: "image", src: "/icons/software/onshape.svg" },
 };
 
 export function getSoftwareIcon(name: string): SoftwareIconDef | null {

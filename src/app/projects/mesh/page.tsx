@@ -5,19 +5,9 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
+import SoftwareIconRow from "@/components/SoftwareIconRow";
 
-const TAGS = ["Independent Review", "2026"];
-
-const SECTIONS = [
-  { id: "overview", label: "Overview" },
-  { id: "problem", label: "Problem" },
-  { id: "approach", label: "Approach" },
-  { id: "key-findings", label: "Key Findings" },
-  { id: "framing-feedback", label: "Framing Feedback" },
-  { id: "deliverable", label: "The Deliverable" },
-  { id: "outcome", label: "Outcome" },
-  { id: "reflection", label: "Reflection" },
-];
+const SOFTWARE = ["Canva", "LinkedIn"];
 
 const ROLE_DETAILS = [
   { label: "Role", value: "Independent Reviewer" },
@@ -119,6 +109,24 @@ const FINDINGS: Finding[] = [
   },
 ];
 
+const SECTIONS = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "approach", label: "Approach" },
+  {
+    id: "key-findings",
+    label: "Key Findings",
+    subsections: FINDINGS.map((finding, index) => ({
+      id: `key-finding-${index}`,
+      label: finding.title,
+    })),
+  },
+  { id: "framing-feedback", label: "Framing Feedback" },
+  { id: "deliverable", label: "The Deliverable" },
+  { id: "outcome", label: "Outcome" },
+  { id: "reflection", label: "Reflection" },
+];
+
 function FindingCard({
   index,
   finding,
@@ -129,7 +137,10 @@ function FindingCard({
   media?: ReactNode;
 }) {
   return (
-    <div className="panel-grey panel-flat mt-6 w-full overflow-hidden rounded-[22px] border border-[#6e6e6e]">
+    <div
+      id={`key-finding-${index}`}
+      className="panel-grey panel-flat mt-6 w-full scroll-mt-8 overflow-hidden rounded-[22px] border border-[#6e6e6e]"
+    >
       <div
         className="btn-pill btn-pill-static finding-header flex items-center gap-3 px-5 py-3"
         style={{ borderRadius: "21px 21px 0 0" }}
@@ -257,24 +268,15 @@ export default function MeshPage() {
       />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
-        <div className="flex flex-wrap gap-2">
-          {TAGS.map((tag) => (
-            <span
-              key={tag}
-              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">
           Mesh UI/UX Website Review
         </h1>
         <p className="mt-3 max-w-[960px] leading-relaxed text-foreground/70">
           A UI/UX review of Mesh&apos;s (YC W25) new website, submitted for an open LinkedIn feedback
           call.
         </p>
+
+        <SoftwareIconRow software={SOFTWARE} />
 
         <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
           {ROLE_DETAILS.map((detail) => (
@@ -457,11 +459,11 @@ export default function MeshPage() {
         {/* Outcome */}
         <section id="outcome" className="mt-16 scroll-mt-8">
           <Eyebrow>Outcome</Eyebrow>
-          <div className="panel-grey mt-6 w-full rounded-[22px] border border-black px-6 py-10 sm:px-12 sm:py-14">
-            <p className="max-w-[820px] text-2xl font-semibold leading-snug text-foreground sm:text-3xl">
+          <div className="mt-6 w-full rounded-[22px] border border-black/10 bg-[#345DF0] px-6 py-10 sm:px-12 sm:py-14">
+            <p className="max-w-[820px] text-2xl font-semibold leading-snug text-white sm:text-3xl">
               “This is the best feedback I&apos;ve received in a long time.”
             </p>
-            <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-foreground/50">
+            <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-white/60">
               Erin Kim, Co-founder &amp; CEO, Mesh
             </p>
           </div>

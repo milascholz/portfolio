@@ -6,8 +6,9 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { BASE_PATH } from "@/lib/base-path";
 import { useRegisterProjectNav } from "@/context/ProjectNavContext";
+import SoftwareIconRow from "@/components/SoftwareIconRow";
 
-const TAGS = ["Personal Project", "Shipped 2026"];
+const SOFTWARE = ["Figma", "Claude Code"];
 
 const ROLE_DETAILS = [
   { label: "Role", value: "Product Designer + Developer" },
@@ -616,21 +617,12 @@ export default function DiscifyPage() {
       />
 
       <div className="mx-auto w-full max-w-[1120px] p-6 md:p-10 lg:p-12">
-        <div className="flex flex-wrap gap-2">
-          {TAGS.map((tag) => (
-            <span
-              key={tag}
-              className="btn-pill btn-pill-static px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground">Discify</h1>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">Discify</h1>
         <p className="mt-3 max-w-[960px] leading-relaxed text-foreground/70">
           Spotify extension gamifying album listens
         </p>
+
+        <SoftwareIconRow software={SOFTWARE} />
 
         <div className="panel-grey panel-flat mt-8 grid grid-cols-2 gap-6 rounded-[22px] border border-[#6e6e6e] p-6 sm:grid-cols-4">
           {ROLE_DETAILS.map((detail) => (
