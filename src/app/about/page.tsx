@@ -76,19 +76,17 @@ export default function AboutPage() {
 
               {/* Why Product Design */}
               <div className="mt-16">
-                <Eyebrow>Why Product Design</Eyebrow>
                 <h2 className="mt-2 text-3xl font-semibold leading-tight text-foreground">
                   From mechatronics to product design.
                 </h2>
                 <Prose>
                   <p>
-                    I started as a mechatronics engineer because I loved learning how something is built
-                    and the problem-solving that comes with it. But I kept noticing empathy for the user
-                    was missing from that process, and that&apos;s exactly what product design adds
-                    alongside the building. I want to build useful things, and the surest way to get
-                    there is bringing the people who&apos;ll use it into the journey as I build, not just
-                    at the end. Next, I&apos;m looking for a product design role where I can keep
-                    combining that hands-on engineering instinct with real user research.
+                    I got into mechatronics because I love figuring out how things are built, and the
+                    problem-solving that comes with it. But the more I built, the more I noticed nobody
+                    was asking who it was for. Product design fills that gap. I want to build things that
+                    are actually useful, and the best way to get there is to involve users while
+                    I&apos;m building. I&apos;m looking for a product design role where I can pair my
+                    engineering instincts with real user research.
                   </p>
                 </Prose>
               </div>
