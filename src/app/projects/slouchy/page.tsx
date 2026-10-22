@@ -192,7 +192,7 @@ const DECISIONS: Decision[] = [
   {
     title: "The menu bar, not an app",
     decision: "Slouchy lives in the macOS menu bar, with no account and no system notifications.",
-    why: "Students already ignore a wall of notifications. A small icon shows your status at a glance and only opens when it's time to check in, so it's as non-intrusive as possible.",
+    why: "Students already ignore a wall of notifications. A small icon shows your status at a glance and only opens when it's time to check in, so it's as non-intrusive as possible. At about 16px in the menu bar, detail gets lost, so the icon only shows your status. So, the logo has no arms or legs, just a single stroke and a head. It stays straight when you're on track and curves into an amber S when you're overdue, so you can see your status without opening anything.",
     rejected: "A standalone app, push notifications.",
   },
   {
@@ -214,11 +214,6 @@ const DECISIONS: Decision[] = [
     title: "A shop for the reward loop",
     decision: "Streaks unlock accessories for Slouchy: a hat, sunglasses, a coffee cup.",
     why: "Habits stick when there's a reward. Most habit tools get forgotten after a couple of days, and a small sense of progression gives people a reason to come back daily.",
-  },
-  {
-    title: "Deliberately minimal settings",
-    decision: "Only three settings: nudge interval, active hours, weekends on or off.",
-    why: "Every extra setting is another reason to procrastinate instead of just sitting up straight.",
   },
 ];
 
@@ -307,38 +302,20 @@ const DIRECTIONS_COLUMNS: TableColumn[] = [
 
 const DIRECTIONS_ROWS: Record<string, ReactNode>[] = [
   {
-    direction: "1. Flat minimal",
-    asked: "Purple and teal accents, a spine glyph, “Are you straight?”, Yes / Remind me in 5",
-    kept: "Three tabs: Nudge, Log, Settings. The dot grid.",
-    dropped: "“Remind me in 5.” People would hit it like an alarm's snooze. Fixing your posture takes one second, so a snooze only delays it and lets you off the hook.",
-  },
-  {
-    direction: "2. Apple-native",
-    asked: "SF Pro, system blue, solid green Yes and solid red No",
-    kept: "Yes/No only, sentence case, segmented tabs",
-    dropped: "Solid green and red buttons felt like an alarm going off",
-  },
-  {
-    direction: "3. Calm utility",
-    asked: "Things 3 and Fantastical as reference, muted indigo, lightly tinted buttons",
-    kept: "Tinted buttons (“subtle, not alarming”), custom interval and time steppers",
-    dropped: "The tone. Calm and neutral still felt clinical, and Slouchy shouldn't.",
-  },
-  {
-    direction: "4. Dark theme",
+    direction: "1. Dark theme",
     asked: "A dark nudge screen with a progress arc and streak badge, calm light utility screens",
     kept: "Streak badge, today's check-ins under the question",
     dropped: "The seriousness. Dramatic and polished, but not playful.",
   },
   {
-    direction: "5. Garden",
+    direction: "2. Garden",
     asked: "Flowers as check-ins, Duolingo-style warmth",
     kept: "The push toward playful",
     dropped: "The flowers. A flower can only grow, so it couldn't show when you slouched.",
   },
   {
-    direction: "6. Glowing orbs",
-    asked: "Direction 4 again, with orbs instead of flowers",
+    direction: "3. Glowing orbs",
+    asked: "Direction 1 again, with orbs instead of flowers",
     kept: "Orbs as check-in dots",
     dropped: "Everything else, once I went hand-drawn.",
   },
@@ -515,9 +492,9 @@ export default function SlouchyPage() {
               <Prose>
                 <p>
                   University students spend hours hunched over laptops writing essays, sitting through lectures
-                  and grinding through assignments. Studies report that 30 to 80% of university students
-                  experience low back pain. It&apos;s a small daily habit that gets ignored until it compounds
-                  into a bigger problem.
+                  and grinding through assignments. Across published prevalence studies, 30 to 80% of
+                  university students report experiencing low back pain. It&apos;s a small daily habit that gets
+                  ignored until it compounds into a bigger problem.
                 </p>
                 <p>
                   The inspiration behind this project started with my own experience. I was in the middle of
@@ -621,15 +598,26 @@ export default function SlouchyPage() {
         <section id="solution" className="mt-16 scroll-mt-8">
           <Eyebrow>Solution</Eyebrow>
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            One question, two buttons, one second.
+            A friend in your menu bar who asks &quot;you slouching?&quot; every 45 minutes while you work.
           </h2>
           <Prose>
             <ul className="list-disc space-y-2 pl-5">
-              <li>Slouchy lives in the Mac menu bar: no app to open, no account, no notifications</li>
-              <li>Every 45 minutes during your work hours, he pops up and asks if you&apos;re slouching</li>
-              <li>He reacts to your answer, your streak, the time of day, and how long you&apos;ve been ignoring him</li>
-              <li>A log shows your streak, weekly score, and every check-in on a dot grid</li>
-              <li>Streak milestones unlock accessories for Slouchy in the shop</li>
+              <li>
+                <span className="font-semibold text-foreground">One tap to answer:</span> yes or no. No
+                account, no notifications.
+              </li>
+              <li>
+                <span className="font-semibold text-foreground">Reacts like a friend:</span> Slouchy&apos;s
+                mood shifts with your streak, the time of day, and whether you&apos;ve been ignoring it.
+              </li>
+              <li>
+                <span className="font-semibold text-foreground">Log:</span> every check-in as a dot, plus
+                your streak and weekly score.
+              </li>
+              <li>
+                <span className="font-semibold text-foreground">Shop:</span> accessories for Slouchy,
+                unlocked by streak milestones.
+              </li>
             </ul>
           </Prose>
           <div className="well-inset mt-6 p-6">
@@ -676,7 +664,7 @@ export default function SlouchyPage() {
 
           <Prose>
             <p>
-              The garden direction (5) was my first push toward playful: every check-in a flower, every day a
+              The garden direction (2) was my first push toward playful: every check-in a flower, every day a
               stem whose bloom showed that day&apos;s score. But a flower can only grow. It showed progress,
               never a miss. A row of dots shows every check-in, including the ones where you were slouching, and
               seeing those misses is what pushes you to sit up next time.
@@ -691,19 +679,19 @@ export default function SlouchyPage() {
               className="w-full rounded-lg"
             />
             <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-4">
-              <p className="text-xs text-foreground/50">Direction 4: the dark theme nudge</p>
-              <p className="text-xs text-foreground/50">Direction 5, garden: every check-in as a flower</p>
-              <p className="text-xs text-foreground/50">Direction 6: rounded cards and centered tabs</p>
+              <p className="text-xs text-foreground/50">Direction 1: the dark theme nudge</p>
+              <p className="text-xs text-foreground/50">Direction 2, garden: every check-in as a flower</p>
+              <p className="text-xs text-foreground/50">Direction 3: rounded cards and centered tabs</p>
               <p className="text-xs text-foreground/50">
-                Direction 6, version 2: lowercase tabs and a thumbs-up Slouchy
+                Direction 3, version 2: lowercase tabs and a thumbs-up Slouchy
               </p>
             </div>
           </div>
           <Prose>
             <p>
-              Direction 4&apos;s dark theme nudge (nudge = notification posture reminder) added a progress ring
-              and streak badge, whereas direction 5 swapped them for a weekly garden, one flower per day, in an
-              attempt to make the app feel more playful. Direction 6 swapped the garden for a dot grid, which
+              Direction 1&apos;s dark theme nudge (nudge = notification posture reminder) added a progress ring
+              and streak badge, whereas direction 2 swapped them for a weekly garden, one flower per day, in an
+              attempt to make the app feel more playful. Direction 3 swapped the garden for a dot grid, which
               was simpler to understand. I iterated on this version until reaching a finalized design, with a
               more playful font and the Slouchy character. I did the same iterative process with the reminder
               notification as shown below, where I started with a dark theme that felt clinical and looked too
@@ -724,7 +712,7 @@ export default function SlouchyPage() {
 
           <Prose>
             <p>
-              <span className="font-semibold text-foreground">What six directions taught me:</span> A design can
+              <span className="font-semibold text-foreground">What three directions taught me:</span> A design can
               look clean and polished, but without personality it won&apos;t speak to my target audience.
               Polished and neutral is what every competitor already looks like, and my research showed people
               listen to their friends, not a lecture.
@@ -770,40 +758,11 @@ export default function SlouchyPage() {
           </div>
 
           <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">
-            Branding
-          </h3>
-          <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-start">
-            <div className="space-y-4 leading-relaxed text-foreground/70 lg:max-w-[420px] lg:shrink-0">
-              <p>
-                The menu bar icon had a different job than the character: read at 16px beside wifi and battery.
-                So no arms or legs, just a single stroke and a head. It stays straight when you&apos;re on track
-                and curves into an amber S when you&apos;re overdue, so you can see your status without opening
-                anything.
-              </p>
-              <p>
-                I also dropped the name Straighten. It sounded like an instruction, the exact tone my research
-                said to avoid. The app is now named after its character, and the app icon is Slouchy himself.
-              </p>
-            </div>
-            <div className="well-inset min-w-0 flex-1 p-6">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`${BASE_PATH}/images/slouchy/logo.png`}
-                alt="The old 'straighten' wordmark with a pin icon, next to an arrow pointing to the new 'slouchy' app icon and wordmark"
-                className="w-full rounded-lg"
-              />
-              <p className="mt-2 text-xs text-foreground/50">
-                Straighten&apos;s original wordmark, rebranded to Slouchy and his icon
-              </p>
-            </div>
-          </div>
-
-          <h3 className="mt-10 max-w-[960px] text-xl font-semibold leading-snug text-foreground">
             2. Building Slouchy&apos;s character
           </h3>
           <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-start">
             <p className="max-w-[320px] shrink-0 leading-relaxed text-foreground/70">
-              Once the voice was set, Slouchy needed a small range of expressions to react to your answer:
+              Once the direction and tone were set, Slouchy needed a small range of expressions to react to your answer:
               neutral by default, unimpressed when you admit to slouching, happy and thumbs-up when you
               don&apos;t.
             </p>
@@ -981,16 +940,6 @@ export default function SlouchyPage() {
                       The shop: accessories unlocked by keeping your streak
                     </p>
                   </div>
-                ) : index === 6 ? (
-                  <div className="well-inset p-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`${BASE_PATH}/images/slouchy/settings-desktop.png`}
-                      alt="Settings screen with nudge interval (30m, 45m, 60m, custom), active hours, and a weekends toggle, live in the macOS menu bar"
-                      className="w-full rounded-lg border border-black/10"
-                    />
-                    <p className="mt-2 text-xs text-foreground/50">The only three settings Slouchy has</p>
-                  </div>
                 ) : undefined
               }
             />
@@ -1048,6 +997,11 @@ export default function SlouchyPage() {
                   <span className="font-semibold text-foreground">Next:</span> build it as a real macOS menu bar
                   app, and test it with the students from the library for a week to see if the shop keeps
                   answers honest once the novelty wears off.
+                </p>
+                <p>
+                  <span className="font-semibold text-foreground">How I&apos;d measure success:</span> by
+                  how many nudges get answered instead of ignored, and whether &quot;yes, I&apos;m
+                  slouching&quot; answers drop as the week goes on.
                 </p>
               </Prose>
               <div className="well-inset mt-4 flex-1 p-3">

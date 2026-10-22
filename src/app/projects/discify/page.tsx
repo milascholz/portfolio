@@ -461,7 +461,7 @@ const DISC_GLANCE_STEPS = [0, 25, 50, 80, 95, 100];
 
 function DiscDemo() {
   const assets = useDiscAssets();
-  const [percent, setPercent] = useState(62);
+  const [percent, setPercent] = useState(64);
   const tracks = Math.round((percent / 100) * DISC_TOTAL_TRACKS);
 
   return (
@@ -769,7 +769,7 @@ export default function DiscifyPage() {
                 <>
                   <Prose>
                     <p>
-                      The shipped version includes the redesigned disc with real album art, the tracking
+                      The built version includes the redesigned disc with real album art, the tracking
                       UI, and the profile section with filters to toggle between in-progress and completed
                       albums.
                     </p>
@@ -960,18 +960,19 @@ export default function DiscifyPage() {
         <section id="final-product" className="mt-16 scroll-mt-8">
           <Eyebrow>Final Product</Eyebrow>
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
-            Shipped and in daily use.
+            Built and in daily use.
           </h2>
           <Prose>
             <p>
-              <span className="font-semibold text-foreground">Shipped:</span> per-track 90% completion
-              thresholds, disc visualization, the album page discs with hover and click details, and the
-              profile section with disc progress filtering.
+              <span className="font-semibold text-foreground">Built:</span> Fully built. I&apos;ve used it
+              daily since September and completed 9 albums, most of which I&apos;d never have listened to
+              past the singles.
             </p>
             <p>
               <span className="font-semibold text-foreground">Next:</span> a Spotify Wrapped-style yearly
               recap of stats like number of completed albums, number of new albums listened to, number of
-              albums started, number of times the same album was fully listened to, etc.
+              albums started, number of times the same album was fully listened to, etc. If I release it to
+              the public, I&apos;d measure success by how many started albums people actually finish.
             </p>
           </Prose>
           <MediaBoxVideo

@@ -2,35 +2,43 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import ProfileSidebar from "@/components/ProfileSidebar";
+import ProfileExtras from "@/components/ProfileExtras";
+import ProfileNameCard from "@/components/ProfileNameCard";
 import ProjectSidebar from "@/components/ProjectSidebar";
 
 /**
  * Home and project/case-study pages share this persistent shell so the
  * sidebar column stays a fixed width and swaps content (profile card vs.
- * case-study nav) instead of collapsing — the profile card wipes left and
+ * case-study nav) instead of collapsing — the profile extras wipe left and
  * ProjectSidebar cross-fades in, while the content pane to its right
  * becomes the full-bleed case-study card. Lives above the routed
- * `children`, so it never remounts across navigations. The "about" page is
- * unrelated content in its own plain white card.
+ * `children`, so it never remounts across navigations. About is treated
+ * like Home (not "expanded"): it gets the same profile-card + ProfileExtras
+ * sidebar as Home, and supplies its own panel-grey card around its content
+ * the same way Home's own page does, rather than the ProjectSidebar/
+ * full-bleed-card treatment case studies and Fun use.
+ *
+ * The name card is shown on Home, Fun, and About, so it's rendered once,
+ * outside the crossfade below it — it stays mounted and unanimated across
+ * that transition instead of fading out and a lookalike fading back in.
  */
 export default function MainSurface({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === "/" || pathname === "";
   const isFun = pathname === "/fun" || pathname === "/fun/";
+  const isAbout = pathname === "/about" || pathname === "/about/";
   const isExpanded = (pathname?.startsWith("/projects/") ?? false) || isFun;
-
-  if (!isHome && !isExpanded) {
-    return <div className="h-full overflow-y-auto border border-black bg-white">{children}</div>;
-  }
+  const showCard = isHome || isFun || isAbout;
 
   return (
     <div className="no-scrollbar flex h-full flex-col gap-1.5 overflow-y-auto lg:h-full lg:min-h-0 lg:flex-row lg:items-stretch lg:overflow-visible">
       <div
-        className={`${isExpanded ? "hidden lg:flex" : "flex"} w-full shrink-0 flex-col lg:w-[284px] ${
+        className={`${isExpanded ? "hidden lg:flex" : "flex"} w-full shrink-0 flex-col gap-1.5 lg:w-[284px] ${
           isExpanded ? "lg:h-auto lg:max-h-full lg:self-start" : "lg:h-full lg:min-h-0"
         }`}
       >
+        {showCard ? <ProfileNameCard showBio={isHome || isAbout} /> : null}
+
         <div className={`relative min-h-0 w-full ${isExpanded ? "lg:h-auto" : "flex-1 lg:h-full"}`}>
           <div
             className={`transition-all duration-300 ease-in-out ${
@@ -39,7 +47,7 @@ export default function MainSurface({ children }: { children: ReactNode }) {
                 : "lg:h-full translate-x-0 opacity-100"
             }`}
           >
-            <ProfileSidebar />
+            <ProfileExtras />
           </div>
           <div
             className={`transition-all duration-300 ease-in-out ${

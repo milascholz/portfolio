@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Home as HomeIcon } from "lucide-react";
 
 const NAV_ITEMS = [
-  { href: "/about", label: "About", disabled: true },
+  { href: "/about", label: "About", disabled: false },
   { href: "/fun", label: "Fun", disabled: false },
   { href: "/", label: "Projects", disabled: false },
 ];

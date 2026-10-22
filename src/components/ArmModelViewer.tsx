@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { BASE_PATH } from "@/lib/base-path";
 
 type ModelViewerElementConfig = {
@@ -13,14 +13,45 @@ declare global {
   }
 }
 
+const MODEL_SRC = `${BASE_PATH}/models/baker-bot-arm.glb`;
+
 export default function ArmModelViewer() {
+  const [shouldLoad, setShouldLoad] = useState(false);
   const [ready, setReady] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Defer the model-viewer bundle and the GLB fetch until this section is
+  // actually about to scroll into view, so they don't compete for bandwidth
+  // with the hero video and other media at the top of the page.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "800px 0px" }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!shouldLoad) return;
     let cancelled = false;
     window.ModelViewerElement = window.ModelViewerElement || {};
     window.ModelViewerElement.meshoptDecoderLocation = `${BASE_PATH}/vendor/meshopt-decoder.js`;
 
+    // Kick off the GLB fetch and the model-viewer bundle import in parallel
+    // (instead of fetching the model only after the library finishes
+    // loading) so the browser cache is already warm by the time the
+    // <model-viewer> element is created.
+    fetch(MODEL_SRC, { cache: "force-cache" }).catch(() => {});
     import("@google/model-viewer").then(() => {
       if (!cancelled) setReady(true);
     });
@@ -28,14 +59,14 @@ export default function ArmModelViewer() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [shouldLoad]);
 
   return (
-    <div className="well-inset mt-6 p-6">
+    <div ref={containerRef} className="well-inset mt-6 p-6">
       <div className="h-[420px] w-full overflow-hidden rounded-lg border border-black/10 sm:h-[520px]">
         {ready ? (
           <model-viewer
-            src={`${BASE_PATH}/models/baker-bot-arm.glb`}
+            src={MODEL_SRC}
             alt="Interactive 3D model of Baker Bot's right arm assembly, showing the shoulder, elbow, forearm, and hand"
             camera-controls
             touch-action="pan-y"
@@ -46,7 +77,7 @@ export default function ArmModelViewer() {
             environment-image="neutral"
             exposure="1"
             tone-mapping="neutral"
-            loading="lazy"
+            loading="eager"
             reveal="auto"
             style={{
               width: "100%",

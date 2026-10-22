@@ -582,6 +582,13 @@ export default function HumanoidRobotArmAssemblyPage() {
           <h2 className="mt-2 max-w-[960px] text-3xl font-semibold leading-tight text-foreground">
             What I learned
           </h2>
+          <Prose>
+            <p>
+              <span className="font-semibold text-foreground">How I&apos;d measure success:</span> zero
+              shoulder slips or bayonet disconnects across a semester of lecture use and bike commutes, and
+              the elbow holding its gesture position with no drift.
+            </p>
+          </Prose>
 
           {REFLECTION_POINTS.map((point) => (
             <div key={point.title}>

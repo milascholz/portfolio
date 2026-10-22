@@ -84,7 +84,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Diorama",
     description:
       "Building a model train set diorama from scratch. I built the table it sits on, the mountains, the tunnels, even the grass for the mountains. An ongoing project I love working on when I'm home, giving my dad's childhood train set a new life.",
-    software: ["Paper mache, and a lot of time, patience, and love"],
+    software: ["paper mache, and a lot of time, patience, and love"],
     item: { type: "image", src: "/images/fun/train-3515.jpg", alt: "Model train layout river bend beside a painted mountain" },
   },
   {
@@ -149,7 +149,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Diorama",
     description:
       "Building a model train set diorama from scratch. I built the table it sits on, the mountains, the tunnels, even the grass for the mountains. An ongoing project I love working on when I'm home, giving my dad's childhood train set a new life.",
-    software: ["Paper mache, and a lot of time, patience, and love"],
+    software: ["paper mache, and a lot of time, patience, and love"],
     item: { type: "image", src: "/images/fun/train-3514.jpg", alt: "Model train layout with mountain tunnel and bridge" },
   },
   {
@@ -191,7 +191,7 @@ const ENTRIES: FunEntry[] = [
     meta: "Diorama",
     description:
       "Building a model train set diorama from scratch. I built the table it sits on, the mountains, the tunnels, even the grass for the mountains. An ongoing project I love working on when I'm home, giving my dad's childhood train set a new life.",
-    software: ["Paper mache, and a lot of time, patience, and love"],
+    software: ["paper mache, and a lot of time, patience, and love"],
     item: { type: "image", src: "/images/fun/train-3513.jpg", alt: "Close-up of hand-painted rock and grass terrain" },
   },
   {
