@@ -4,6 +4,7 @@ export type Project = {
   subheading: string;
   gradient: string;
   video?: string;
+  image?: string;
   poster?: string;
   tag?: string;
   link?: string;
@@ -12,6 +13,17 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "nosh",
+    title: "Nosh",
+    subheading: "Product + brand design for a snack container",
+    gradient: "linear-gradient(135deg, #be123c 0%, #fb7185 55%, #fecdd3 100%)",
+    image: "/images/nosh-poster.jpg",
+    tag: "1st in Visual & Brand Design @ FIG Makeathon",
+    link: "https://nosh-project.notion.site/nosh-4131ef3a2cc3811c9663c45968045eae",
+    linkLabel: "View case study",
+    linkExternal: true,
+  },
   {
     id: "discify",
     title: "Discify",
@@ -23,13 +35,13 @@ export const projects: Project[] = [
     linkLabel: "View case study",
   },
   {
-    id: "project-four",
-    title: "Mesh (YC W25) Website UI/UX Feedback",
-    subheading: "12-point UX audit · CEO: best feedback in a long time",
-    gradient: "linear-gradient(135deg, #ea580c 0%, #fb923c 55%, #fed7aa 100%)",
-    video: "/videos/meshvid.mp4",
-    poster: "/images/meshvid-poster.jpg",
-    link: "/projects/mesh",
+    id: "project-three",
+    title: "Humanoid Robot Arms",
+    subheading: "Arms for a commissioned humanoid AI teaching assistant robot",
+    gradient: "linear-gradient(135deg, #059669 0%, #34d399 55%, #a7f3d0 100%)",
+    video: "/videos/humanoid-robot-arm-assembly.mp4",
+    poster: "/images/humanoid-robot-arm-poster.jpg",
+    link: "/projects/humanoid-robot-arm-assembly",
     linkLabel: "View case study",
   },
   {
@@ -41,16 +53,6 @@ export const projects: Project[] = [
     poster: "/images/slouchy-poster.jpg",
     tag: "2nd Place @ Cornell UX Designathon",
     link: "/projects/slouchy",
-    linkLabel: "View case study",
-  },
-  {
-    id: "project-three",
-    title: "Humanoid Robot Arms",
-    subheading: "Arms for a commissioned humanoid AI teaching assistant robot",
-    gradient: "linear-gradient(135deg, #059669 0%, #34d399 55%, #a7f3d0 100%)",
-    video: "/videos/humanoid-robot-arm-assembly.mp4",
-    poster: "/images/humanoid-robot-arm-poster.jpg",
-    link: "/projects/humanoid-robot-arm-assembly",
     linkLabel: "View case study",
   },
 ];

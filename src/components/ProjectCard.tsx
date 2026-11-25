@@ -21,6 +21,9 @@ export default function ProjectCard({ project }: { project: Project }) {
       playsInline
       preload="metadata"
     />
+  ) : project.image ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className="h-auto w-full" src={`${BASE_PATH}${project.image}`} alt="" />
   ) : (
     <div className="aspect-video w-full" style={{ backgroundImage: project.gradient }} />
   );
